@@ -17,8 +17,8 @@ public class EmoticonImplTest {
 
 
     @Test
-    public void testRetrieveGamePieceAndShowType() throws Exception {
+    public void testReturnEmoticonType() throws Exception {
         Emoticon emo = new EmoticonImpl(3, 4, 20, 20, bitmap, "HAPPY", 10);
-        assertEquals(emo.getArrayX(), 3);
+        assertEquals(emo.getEmoticonType(), "HAPPY");
     }
 }
