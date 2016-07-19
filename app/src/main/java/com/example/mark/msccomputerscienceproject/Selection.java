@@ -21,7 +21,7 @@ public interface Selection {
 
     boolean adjacentSelections();
 
-    void setSelection02ToSelection01();
+    void secondSelectionBecomesFirstSelection();
 
 }
 
