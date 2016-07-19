@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -31,6 +32,7 @@ public class EmoticonMatchFinderTest {
     @Before
     public void setUp() throws Exception {
         emoticons = new AbstractEmoticon[X_MAX][Y_MAX];
+        emoticonMatchFinder = new EmoticonMatchFinder(emoticons);
         int counter = 0;
         for (int x = ROW_START; x < X_MAX; x++) {
             for (int y = COLUMN_TOP; y < Y_MAX; y++) {
@@ -52,10 +54,9 @@ public class EmoticonMatchFinderTest {
 
     @Test
     public void testFindVerticalMatches() throws Exception {
-        emoticons[0][1] = new MockEmoticon(2, 1, 20, 20, bitmap, "HAPPY");
-        emoticons[0][2] = new MockEmoticon(2, 2, 20, 20, bitmap, "HAPPY");
-        emoticons[0][3] = new MockEmoticon(2, 3, 20, 20, bitmap, "HAPPY");
-        emoticonMatchFinder = new EmoticonMatchFinder(emoticons);
+        emoticons[2][1] = new MockEmoticon(2, 1, 20, 20, bitmap, "HAPPY");
+        emoticons[2][2] = new MockEmoticon(2, 2, 20, 20, bitmap, "HAPPY");
+        emoticons[2][3] = new MockEmoticon(2, 3, 20, 20, bitmap, "HAPPY");
         matchingX = emoticonMatchFinder.findVerticalMatches();
 
         assertEquals(1, matchingX.size());
@@ -71,7 +72,6 @@ public class EmoticonMatchFinderTest {
         emoticons[4][3] = new MockEmoticon(4, 3, 20, 20, bitmap, "SURPRISED");
         emoticons[5][3] = new MockEmoticon(5, 3, 20, 20, bitmap, "SURPRISED");
         emoticons[6][3] = new MockEmoticon(6, 3, 20, 20, bitmap, "SURPRISED");
-        emoticonMatchFinder = new EmoticonMatchFinder(emoticons);
         matchingY = emoticonMatchFinder.findHorizontalMatches();
 
         assertEquals(1, matchingY.size());
@@ -83,7 +83,20 @@ public class EmoticonMatchFinderTest {
     }
 
     @Test
-    public void testAnotherMatchPossible() throws Exception {
+    public void testAnotherVerticalMatchPossible() throws Exception {
         assertFalse(emoticonMatchFinder.anotherMatchPossible());
+        emoticons[2][1] = new MockEmoticon(2, 1, 20, 20, bitmap, "HAPPY");
+        emoticons[2][2] = new MockEmoticon(2, 2, 20, 20, bitmap, "HAPPY");
+        emoticons[2][4] = new MockEmoticon(2, 4, 20, 20, bitmap, "HAPPY");
+        assertTrue(emoticonMatchFinder.anotherMatchPossible());
     }
+
+    @Test
+    public void testAnotherHorizontalMatchPossible() throws Exception {
+        emoticons[3][3] = new MockEmoticon(3, 3, 20, 20, bitmap, "SURPRISED");
+        emoticons[5][3] = new MockEmoticon(5, 3, 20, 20, bitmap, "SURPRISED");
+        emoticons[6][3] = new MockEmoticon(6, 3, 20, 20, bitmap, "SURPRISED");
+        assertTrue(emoticonMatchFinder.anotherMatchPossible());
+    }
+
 }
