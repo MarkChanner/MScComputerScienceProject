@@ -23,7 +23,7 @@ public class SelectionImplTest {
 
     @After
     public void tearDown() throws Exception {
-
+        selection = null;
     }
 
     @Test
@@ -36,36 +36,26 @@ public class SelectionImplTest {
         assertEquals(selection.getSelection02()[Y], 3);
     }
 
-    /*@Test
+    @Test
     public void testSelection01Made() throws Exception {
-
-    }
-
-    @Test
-    public void testGetSelection01() throws Exception {
-
-    }
-
-    @Test
-    public void testSetSelection01() throws Exception {
-
-    }
-
-    @Test
-    public void testGetSelection02() throws Exception {
-
-    }
-
-    @Test
-    public void testSetSelection02() throws Exception {
-
+        assertEquals(selection.selection01Made(), false);
+        selection.setSelection01(5, 6);
+        assertEquals(selection.selection01Made(), true);
     }
 
     @Test
     public void testSameSelectionMadeTwice() throws Exception {
-
+        selection.setSelection01(3, 3);
+        selection.setSelection02(2, 3);
+        assertEquals(selection.sameSelectionMadeTwice(), false);
+        selection.resetUserSelections();
+        assertEquals(selection.getSelection01()[X], -1);
+        assertEquals(selection.getSelection02()[Y], -1);
+        selection.setSelection01(5, 5);
+        selection.setSelection02(5, 5);
+        assertEquals(selection.sameSelectionMadeTwice(), true);
     }
-
+/*
     @Test
     public void testAdjacentSelections() throws Exception {
 
