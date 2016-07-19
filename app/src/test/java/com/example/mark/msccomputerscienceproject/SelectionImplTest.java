@@ -18,7 +18,6 @@ public class SelectionImplTest {
     @Before
     public void setUp() throws Exception {
         selection = new SelectionImpl();
-
     }
 
     @After
@@ -30,39 +29,52 @@ public class SelectionImplTest {
     public void testResetUserSelections() throws Exception {
         selection.setSelection01(1, 2);
         selection.setSelection02(1, 3);
-        assertEquals(selection.getSelection01()[X], 1);
-        assertEquals(selection.getSelection01()[Y], 2);
-        assertEquals(selection.getSelection02()[X], 1);
-        assertEquals(selection.getSelection02()[Y], 3);
+        assertEquals(1, selection.getSelection01()[X]);
+        assertEquals(2, selection.getSelection01()[Y]);
+        assertEquals(1, selection.getSelection02()[X]);
+        assertEquals(3, selection.getSelection02()[Y]);
+        selection.resetUserSelections();
+        assertEquals(-1, selection.getSelection01()[X]);
+        assertEquals(-1, selection.getSelection02()[Y]);
     }
 
     @Test
     public void testSelection01Made() throws Exception {
-        assertEquals(selection.selection01Made(), false);
+        assertEquals(false, selection.selection01Made());
         selection.setSelection01(5, 6);
-        assertEquals(selection.selection01Made(), true);
+        assertEquals(true, selection.selection01Made());
     }
 
     @Test
     public void testSameSelectionMadeTwice() throws Exception {
         selection.setSelection01(3, 3);
         selection.setSelection02(2, 3);
-        assertEquals(selection.sameSelectionMadeTwice(), false);
+        assertEquals(false, selection.sameSelectionMadeTwice());
         selection.resetUserSelections();
-        assertEquals(selection.getSelection01()[X], -1);
-        assertEquals(selection.getSelection02()[Y], -1);
         selection.setSelection01(5, 5);
         selection.setSelection02(5, 5);
-        assertEquals(selection.sameSelectionMadeTwice(), true);
+        assertEquals(true, selection.sameSelectionMadeTwice());
     }
-/*
+
     @Test
     public void testAdjacentSelections() throws Exception {
-
+        selection.setSelection01(4, 3);
+        selection.setSelection02(6, 3);
+        assertEquals(false, selection.adjacentSelections());
+        selection.resetUserSelections();
+        selection.setSelection01(4, 3);
+        selection.setSelection02(5, 3);
+        assertEquals(true, selection.adjacentSelections());
     }
 
     @Test
     public void testSetSelection02ToSelection01() throws Exception {
-
-    }*/
+        selection.setSelection01(5, 5);
+        selection.setSelection02(1, 1);
+        selection.secondSelectionBecomesFirstSelection();
+        assertEquals(1, selection.getSelection01()[X]);
+        assertEquals(1, selection.getSelection01()[Y]);
+        assertEquals(-1, selection.getSelection02()[X]);
+        assertEquals(-1, selection.getSelection02()[Y]);
+    }
 }
