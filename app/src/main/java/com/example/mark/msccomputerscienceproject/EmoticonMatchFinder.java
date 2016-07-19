@@ -65,6 +65,7 @@ public class EmoticonMatchFinder {
             }
         }
         return bigList;
+
     }
 
     private void examineList(LinkedList<Emoticon> consecutiveEmotions, ArrayList<LinkedList<Emoticon>> bigList) {

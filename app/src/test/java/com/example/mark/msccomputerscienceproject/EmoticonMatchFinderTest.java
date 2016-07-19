@@ -98,5 +98,4 @@ public class EmoticonMatchFinderTest {
         emoticons[6][3] = new MockEmoticon(6, 3, 20, 20, bitmap, "SURPRISED");
         assertTrue(emoticonMatchFinder.anotherMatchPossible());
     }
-
 }
