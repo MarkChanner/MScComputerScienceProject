@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science final project
  */
-public class SelectionImplTest {
+public class SelectionTest {
 
     private Selection selection;
     public static final int X = 0;
