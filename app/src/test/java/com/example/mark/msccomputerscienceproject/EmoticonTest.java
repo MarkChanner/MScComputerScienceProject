@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science final project
  */
-public class EmoticonImplTest {
+public class EmoticonTest {
 
     @Mock
     Bitmap bitmap;
@@ -18,6 +18,6 @@ public class EmoticonImplTest {
     @Test
     public void testReturnEmoticonType() throws Exception {
         Emoticon emo = new EmoticonImpl(3, 4, 20, 20, bitmap, "HAPPY", 10);
-        assertEquals(emo.getEmoticonType(), "HAPPY");
+        assertEquals("HAPPY", emo.getEmoticonType());
     }
 }
