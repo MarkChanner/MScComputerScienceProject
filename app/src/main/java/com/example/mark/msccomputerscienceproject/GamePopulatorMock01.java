@@ -19,7 +19,8 @@ public class GamePopulatorMock01 implements GamePopulator {
     private Bitmap bitmap = BitmapCreator.getInstance().getEmptyBitmap();
 
     @Override
-    public void populateEmoticonsArray(EmoticonFactory emoticonFactory, Emoticon[][] emoticons, int emoWidth, int emoHeight) {
+
+    public void populateBoard(EmoticonCreator emoticonCreator, Emoticon[][] emoticons) {
         // Populates the emoticons array with numbers that increment by 1 so that no matches are possible yet
         int counter = 0;
         for (int x = ROW_START; x < X_MAX; x++) {

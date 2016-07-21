@@ -13,8 +13,6 @@ public interface GameModel {
 
     void processSelections(int[] sel1, int[] sel2);
 
-    Emoticon[][] getEmoticons();
-
     void resetBoard();
 
 }

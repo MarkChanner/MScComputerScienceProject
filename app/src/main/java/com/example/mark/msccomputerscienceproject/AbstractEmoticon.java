@@ -207,6 +207,7 @@ public abstract class AbstractEmoticon implements Emoticon {
     public int getViewPositionY() {
         return screenPositionY;
     }
+
     @Override
     public Bitmap getBitmap() {
         return bitmap;
