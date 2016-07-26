@@ -1,6 +1,8 @@
 package com.example.mark.msccomputerscienceproject;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.test.InstrumentationRegistry;
 
 import org.junit.After;
@@ -43,6 +45,12 @@ public class BitmapCreatorTest {
 
     @Test
     public void testGetAngryBitmap() throws Exception {
+        Context context = InstrumentationRegistry.getTargetContext();
+        bitmapCreator.prepareScaledBitmaps(context, emoWidth, emoHeight);
+        Bitmap angryBitmap1 = bitmapCreator.getAngryBitmap();
 
+        Bitmap unscaledBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.angry);
+        Bitmap angryBitmap2 = Bitmap.createScaledBitmap(unscaledBitmap, emoWidth, emoHeight, false);
+        assertTrue(angryBitmap1.sameAs(angryBitmap2));
     }
 }
