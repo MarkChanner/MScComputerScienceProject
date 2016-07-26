@@ -19,11 +19,32 @@ public class BitmapCreator {
     }
 
     public static synchronized BitmapCreator getInstance() {
-
+        if (instance == null) {
+            instance = new BitmapCreator();
+        }
+        return instance;
     }
 
     public void prepareScaledBitmaps(Context context, int emoWidth, int emoHeight) {
+        Bitmap temp;
+        temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.empty_tile);
+        emptyBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+        emptyBitmap.eraseColor(android.graphics.Color.TRANSPARENT);
 
+        temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.angry);
+        angryBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+
+        temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.happy);
+        happyBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+
+        temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.embarrassed);
+        embarrassedBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+
+        temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.surprised);
+        surprisedBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+
+        temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.sad);
+        sadBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
     }
 
     public Bitmap getAngryBitmap() {
