@@ -1,6 +1,5 @@
 package com.example.mark.msccomputerscienceproject;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 
 import java.util.Random;
@@ -11,7 +10,7 @@ public class EmoticonCreatorImpl implements EmoticonCreator {
     private int emoWidth;
     private int emoHeight;
 
-    public EmoticonCreatorImpl(Context context, BitmapCreator bitmapCreator, int emoWidth, int emoHeight) {
+    public EmoticonCreatorImpl(BitmapCreator bitmapCreator, int emoWidth, int emoHeight) {
         this.emoWidth = emoWidth;
         this.emoHeight = emoHeight;
         this.bitmapCreator = bitmapCreator;
