@@ -11,9 +11,9 @@ public class EmoticonCreatorImpl implements EmoticonCreator {
     private int emoHeight;
 
     public EmoticonCreatorImpl(BitmapCreator bitmapCreator, int emoWidth, int emoHeight) {
+        this.bitmapCreator = bitmapCreator;
         this.emoWidth = emoWidth;
         this.emoHeight = emoHeight;
-        this.bitmapCreator = bitmapCreator;
     }
 
     /**
