@@ -270,7 +270,7 @@ public class GameModelImpl implements GameModel {
                         emoticons[x][y].setDropping(true);
                         emoticons[x][runnerY] = emoCreator.getEmptyEmoticon(x, runnerY);
                     } else {
-                        emoticons[x][y] = emoCreator.generateEmoticon(x, y, offScreenStartPosition);
+                        emoticons[x][y] = emoCreator.generateRandomEmoticon(x, y, offScreenStartPosition);
                         offScreenStartPosition--;
                     }
                 }
