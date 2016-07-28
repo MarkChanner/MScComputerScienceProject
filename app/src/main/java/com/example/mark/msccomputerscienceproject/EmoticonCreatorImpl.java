@@ -21,7 +21,7 @@ public class EmoticonCreatorImpl implements EmoticonCreator {
      *
      * @return EmoticonImpl
      */
-    public Emoticon generateEmoticon(int x, int y, int offScreenStartPositionY) {
+    public Emoticon generateRandomEmoticon(int x, int y, int offScreenStartPositionY) {
         Random random = new Random();
         String emoID = null;
         Bitmap bitmap = null;
@@ -50,6 +50,35 @@ public class EmoticonCreatorImpl implements EmoticonCreator {
                 break;
         }
         return new EmoticonImpl(x, y, emoWidth, emoHeight, bitmap, emoID, offScreenStartPositionY);
+    }
+
+    public Emoticon generateSpecifiedEmoticon(int x, int y, String emoType) {
+        Bitmap bitmap = null;
+        switch (emoType) {
+            case "ANGRY":
+                bitmap = bitmapCreator.getAngryBitmap();
+                break;
+            case "HAPPY":
+                bitmap = bitmapCreator.getHappyBitmap();
+                break;
+            case "EMBARRASSED":
+                bitmap = bitmapCreator.getEmbarrassedBitmap();
+                break;
+            case "SURPRISED":
+                bitmap = bitmapCreator.getSurprisedBitmap();
+                break;
+            case "SAD":
+                bitmap = bitmapCreator.getSadBitmap();
+                break;
+            default:
+                break;
+        }
+        return new EmoticonImpl(x, y, emoWidth, emoHeight, bitmap, emoType, y);
+    }
+
+    public Emoticon generateMockEmoticon(int x, int y) {
+        String mockID = ("" + x + y);
+        return new MockEmoticon(x, y, emoWidth, emoHeight, bitmapCreator.getMockBitmap(), mockID);
     }
 
     public Emoticon getEmptyEmoticon(int x, int y) {
