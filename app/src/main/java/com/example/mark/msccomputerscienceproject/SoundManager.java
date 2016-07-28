@@ -69,7 +69,7 @@ public class SoundManager {
         }
     }
 
-    public void playMatchedEmoticons(ArrayList<LinkedList<Emoticon>> matchingX, ArrayList<LinkedList<Emoticon>> matchingY) {
+    public void announceMatchedEmoticons(ArrayList<LinkedList<Emoticon>> matchingX, ArrayList<LinkedList<Emoticon>> matchingY) {
         Log.d(TAG, "in PlayMatchedEmoticons method");
         if (mixedEmotionsSameDirection(matchingX)
                 || mixedEmotionsSameDirection(matchingY)
@@ -139,6 +139,7 @@ public class SoundManager {
             case "SAD":
                 soundPool.play(sadID, 1, 1, 0, 0, 1);
                 break;
+
             case MIXED_EMOTIONS:
                 soundPool.play(mixedEmotionsID, 1, 1, 0, 0, 1);
                 break;
