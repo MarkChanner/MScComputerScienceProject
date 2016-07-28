@@ -26,10 +26,12 @@ public class SoundManager {
     private int invalidMoveID = -1;
     private int matchFoundID = -1;
     private int angryID = -1;
-    private int delightedID = -1;
+    private int happyID = -1;
     private int embarrassedID = -1;
     private int surprisedID = -1;
-    private int upsetID = -1;
+    private int sadID = -1;
+    private int mixedEmotionsID = -1;
+    public static final String MIXED_EMOTIONS = "MIXED_EMOTIONS";
 
     public void loadSound(Context context) {
         soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
@@ -47,8 +49,8 @@ public class SoundManager {
             descriptor = assetManager.openFd("angry.ogg");
             angryID = soundPool.load(descriptor, 0);
 
-            descriptor = assetManager.openFd("delighted.ogg");
-            delightedID = soundPool.load(descriptor, 0);
+            descriptor = assetManager.openFd("happy.ogg");
+            happyID = soundPool.load(descriptor, 0);
 
             descriptor = assetManager.openFd("embarrassed.ogg");
             embarrassedID = soundPool.load(descriptor, 0);
@@ -56,8 +58,11 @@ public class SoundManager {
             descriptor = assetManager.openFd("surprised.ogg");
             surprisedID = soundPool.load(descriptor, 0);
 
-            descriptor = assetManager.openFd("upset.ogg");
-            upsetID = soundPool.load(descriptor, 0);
+            descriptor = assetManager.openFd("sad.ogg");
+            sadID = soundPool.load(descriptor, 0);
+
+            descriptor = assetManager.openFd("mixed_emotions.ogg");
+            mixedEmotionsID = soundPool.load(descriptor, 0);
 
         } catch (IOException e) {
             Log.e("Error", "sound file failed to load!");
@@ -65,14 +70,44 @@ public class SoundManager {
     }
 
     public void playMatchedEmoticons(ArrayList<LinkedList<Emoticon>> matchingX, ArrayList<LinkedList<Emoticon>> matchingY) {
-        Log.d(TAG, "in PlayAudio method");
-        if (!(matchingX.isEmpty())) {
-            String matchingTypeX = matchingX.get(0).getFirst().getEmoticonType();
-            playSound(matchingTypeX);
-        } else if (!(matchingY.isEmpty())) {
-            String matchingTypeY = matchingY.get(0).getFirst().getEmoticonType();
-            playSound(matchingTypeY);
+        Log.d(TAG, "in PlayMatchedEmoticons method");
+        if (mixedEmotionsSameDirection(matchingX)
+                || mixedEmotionsSameDirection(matchingY)
+                || mixedEmotionsCrossDirection(matchingX, matchingY)) {
+            playSound(MIXED_EMOTIONS);
+        } else if (!matchingX.isEmpty()) {
+            playSound(matchingX.get(0).getFirst().getEmoticonType());
+        } else if (!matchingY.isEmpty()) {
+            playSound(matchingY.get(0).getFirst().getEmoticonType());
         }
+    }
+
+    private boolean mixedEmotionsSameDirection(ArrayList<LinkedList<Emoticon>> matchingLine) {
+        if (!matchingLine.isEmpty() && matchingLine.size() > 1) {
+            String emoTypeMarker = matchingLine.get(0).getFirst().getEmoticonType();
+            for (int i = 1; i < matchingLine.size(); i++) {
+                if (!matchingLine.get(i).getFirst().getEmoticonType().equals(emoTypeMarker)) {
+                    Log.d(TAG, "return TRUE from mixedEmoticonsSAMEDirection");
+                    return true;
+                }
+            }
+        }
+        Log.d(TAG, "return FALSE from mixedEmoticonsSAMEDirection");
+        return false;
+    }
+
+    private boolean mixedEmotionsCrossDirection(ArrayList<LinkedList<Emoticon>> matchingX, ArrayList<LinkedList<Emoticon>> matchingY) {
+        if (!(matchingX.isEmpty() || matchingY.isEmpty())) {
+            String emoTypeMarker = matchingX.get(0).getFirst().getEmoticonType();
+            for (int i = 0; i < matchingY.size(); i++) {
+                if (!emoTypeMarker.equals(matchingY.get(i).getFirst().getEmoticonType())) {
+                    Log.d(TAG, "return TRUE from mixedEmoticonsCROSSDirection");
+                    return true;
+                }
+            }
+        }
+        Log.d(TAG, "return FALSE from mixedEmoticonsSameDirection");
+        return false;
     }
 
     public void playSound(String sound) {
@@ -89,8 +124,8 @@ public class SoundManager {
                 soundPool.play(angryID, 1, 1, 0, 0, 1);
                 break;
 
-            case "DELIGHTED":
-                soundPool.play(delightedID, 1, 1, 0, 0, 1);
+            case "HAPPY":
+                soundPool.play(happyID, 1, 1, 0, 0, 1);
                 break;
 
             case "EMBARRASSED":
@@ -101,8 +136,11 @@ public class SoundManager {
                 soundPool.play(surprisedID, 1, 1, 0, 0, 1);
                 break;
 
-            case "UPSET":
-                soundPool.play(upsetID, 1, 1, 0, 0, 1);
+            case "SAD":
+                soundPool.play(sadID, 1, 1, 0, 0, 1);
+                break;
+            case MIXED_EMOTIONS:
+                soundPool.play(mixedEmotionsID, 1, 1, 0, 0, 1);
                 break;
         }
     }
