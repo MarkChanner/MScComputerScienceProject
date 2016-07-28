@@ -202,7 +202,7 @@ public class GameModelImpl implements GameModel {
         do {
             highlightMatches(matchingX);
             highlightMatches(matchingY);
-            gameController.playMatchSound(matchingX, matchingY);
+            gameController.playSound(matchingX, matchingY);
             gameController.controlRequest(ONE_SECOND);
             removeFromBoard(matchingX);
             removeFromBoard(matchingY);

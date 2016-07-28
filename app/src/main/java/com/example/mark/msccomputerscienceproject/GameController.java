@@ -21,7 +21,7 @@ public interface GameController {
 
     void playSound(String sound);
 
-    void playMatchSound(ArrayList<LinkedList<Emoticon>> matchingX, ArrayList<LinkedList<Emoticon>> matchingY);
+    void playSound(ArrayList<LinkedList<Emoticon>>matchingX, ArrayList<LinkedList<Emoticon>> matchingY);
 
     Emoticon[][] getEmoticons();
 
@@ -29,7 +29,4 @@ public interface GameController {
 
     void setGameEnded(boolean gameEnded);
 
-    int getEmoWidth();
-
-    int getEmoHeight();
 }
