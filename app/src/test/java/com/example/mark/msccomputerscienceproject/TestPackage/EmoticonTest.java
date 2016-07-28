@@ -1,6 +1,9 @@
-package com.example.mark.msccomputerscienceproject;
+package com.example.mark.msccomputerscienceproject.TestPackage;
 
 import android.graphics.Bitmap;
+
+import com.example.mark.msccomputerscienceproject.Emoticon;
+import com.example.mark.msccomputerscienceproject.EmoticonImpl;
 
 import org.junit.Test;
 import org.mockito.Mock;

@@ -1,6 +1,13 @@
-package com.example.mark.msccomputerscienceproject;
+package com.example.mark.msccomputerscienceproject.TestPackage;
 
 import android.graphics.Bitmap;
+
+import com.example.mark.msccomputerscienceproject.AbstractEmoticon;
+import com.example.mark.msccomputerscienceproject.BitmapCreator;
+import com.example.mark.msccomputerscienceproject.Emoticon;
+import com.example.mark.msccomputerscienceproject.EmoticonMatchFinder;
+import com.example.mark.msccomputerscienceproject.GameControllerImpl;
+import com.example.mark.msccomputerscienceproject.MockEmoticon;
 
 import org.junit.After;
 import org.junit.Before;

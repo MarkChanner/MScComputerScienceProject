@@ -14,6 +14,7 @@ public class BitmapCreator {
     private Bitmap surprisedBitmap;
     private Bitmap sadBitmap;
     private Bitmap emptyBitmap;
+    private Bitmap mockBitmap;
 
     private BitmapCreator() {
     }
@@ -45,6 +46,9 @@ public class BitmapCreator {
 
         temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.sad);
         sadBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+
+        temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.mock);
+        mockBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
     }
 
     public Bitmap getAngryBitmap() {
@@ -67,7 +71,12 @@ public class BitmapCreator {
         return sadBitmap;
     }
 
+    public Bitmap getMockBitmap() {
+        return mockBitmap;
+    }
+
     public Bitmap getEmptyBitmap() {
         return emptyBitmap;
     }
 }
+

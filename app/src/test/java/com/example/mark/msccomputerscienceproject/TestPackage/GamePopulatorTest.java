@@ -1,4 +1,4 @@
-package com.example.mark.msccomputerscienceproject;
+package com.example.mark.msccomputerscienceproject.TestPackage;
 
 import android.graphics.Bitmap;
 

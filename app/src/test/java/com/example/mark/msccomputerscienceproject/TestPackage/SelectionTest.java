@@ -1,4 +1,7 @@
-package com.example.mark.msccomputerscienceproject;
+package com.example.mark.msccomputerscienceproject.TestPackage;
+
+import com.example.mark.msccomputerscienceproject.Selection;
+import com.example.mark.msccomputerscienceproject.SelectionImpl;
 
 import org.junit.After;
 import org.junit.Before;
