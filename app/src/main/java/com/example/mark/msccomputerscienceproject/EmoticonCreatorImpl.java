@@ -31,7 +31,7 @@ public class EmoticonCreatorImpl implements EmoticonCreator {
                 bitmap = bitmapCreator.getAngryBitmap();
                 break;
             case 1:
-                emoID = "DELIGHTED";
+                emoID = "HAPPY";
                 bitmap = bitmapCreator.getHappyBitmap();
                 break;
             case 2:
@@ -43,7 +43,7 @@ public class EmoticonCreatorImpl implements EmoticonCreator {
                 bitmap = bitmapCreator.getSurprisedBitmap();
                 break;
             case 4:
-                emoID = "UPSET";
+                emoID = "SAD";
                 bitmap = bitmapCreator.getSadBitmap();
                 break;
             default:
