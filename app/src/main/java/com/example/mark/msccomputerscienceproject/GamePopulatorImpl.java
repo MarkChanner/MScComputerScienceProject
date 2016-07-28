@@ -19,7 +19,7 @@ public class GamePopulatorImpl implements GamePopulator {
             int dropGap = Y_MAX * 2;
             for (int y = COLUMN_TOP; y < Y_MAX; y++) {
                 do {
-                    newEmoticon = emoCreator.generateEmoticon(x, y, ((y - Y_MAX) - dropGap));
+                    newEmoticon = emoCreator.generateRandomEmoticon(x, y, ((y - Y_MAX) - dropGap));
 
                 } while ((y >= 2 &&
                         (newEmoticon.getEmoticonType().equals(emoticons[x][y - 1].getEmoticonType()) &&
