@@ -39,7 +39,7 @@ public class EmoticonCreatorImplTest {
         int y = 3;
         int offScreenStartPositionY = 10;
         EmoticonCreator emoCreator = new EmoticonCreatorImpl(bitmapCreator, emoWidth, emoHeight);
-        Emoticon emo = emoCreator.generateEmoticon(x, y, offScreenStartPositionY);
+        Emoticon emo = emoCreator.generateRandomEmoticon(x, y, offScreenStartPositionY);
         assertThat(emo, instanceOf(Emoticon.class));
     }
 
