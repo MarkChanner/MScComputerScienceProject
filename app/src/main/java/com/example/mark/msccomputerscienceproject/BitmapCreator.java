@@ -79,4 +79,3 @@ public class BitmapCreator {
         return emptyBitmap;
     }
 }
-
