@@ -3,6 +3,9 @@ package com.example.mark.msccomputerscienceproject;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 
+import com.example.mark.msccomputerscienceproject.emoticon_populator.BitmapCreator;
+import com.example.mark.msccomputerscienceproject.emoticon_populator.EmoticonCreatorImpl;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

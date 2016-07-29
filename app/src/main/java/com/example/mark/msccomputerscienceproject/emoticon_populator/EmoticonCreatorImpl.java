@@ -1,6 +1,11 @@
-package com.example.mark.msccomputerscienceproject;
+package com.example.mark.msccomputerscienceproject.emoticon_populator;
 
 import android.graphics.Bitmap;
+
+import com.example.mark.msccomputerscienceproject.Emoticon;
+import com.example.mark.msccomputerscienceproject.EmoticonImpl;
+import com.example.mark.msccomputerscienceproject.EmptyEmoticon;
+import com.example.mark.msccomputerscienceproject.MockEmoticon;
 
 import java.util.Random;
 

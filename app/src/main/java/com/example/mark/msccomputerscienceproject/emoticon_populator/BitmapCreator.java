@@ -1,8 +1,10 @@
-package com.example.mark.msccomputerscienceproject;
+package com.example.mark.msccomputerscienceproject.emoticon_populator;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
+import com.example.mark.msccomputerscienceproject.R;
 
 public class BitmapCreator {
 
@@ -78,4 +80,5 @@ public class BitmapCreator {
     public Bitmap getEmptyBitmap() {
         return emptyBitmap;
     }
+
 }

@@ -1,4 +1,6 @@
-package com.example.mark.msccomputerscienceproject;
+package com.example.mark.msccomputerscienceproject.emoticon_populator;
+
+import com.example.mark.msccomputerscienceproject.Emoticon;
 
 public interface EmoticonCreator {
 
