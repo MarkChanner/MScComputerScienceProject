@@ -11,7 +11,9 @@ public interface GameModel {
 
     void handleSelection(int x, int y);
 
-    void processSelections(int[] sel1, int[] sel2);
+    void finishRound();
+
+    void levelUp();
 
     void resetBoard();
 
