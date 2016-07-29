@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 
 import com.example.mark.msccomputerscienceproject.emoticon_populator.*;
 
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 
