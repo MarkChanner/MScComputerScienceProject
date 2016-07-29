@@ -25,7 +25,8 @@ public class GameBoardView extends SurfaceView implements Runnable {
     private final Rect highlightSelectionRect = new Rect();
     private final Rect highlightMatchRect = new Rect();
     private SurfaceHolder surfaceHolder;
-    private GameController gameController;
+    private GameController controller;
+    private Emoticon[][] emoticons;
     private int emoWidth;
     private int emoHeight;
 
@@ -38,13 +39,14 @@ public class GameBoardView extends SurfaceView implements Runnable {
     volatile boolean running = false;
 
 
-    public GameBoardView(Context gameController, int viewX, int viewY, int emoWidth, int emoHeight) {
-        super(gameController);
-        this.gameController = (GameController) gameController;
+    public GameBoardView(Context controller, Emoticon[][] emoticons, int viewX, int viewY, int emoWidth, int emoHeight) {
+        super(controller);
+        this.controller = (GameController) controller;
+        this.emoticons = emoticons;
         this.emoWidth = emoWidth;
         this.emoHeight = emoHeight;
         surfaceHolder = getHolder();
-        prepareCanvas(gameController, viewX, viewY);
+        prepareCanvas(controller, viewX, viewY);
     }
 
     private void prepareCanvas(Context context, int boardSizeX, int boardSizeY) {
@@ -93,7 +95,7 @@ public class GameBoardView extends SurfaceView implements Runnable {
         while (running) {
             if (surfaceHolder.getSurface().isValid()) {
                 canvas = surfaceHolder.lockCanvas();
-                gameController.updateEmoticonCoordinates();
+                controller.updateEmoticonCoordinates();
                 drawBoard(canvas);
                 surfaceHolder.unlockCanvasAndPost(canvas);
             }
@@ -101,12 +103,11 @@ public class GameBoardView extends SurfaceView implements Runnable {
     }
 
     public void drawBoard(Canvas canvas) {
-        if (!gameController.isGameEnded()) {
+        if (!controller.isGameEnded()) {
             canvas.drawBitmap(gridBitmap, ZERO, ZERO, null); // Draws background
             canvas.drawRect(highlightSelectionRect, selectionFill);
             canvas.drawRect(highlightSelectionRect, gridLineColour);
 
-            Emoticon[][] emoticons = gameController.getEmoticons();
             for (int y = Y_MAX - 1; y >= 0; y--) {
                 for (int x = 0; x < X_MAX; x++) {
                     Emoticon e = emoticons[x][y];
@@ -136,7 +137,7 @@ public class GameBoardView extends SurfaceView implements Runnable {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         //Log.d(TAG, "in GameBoardView onTouchEvent(MotionEvent)");
-        gameController.handleEvent(event);
+        controller.handleEvent(event);
         return true;
     }
 

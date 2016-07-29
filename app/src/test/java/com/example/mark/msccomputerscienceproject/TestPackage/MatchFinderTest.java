@@ -3,10 +3,9 @@ package com.example.mark.msccomputerscienceproject.TestPackage;
 import android.graphics.Bitmap;
 
 import com.example.mark.msccomputerscienceproject.AbstractEmoticon;
-import com.example.mark.msccomputerscienceproject.BitmapCreator;
+import com.example.mark.msccomputerscienceproject.emoticon_populator.BitmapCreator;
 import com.example.mark.msccomputerscienceproject.Emoticon;
-import com.example.mark.msccomputerscienceproject.EmoticonMatchFinder;
-import com.example.mark.msccomputerscienceproject.GameControllerImpl;
+import com.example.mark.msccomputerscienceproject.MatchFinder;
 import com.example.mark.msccomputerscienceproject.MockEmoticon;
 
 import org.junit.After;
@@ -23,23 +22,23 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science final project
  */
-public class EmoticonMatchFinderTest {
+public class MatchFinderTest {
 
-    public static final int X_MAX = GameControllerImpl.X_MAX;
-    public static final int Y_MAX = GameControllerImpl.Y_MAX;
+    public static final int X_MAX = AbstractEmoticon.GameControllerImpl.X_MAX;
+    public static final int Y_MAX = AbstractEmoticon.GameControllerImpl.Y_MAX;
     public static final int ROW_START = 0;
     public static final int COLUMN_TOP = 0;
 
     private Emoticon[][] emoticons;
     private Bitmap bitmap = BitmapCreator.getInstance().getEmptyBitmap();
-    private EmoticonMatchFinder emoticonMatchFinder;
+    private MatchFinder matchFinder;
     private ArrayList<LinkedList<Emoticon>> matchingX;
     private ArrayList<LinkedList<Emoticon>> matchingY;
 
     @Before
     public void setUp() throws Exception {
         emoticons = new AbstractEmoticon[X_MAX][Y_MAX];
-        emoticonMatchFinder = new EmoticonMatchFinder(emoticons);
+        matchFinder = new MatchFinder();
         int counter = 0;
         for (int x = ROW_START; x < X_MAX; x++) {
             for (int y = COLUMN_TOP; y < Y_MAX; y++) {
@@ -54,7 +53,7 @@ public class EmoticonMatchFinderTest {
     @After
     public void tearDown() throws Exception {
         emoticons = null;
-        emoticonMatchFinder = null;
+        matchFinder = null;
         matchingX = null;
         matchingY = null;
     }
@@ -64,7 +63,7 @@ public class EmoticonMatchFinderTest {
         emoticons[2][1] = new MockEmoticon(2, 1, 20, 20, bitmap, "HAPPY");
         emoticons[2][2] = new MockEmoticon(2, 2, 20, 20, bitmap, "HAPPY");
         emoticons[2][3] = new MockEmoticon(2, 3, 20, 20, bitmap, "HAPPY");
-        matchingX = emoticonMatchFinder.findVerticalMatches();
+        matchingX = matchFinder.findVerticalMatches(emoticons);
 
         assertEquals(1, matchingX.size());
         assertEquals(3, matchingX.get(0).size());
@@ -79,7 +78,7 @@ public class EmoticonMatchFinderTest {
         emoticons[4][3] = new MockEmoticon(4, 3, 20, 20, bitmap, "SURPRISED");
         emoticons[5][3] = new MockEmoticon(5, 3, 20, 20, bitmap, "SURPRISED");
         emoticons[6][3] = new MockEmoticon(6, 3, 20, 20, bitmap, "SURPRISED");
-        matchingY = emoticonMatchFinder.findHorizontalMatches();
+        matchingY = matchFinder.findHorizontalMatches(emoticons);
 
         assertEquals(1, matchingY.size());
         assertEquals(4, matchingY.get(0).size());
@@ -91,11 +90,11 @@ public class EmoticonMatchFinderTest {
 
     @Test
     public void testAnotherVerticalMatchPossible() throws Exception {
-        assertFalse(emoticonMatchFinder.anotherMatchPossible());
+        assertFalse(matchFinder.anotherMatchPossible(emoticons));
         emoticons[2][1] = new MockEmoticon(2, 1, 20, 20, bitmap, "HAPPY");
         emoticons[2][2] = new MockEmoticon(2, 2, 20, 20, bitmap, "HAPPY");
         emoticons[2][4] = new MockEmoticon(2, 4, 20, 20, bitmap, "HAPPY");
-        assertTrue(emoticonMatchFinder.anotherMatchPossible());
+        assertTrue(matchFinder.anotherMatchPossible(emoticons));
     }
 
     @Test
@@ -103,6 +102,6 @@ public class EmoticonMatchFinderTest {
         emoticons[3][3] = new MockEmoticon(3, 3, 20, 20, bitmap, "SURPRISED");
         emoticons[5][3] = new MockEmoticon(5, 3, 20, 20, bitmap, "SURPRISED");
         emoticons[6][3] = new MockEmoticon(6, 3, 20, 20, bitmap, "SURPRISED");
-        assertTrue(emoticonMatchFinder.anotherMatchPossible());
+        assertTrue(matchFinder.anotherMatchPossible(emoticons));
     }
 }

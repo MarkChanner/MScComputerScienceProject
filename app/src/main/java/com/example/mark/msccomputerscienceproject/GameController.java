@@ -21,7 +21,7 @@ public interface GameController {
 
     void playSound(String sound);
 
-    void playSound(ArrayList<LinkedList<Emoticon>>matchingX, ArrayList<LinkedList<Emoticon>> matchingY);
+    void playSound(ArrayList<LinkedList<Emoticon>> matchingX, ArrayList<LinkedList<Emoticon>> matchingY);
 
     Emoticon[][] getEmoticons();
 

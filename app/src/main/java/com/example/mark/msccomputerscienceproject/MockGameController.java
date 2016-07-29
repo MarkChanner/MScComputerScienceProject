@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import com.example.mark.msccomputerscienceproject.emoticon_populator.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -54,12 +55,11 @@ public class MockGameController extends Activity implements GameController {
 
         BitmapCreator bitmapCreator = BitmapCreator.getInstance();
         bitmapCreator.prepareScaledBitmaps(this, emoWidth, emoHeight);
-        EmoticonCreator emoCreator = new EmoticonCreatorImpl(bitmapCreator, emoWidth, emoHeight);
-        GamePopulator gamePopulator = new MockGamePopulator01();
-        gamePopulator.populateBoard(emoCreator, emoticons);
-        this.gameModel = new GameModelImpl(this, gamePopulator, emoCreator, emoticons);
+        EmoticonCreatorImpl emoCreator = new EmoticonCreatorImpl(bitmapCreator, emoWidth, emoHeight);
+        GridPopulator populator = new MockGridPopulator01(emoCreator, emoticons);
+        this.gameModel = new GameModelImpl(this, populator, new MatchFinder(), emoticons);
         this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, sizeY / 3);
-        this.gameBoardView = new GameBoardView(this, gameBoardViewSizeX, sizeY, emoWidth, emoHeight);
+        this.gameBoardView = new GameBoardView(this, emoticons, gameBoardViewSizeX, sizeY, emoWidth, emoHeight);
 
         LinearLayout.LayoutParams scoreParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(scoreBoardViewSizeX, sizeY / 3));
         screenLayout.addView(scoreBoardView, scoreParams);

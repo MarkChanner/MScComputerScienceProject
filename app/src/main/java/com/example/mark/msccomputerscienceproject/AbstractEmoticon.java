@@ -222,4 +222,5 @@ public abstract class AbstractEmoticon implements Emoticon {
     public void setPixelMovement(int pixelMovement) {
         this.pixelMovement = pixelMovement;
     }
+
 }

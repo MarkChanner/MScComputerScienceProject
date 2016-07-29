@@ -1,22 +1,32 @@
 package com.example.mark.msccomputerscienceproject;
 
-public class MockGamePopulator01 implements GamePopulator {
+import com.example.mark.msccomputerscienceproject.emoticon_populator.AbstractGridPopulator;
+import com.example.mark.msccomputerscienceproject.emoticon_populator.EmoticonCreator;
+
+public class MockGridPopulator01 extends AbstractGridPopulator {
 
     public static final int X_MAX = GameControllerImpl.X_MAX;
     public static final int Y_MAX = GameControllerImpl.Y_MAX;
     public static final int ROW_START = 0;
     public static final int COLUMN_TOP = 0;
+    private EmoticonCreator emoCreator;
 
-    public void populateBoard(EmoticonCreator emoCreator, Emoticon[][] emoticons) {
-        for (int x = ROW_START; x < X_MAX; x++) {
-            for (int y = COLUMN_TOP; y < Y_MAX; y++) {
-                emoticons[x][y] = emoCreator.generateMockEmoticon(x, y);
-            }
-        }
-        generateEmoticonAtSetLocation(emoCreator, emoticons);
+    public MockGridPopulator01(EmoticonCreator emoCreator, Emoticon[][] emoticons) {
+        super(emoCreator, emoticons);
+        this.emoCreator = emoCreator;
+        populateBoardWithMocks(emoticons);
     }
 
-    private void generateEmoticonAtSetLocation(EmoticonCreator emoCreator, Emoticon[][] emoticons) {
+    public void populateBoardWithMocks(Emoticon[][] emoticons) {
+        for (int x = ROW_START; x < X_MAX; x++) {
+            for (int y = COLUMN_TOP; y < Y_MAX; y++) {
+                emoticons[x][y] = getMockEmoticon(x, y);
+            }
+        }
+        generateEmoticonAtSetLocation(emoticons);
+    }
+
+    private void generateEmoticonAtSetLocation(Emoticon[][] emoticons) {
         // Populates board so that a horizontal match of Happy
         // emoticons and a vertical match of Surprised emoticons
         // can occur when Emoticons at (0,3) and (0,4) are selected
@@ -36,5 +46,9 @@ public class MockGamePopulator01 implements GamePopulator {
         emoticons[6][3] = emoCreator.generateSpecifiedEmoticon(6, 3, "SAD");
         emoticons[4][4] = emoCreator.generateSpecifiedEmoticon(4, 4, "SAD");
         emoticons[4][5] = emoCreator.generateSpecifiedEmoticon(4, 5, "SAD");
+    }
+
+    public Emoticon getMockEmoticon(int x, int y) {
+        return emoCreator.generateMockEmoticon(x, y);
     }
 }

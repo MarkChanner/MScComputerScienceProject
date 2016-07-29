@@ -2,6 +2,8 @@ package com.example.mark.msccomputerscienceproject;
 
 import android.util.Log;
 
+import com.example.mark.msccomputerscienceproject.emoticon_populator.GridPopulator;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,10 +34,10 @@ public class GameModelImpl implements GameModel {
     private Selections selections;
     private GameController controller;
     private GridPopulator populator;
-    private EmoticonMatchFinder matchFinder;
+    private MatchFinder matchFinder;
     private Emoticon[][] emoticons;
 
-    public GameModelImpl(GameController controller, GridPopulator populator, EmoticonMatchFinder matchFinder, Emoticon[][] emoticons) {
+    public GameModelImpl(GameController controller, GridPopulator populator, MatchFinder matchFinder, Emoticon[][] emoticons) {
         this.selections = new SelectionsImpl();
         this.controller = controller;
         this.populator = populator;
@@ -115,8 +117,8 @@ public class GameModelImpl implements GameModel {
         Log.d(TAG, "in processSelections(Selections)");
         swapSelections(sel1, sel2);
 
-        ArrayList<LinkedList<Emoticon>> matchingX = matchFinder.findVerticalMatches();
-        ArrayList<LinkedList<Emoticon>> matchingY = matchFinder.findHorizontalMatches();
+        ArrayList<LinkedList<Emoticon>> matchingX = matchFinder.findVerticalMatches(emoticons);
+        ArrayList<LinkedList<Emoticon>> matchingY = matchFinder.findHorizontalMatches(emoticons);
 
         if (matchesFound(matchingX, matchingY)) {
             modifyBoard(matchingX, matchingY);
@@ -203,11 +205,11 @@ public class GameModelImpl implements GameModel {
             removeFromBoard(matchingX);
             removeFromBoard(matchingY);
             dropEmoticons();
-            matchingX = matchFinder.findVerticalMatches();
-            matchingY = matchFinder.findHorizontalMatches();
+            matchingX = matchFinder.findVerticalMatches(emoticons);
+            matchingY = matchFinder.findHorizontalMatches(emoticons);
         } while (matchesFound(matchingX, matchingY));
 
-        if (!matchFinder.anotherMatchPossible()) {
+        if (!matchFinder.anotherMatchPossible(emoticons)) {
             Log.d(TAG, "NO MATCHES AVAILABLE - END GAME CONDITION ENTERED");
             finishRound();
 
