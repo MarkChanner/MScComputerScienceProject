@@ -10,7 +10,7 @@ import org.mockito.Mock;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science final project
  */
-public class GamePopulatorTest {
+public class GridPopulatorTest {
 
     @Mock
     Bitmap bitmap;
