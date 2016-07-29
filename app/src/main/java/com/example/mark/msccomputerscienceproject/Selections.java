@@ -3,7 +3,7 @@ package com.example.mark.msccomputerscienceproject;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public interface Selection {
+public interface Selections {
 
     void resetUserSelections();
 

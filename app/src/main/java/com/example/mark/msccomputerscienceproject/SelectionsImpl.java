@@ -1,18 +1,18 @@
 package com.example.mark.msccomputerscienceproject;
 
-public class SelectionImpl implements Selection {
+public class SelectionsImpl implements Selections {
 
     /**
      * @author Mark Channer for Birkbeck MSc Computer Science project
      */
-    private static final String TAG = "SelectionImpl";
+    private static final String TAG = "SelectionsImpl";
     public static final int X = 0;
     public static final int Y = 1;
     private int[] selection01 = new int[2];
     private int[] selection02 = new int[2];
     private boolean selection01Made;
 
-    public SelectionImpl() {
+    public SelectionsImpl() {
         resetUserSelections();
     }
 
