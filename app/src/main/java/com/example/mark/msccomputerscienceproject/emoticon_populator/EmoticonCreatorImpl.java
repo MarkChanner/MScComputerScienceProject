@@ -1,12 +1,7 @@
 package com.example.mark.msccomputerscienceproject.emoticon_populator;
 
 import android.graphics.Bitmap;
-
-import com.example.mark.msccomputerscienceproject.Emoticon;
-import com.example.mark.msccomputerscienceproject.EmoticonImpl;
-import com.example.mark.msccomputerscienceproject.EmptyEmoticon;
-import com.example.mark.msccomputerscienceproject.MockEmoticon;
-
+import com.example.mark.msccomputerscienceproject.*;
 import java.util.Random;
 
 public class EmoticonCreatorImpl implements EmoticonCreator {
