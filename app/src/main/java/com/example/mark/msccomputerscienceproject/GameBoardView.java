@@ -128,7 +128,7 @@ public class GameBoardView extends SurfaceView implements Runnable {
             gridLineColour.setTextSize(80);
             gridLineColour.setStyle(Paint.Style.FILL);
             gridLineColour.setTextAlign(Paint.Align.CENTER);
-            canvas.drawText("GameController Over", (emoWidth * 4), 100, gridLineColour);
+            canvas.drawText("Game Over", (emoWidth * 4), 100, gridLineColour);
             canvas.drawText("Tap to Play Again!", (emoWidth * 4), 300, gridLineColour);
             gridLineColour.setStyle(Paint.Style.STROKE);
         }

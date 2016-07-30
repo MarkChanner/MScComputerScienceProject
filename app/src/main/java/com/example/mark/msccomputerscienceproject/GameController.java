@@ -23,7 +23,7 @@ public interface GameController {
 
     void playSound(ArrayList<LinkedList<Emoticon>> matchingX, ArrayList<LinkedList<Emoticon>> matchingY);
 
-    Emoticon[][] getEmoticons();
+    //Emoticon[][] getEmoticons();
 
     boolean isGameEnded();
 

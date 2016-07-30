@@ -56,7 +56,8 @@ public class MockGameController extends Activity implements GameController {
         BitmapCreator bitmapCreator = BitmapCreator.getInstance();
         bitmapCreator.prepareScaledBitmaps(this, emoWidth, emoHeight);
         EmoticonCreatorImpl emoCreator = new EmoticonCreatorImpl(bitmapCreator, emoWidth, emoHeight);
-        GridPopulator populator = new MockGridPopulator01(emoCreator, emoticons);
+        GridPopulator populator = new MockGridPopulator01(emoCreator);
+        populator.populateBoard(emoticons);
         this.gameModel = new GameModelImpl(this, populator, new MatchFinder(), emoticons);
         this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, sizeY / 3);
         this.gameBoardView = new GameBoardView(this, emoticons, gameBoardViewSizeX, sizeY, emoWidth, emoHeight);
@@ -132,15 +133,6 @@ public class MockGameController extends Activity implements GameController {
     @Override
     public void playSound(String sound) {
         // do nothing
-    }
-
-    @Override
-    public Emoticon[][] getEmoticons() {
-        if (emoticons == null) {
-            throw new NullPointerException();
-        } else {
-            return emoticons;
-        }
     }
 
     @Override

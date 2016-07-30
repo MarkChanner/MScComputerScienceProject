@@ -10,7 +10,29 @@ import com.example.mark.msccomputerscienceproject.Emoticon;
  */
 public class GridPopulatorImpl extends AbstractGridPopulator {
 
-    public GridPopulatorImpl(EmoticonCreator emoCreator, Emoticon[][] emoticons) {
-        super(emoCreator, emoticons);
+    public GridPopulatorImpl(EmoticonCreator emoCreator) {
+        super(emoCreator);
+    }
+
+    @Override
+    public void populateBoard(Emoticon[][] emoticons) {
+        Emoticon newEmoticon;
+        for (int x = ROW_START; x < X_MAX; x++) {
+            int dropGap = Y_MAX * 2;
+            for (int y = COLUMN_TOP; y < Y_MAX; y++) {
+                do {
+                    newEmoticon = getRandomEmoticon(x, y, ((y - Y_MAX) - dropGap));
+
+                } while ((y >= 2 &&
+                        (newEmoticon.getEmoticonType().equals(emoticons[x][y - 1].getEmoticonType()) &&
+                                newEmoticon.getEmoticonType().equals(emoticons[x][y - 2].getEmoticonType()))) ||
+                        (x >= 2 &&
+                                (newEmoticon.getEmoticonType().equals(emoticons[x - 1][y].getEmoticonType()) &&
+                                        newEmoticon.getEmoticonType().equals(emoticons[x - 2][y].getEmoticonType()))));
+
+                dropGap--;
+                emoticons[x][y] = newEmoticon;
+            }
+        }
     }
 }

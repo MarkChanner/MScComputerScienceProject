@@ -11,13 +11,13 @@ public class MockGridPopulator01 extends AbstractGridPopulator {
     public static final int COLUMN_TOP = 0;
     private EmoticonCreator emoCreator;
 
-    public MockGridPopulator01(EmoticonCreator emoCreator, Emoticon[][] emoticons) {
-        super(emoCreator, emoticons);
+    public MockGridPopulator01(EmoticonCreator emoCreator) {
+        super(emoCreator);
         this.emoCreator = emoCreator;
-        populateBoardWithMocks(emoticons);
     }
 
-    public void populateBoardWithMocks(Emoticon[][] emoticons) {
+    @Override
+    public void populateBoard(Emoticon[][] emoticons) {
         for (int x = ROW_START; x < X_MAX; x++) {
             for (int y = COLUMN_TOP; y < Y_MAX; y++) {
                 emoticons[x][y] = getMockEmoticon(x, y);

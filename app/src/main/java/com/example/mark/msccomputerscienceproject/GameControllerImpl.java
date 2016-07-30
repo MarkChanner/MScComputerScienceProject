@@ -29,7 +29,6 @@ public class GameControllerImpl extends Activity implements GameController {
     private SoundManager soundManager;
     private int emoWidth;
     private int emoHeight;
-    private Emoticon[][] emoticons;
     private GameModel gameModel;
     private ScoreBoardView scoreBoardView;
     private GameBoardView gameBoardView;
@@ -58,11 +57,12 @@ public class GameControllerImpl extends Activity implements GameController {
         this.emoWidth = gameBoardViewSizeX / X_MAX;
         this.emoHeight = sizeY / Y_MAX;
 
-        this.emoticons = new AbstractEmoticon[X_MAX][Y_MAX];
         BitmapCreator bitmapCreator = BitmapCreator.getInstance();
         bitmapCreator.prepareScaledBitmaps(this, emoWidth, emoHeight);
         EmoticonCreator emoCreator = new EmoticonCreatorImpl(bitmapCreator, emoWidth, emoHeight);
-        GridPopulator populator = new GridPopulatorImpl(emoCreator, emoticons);
+        GridPopulator populator = new GridPopulatorImpl(emoCreator);
+        Emoticon[][] emoticons = new AbstractEmoticon[X_MAX][Y_MAX];
+        populator.populateBoard(emoticons);
         this.gameModel = new GameModelImpl(this, populator, new MatchFinder(), emoticons);
 
         this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, sizeY / 3);
@@ -145,14 +145,6 @@ public class GameControllerImpl extends Activity implements GameController {
         soundManager.playSound(sound);
     }
 
-    @Override
-    public Emoticon[][] getEmoticons() {
-        if (emoticons == null) {
-            throw new NullPointerException();
-        } else {
-            return emoticons;
-        }
-    }
 
     @Override
     public void setGameEnded(boolean gameEnded) {

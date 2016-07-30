@@ -8,7 +8,7 @@ import com.example.mark.msccomputerscienceproject.*;
  * the start of the game, another emoticon is chosen until one that does not form a match is
  * found { @inheritDocs }
  */
-public class AbstractGridPopulator implements GridPopulator {
+public abstract class AbstractGridPopulator implements GridPopulator {
 
     public static final int X_MAX = GameControllerImpl.X_MAX;
     public static final int Y_MAX = GameControllerImpl.Y_MAX;
@@ -16,31 +16,8 @@ public class AbstractGridPopulator implements GridPopulator {
     public static final int COLUMN_TOP = 0;
     private EmoticonCreator emoCreator;
 
-    public AbstractGridPopulator(EmoticonCreator emoCreator, Emoticon[][] emoticons) {
+    public AbstractGridPopulator(EmoticonCreator emoCreator) {
         this.emoCreator = emoCreator;
-        populateBoard(emoticons);
-    }
-
-    @Override
-    public void populateBoard(Emoticon[][] emoticons) {
-        Emoticon newEmoticon;
-        for (int x = ROW_START; x < X_MAX; x++) {
-            int dropGap = Y_MAX * 2;
-            for (int y = COLUMN_TOP; y < Y_MAX; y++) {
-                do {
-                    newEmoticon = getRandomEmoticon(x, y, ((y - Y_MAX) - dropGap));
-
-                } while ((y >= 2 &&
-                        (newEmoticon.getEmoticonType().equals(emoticons[x][y - 1].getEmoticonType()) &&
-                                newEmoticon.getEmoticonType().equals(emoticons[x][y - 2].getEmoticonType()))) ||
-                        (x >= 2 &&
-                                (newEmoticon.getEmoticonType().equals(emoticons[x - 1][y].getEmoticonType()) &&
-                                        newEmoticon.getEmoticonType().equals(emoticons[x - 2][y].getEmoticonType()))));
-
-                dropGap--;
-                emoticons[x][y] = newEmoticon;
-            }
-        }
     }
 
     @Override
