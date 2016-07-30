@@ -15,6 +15,13 @@ public class BitmapCreator {
     private Bitmap embarrassedBitmap;
     private Bitmap surprisedBitmap;
     private Bitmap sadBitmap;
+
+    private Bitmap afraidBitmap;
+    private Bitmap cryingBitmap;
+    private Bitmap grumpyBitmap;
+    private Bitmap innocentBitmap;
+    private Bitmap tiredBitmap;
+
     private Bitmap emptyBitmap;
     private Bitmap mockBitmap;
 
@@ -51,6 +58,21 @@ public class BitmapCreator {
 
         temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.mock);
         mockBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+
+        temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.afraid);
+        afraidBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+
+        temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.crying);
+        cryingBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+
+        temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.grumpy);
+        grumpyBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+
+        temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.innocent);
+        innocentBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+
+        temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.tired);
+        tiredBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
     }
 
     public Bitmap getAngryBitmap() {
@@ -71,6 +93,26 @@ public class BitmapCreator {
 
     public Bitmap getSadBitmap() {
         return sadBitmap;
+    }
+
+    public Bitmap getAfraidBitmap() {
+        return afraidBitmap;
+    }
+
+    public Bitmap getCryingBitmap() {
+        return cryingBitmap;
+    }
+
+    public Bitmap getGrumpyBitmap() {
+        return grumpyBitmap;
+    }
+
+    public Bitmap getInnocentBitmap() {
+        return innocentBitmap;
+    }
+
+    public Bitmap getTiredBitmap() {
+        return tiredBitmap;
     }
 
     public Bitmap getMockBitmap() {
