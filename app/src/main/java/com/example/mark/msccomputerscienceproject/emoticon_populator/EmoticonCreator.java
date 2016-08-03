@@ -4,11 +4,11 @@ import com.example.mark.msccomputerscienceproject.Emoticon;
 
 public interface EmoticonCreator {
 
-    Emoticon generateRandomEmoticon(int x, int y, int offScreenStartPositionY);
+    Emoticon createRandomEmoticon(int x, int y, int offScreenStartPositionY);
 
-    Emoticon generateSpecifiedEmoticon(int x, int y, String emoType);
+    Emoticon createSpecifiedEmoticon(int x, int y, String emoType);
 
-    Emoticon generateMockEmoticon(int x, int y);
+    Emoticon createMockEmoticon(int x, int y);
 
-    Emoticon getEmptyEmoticon(int x, int y);
+    Emoticon createEmptyEmoticon(int x, int y);
 }

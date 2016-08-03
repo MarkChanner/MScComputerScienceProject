@@ -28,9 +28,15 @@ public class MockGameController extends Activity implements GameController {
     private Emoticon[][] emoticons;
     private GameModel gameModel;
     private ScoreBoardView scoreBoardView;
-    private GameBoardView gameBoardView;
+    private GameBoardViewImpl gameBoardView;
 
     volatile boolean gameEnded = false;
+
+    // moved outside temp
+    int sizeX;
+    int scoreBoardViewSizeX;
+    int gameBoardViewSizeX;
+    int sizeY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,22 +51,22 @@ public class MockGameController extends Activity implements GameController {
         Display display = getWindowManager().getDefaultDisplay();
         display.getSize(size);
 
-        int sizeX = (size.x - ((screenLayout.getPaddingLeft() * 2) + screenLayout.getPaddingRight()));
-        int scoreBoardViewSizeX = (int) (sizeX * 0.1);
-        int gameBoardViewSizeX = (int) (sizeX * 0.9);
-        int sizeY = (size.y - (screenLayout.getPaddingTop() + screenLayout.getPaddingBottom()));
+        sizeX = (size.x - ((screenLayout.getPaddingLeft() * 2) + screenLayout.getPaddingRight()));
+        scoreBoardViewSizeX = (int) (sizeX * 0.1);
+        gameBoardViewSizeX = (int) (sizeX * 0.9);
+        sizeY = (size.y - (screenLayout.getPaddingTop() + screenLayout.getPaddingBottom()));
         this.emoWidth = gameBoardViewSizeX / X_MAX;
         this.emoHeight = sizeY / Y_MAX;
         this.emoticons = new AbstractEmoticon[X_MAX][Y_MAX];
 
         BitmapCreator bitmapCreator = BitmapCreator.getInstance();
         bitmapCreator.prepareScaledBitmaps(this, emoWidth, emoHeight);
-        EmoticonCreatorImpl emoCreator = new EmoticonCreatorImpl(bitmapCreator, emoWidth, emoHeight);
+        EmoticonCreator emoCreator = new EmoticonCreatorImpl(bitmapCreator, emoWidth, emoHeight);
         GridPopulator populator = new MockGridPopulator01(emoCreator);
         populator.populateBoard(emoticons);
-        this.gameModel = new GameModelImpl(this, populator, new MatchFinder(), emoticons);
+        this.gameModel = new GameModelImpl(this, populator, new MatchFinder(), emoticons, emoWidth, emoHeight);
         this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, sizeY / 3);
-        this.gameBoardView = new GameBoardView(this, emoticons, gameBoardViewSizeX, sizeY, emoWidth, emoHeight);
+        this.gameBoardView = new GameBoardViewImpl(this, emoticons, gameBoardViewSizeX, sizeY, emoWidth, emoHeight);
 
         LinearLayout.LayoutParams scoreParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(scoreBoardViewSizeX, sizeY / 3));
         screenLayout.addView(scoreBoardView, scoreParams);
@@ -85,12 +91,11 @@ public class MockGameController extends Activity implements GameController {
     }
 
     @Override
-    public void handleEvent(MotionEvent event) {
+    public void handle(MotionEvent event) {
         int screenX = (int) event.getX();
         int screenY = (int) event.getY();
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (!isGameEnded()) {
-                gameBoardView.highlightSelection(screenX / emoWidth, screenY / emoHeight);
                 gameModel.handleSelection(screenX / emoWidth, screenY / emoHeight);
             } else {
                 gameEnded = false;
@@ -106,22 +111,12 @@ public class MockGameController extends Activity implements GameController {
     }
 
     @Override
-    public void highlightSelectionRequest(int x, int y) {
-        gameBoardView.highlightSelection(x, y);
-    }
-
-    @Override
-    public void unHighlightSelectionRequest() {
-        gameBoardView.unHighlightSelection();
-    }
-
-    @Override
-    public void incrementScoreRequest(int points) {
+    public void incrementScoreView(int points) {
         scoreBoardView.incrementScore(points);
     }
 
     @Override
-    public void controlRequest(int second) {
+    public void control(int second) {
         gameBoardView.control(second);
     }
 

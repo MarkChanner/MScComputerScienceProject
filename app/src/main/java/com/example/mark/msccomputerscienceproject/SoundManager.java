@@ -18,20 +18,53 @@ public class SoundManager {
 
     private static final String TAG = "SoundManager";
 
+    public static final String INVALID_MOVE = "INVALID_MOVE";
+    public static final String MATCH_FOUND = "MATCH_FOUND";
+    public static final String MIXED_EMOTIONS = "MIXED_EMOTIONS";
+
+    public static final String ANGRY = "ANGRY";
+    public static final String HAPPY = "HAPPY";
+    public static final String EMBARRASSED = "EMBARRASSED";
+    public static final String SURPRISED = "SURPRISED";
+    public static final String SAD = "SAD";
+
+    public static final String ANGRY2 = "ANGRY2";
+    public static final String HAPPY2 = "HAPPY2";
+    public static final String EMBARRASSED2 = "EMBARRASSED2";
+    public static final String SURPRISED2 = "SURPRISED2";
+    public static final String SAD2 = "SAD2";
+
+    /*public static final String AFRAID = "AFRAID";
+    public static final String CRYING = "CRYING";
+    public static final String GRUMPY = "GRUMPY";
+    public static final String INNOCENT = "INNOCENT";
+    public static final String TIRED = "TIRED";*/
+
     /**
      * Try to keep the sound small and at a low bitrate
      */
     private SoundPool soundPool;
-
-    private int invalidMoveID = -1;
+    private int swap_back = -1;
     private int matchFoundID = -1;
     private int angryID = -1;
     private int happyID = -1;
     private int embarrassedID = -1;
     private int surprisedID = -1;
     private int sadID = -1;
+
+    private int angry2ID = -1;
+    private int happy2ID = -1;
+    private int embarrassed2ID = -1;
+    private int surprised2ID = -1;
+    private int sad2ID = -1;
+
+    /*private int afraidID = -1;
+    private int cryingID = -1;
+    private int grumpyID = -1;
+    private int innocentID = -1;
+    private int tiredID = -1;*/
+
     private int mixedEmotionsID = -1;
-    public static final String MIXED_EMOTIONS = "MIXED_EMOTIONS";
 
     public void loadSound(Context context) {
         soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
@@ -44,7 +77,7 @@ public class SoundManager {
             matchFoundID = soundPool.load(descriptor, 0);
 
             descriptor = assetManager.openFd("swap_back.ogg");
-            invalidMoveID = soundPool.load(descriptor, 0);
+            swap_back = soundPool.load(descriptor, 0);
 
             descriptor = assetManager.openFd("angry.ogg");
             angryID = soundPool.load(descriptor, 0);
@@ -59,7 +92,39 @@ public class SoundManager {
             surprisedID = soundPool.load(descriptor, 0);
 
             descriptor = assetManager.openFd("sad.ogg");
+
             sadID = soundPool.load(descriptor, 0);
+
+            descriptor = assetManager.openFd("angry2.ogg");
+            angry2ID = soundPool.load(descriptor, 0);
+
+            descriptor = assetManager.openFd("happy2.ogg");
+            happy2ID = soundPool.load(descriptor, 0);
+
+            descriptor = assetManager.openFd("embarrassed2.ogg");
+            embarrassed2ID = soundPool.load(descriptor, 0);
+
+            descriptor = assetManager.openFd("surprised2.ogg");
+            surprised2ID = soundPool.load(descriptor, 0);
+
+            descriptor = assetManager.openFd("sad2.ogg");
+            sad2ID = soundPool.load(descriptor, 0);
+
+
+            /*descriptor = assetManager.openFd("afraid.ogg");
+            afraidID = soundPool.load(descriptor, 0);
+
+            descriptor = assetManager.openFd("crying.ogg");
+            cryingID = soundPool.load(descriptor, 0);
+
+            descriptor = assetManager.openFd("grumpy.ogg");
+            grumpyID = soundPool.load(descriptor, 0);
+
+            descriptor = assetManager.openFd("innocent.ogg");
+            innocentID = soundPool.load(descriptor, 0);
+
+            descriptor = assetManager.openFd("tired.ogg");
+            tiredID = soundPool.load(descriptor, 0);*/
 
             descriptor = assetManager.openFd("mixed_emotions.ogg");
             mixedEmotionsID = soundPool.load(descriptor, 0);
@@ -70,7 +135,7 @@ public class SoundManager {
     }
 
     public void announceMatchedEmoticons(ArrayList<LinkedList<Emoticon>> matchingX, ArrayList<LinkedList<Emoticon>> matchingY) {
-        Log.d(TAG, "in PlayMatchedEmoticons method");
+        //Log.d(TAG, "in PlayMatchedEmoticons method");
         if (mixedEmotionsSameDirection(matchingX)
                 || mixedEmotionsSameDirection(matchingY)
                 || mixedEmotionsCrossDirection(matchingX, matchingY)) {
@@ -87,12 +152,12 @@ public class SoundManager {
             String emoTypeMarker = matchingLine.get(0).getFirst().getEmoticonType();
             for (int i = 1; i < matchingLine.size(); i++) {
                 if (!matchingLine.get(i).getFirst().getEmoticonType().equals(emoTypeMarker)) {
-                    Log.d(TAG, "return TRUE from mixedEmoticonsSAMEDirection");
+                    //Log.d(TAG, "return TRUE from mixedEmoticonsSAMEDirection");
                     return true;
                 }
             }
         }
-        Log.d(TAG, "return FALSE from mixedEmoticonsSAMEDirection");
+        //Log.d(TAG, "return FALSE from mixedEmoticonsSAMEDirection");
         return false;
     }
 
@@ -101,44 +166,84 @@ public class SoundManager {
             String emoTypeMarker = matchingX.get(0).getFirst().getEmoticonType();
             for (int i = 0; i < matchingY.size(); i++) {
                 if (!emoTypeMarker.equals(matchingY.get(i).getFirst().getEmoticonType())) {
-                    Log.d(TAG, "return TRUE from mixedEmoticonsCROSSDirection");
+                    //Log.d(TAG, "return TRUE from mixedEmoticonsCROSSDirection");
                     return true;
                 }
             }
         }
-        Log.d(TAG, "return FALSE from mixedEmoticonsSameDirection");
+       // Log.d(TAG, "return FALSE from mixedEmoticonsSameDirection");
         return false;
     }
 
     public void playSound(String sound) {
         switch (sound) {
-            case "INVALID_MOVE":
-                soundPool.play(invalidMoveID, 1, 1, 0, 0, 1);
+            case INVALID_MOVE:
+                soundPool.play(swap_back, 1, 1, 0, 0, 1);
                 break;
 
-            case "MATCH_FOUND":
+            case MATCH_FOUND:
                 soundPool.play(matchFoundID, 1, 1, 0, 0, 1);
                 break;
 
-            case "ANGRY":
+            case ANGRY:
                 soundPool.play(angryID, 1, 1, 0, 0, 1);
                 break;
 
-            case "HAPPY":
+            case HAPPY:
                 soundPool.play(happyID, 1, 1, 0, 0, 1);
                 break;
 
-            case "EMBARRASSED":
+            case EMBARRASSED:
                 soundPool.play(embarrassedID, 1, 1, 0, 0, 1);
                 break;
 
-            case "SURPRISED":
+            case SURPRISED:
                 soundPool.play(surprisedID, 1, 1, 0, 0, 1);
                 break;
 
-            case "SAD":
+            case SAD:
                 soundPool.play(sadID, 1, 1, 0, 0, 1);
                 break;
+
+            case ANGRY2:
+                soundPool.play(angry2ID, 1, 1, 0, 0, 1);
+                break;
+
+            case HAPPY2:
+                soundPool.play(happy2ID, 1, 1, 0, 0, 1);
+                break;
+
+            case EMBARRASSED2:
+                soundPool.play(embarrassed2ID, 1, 1, 0, 0, 1);
+                break;
+
+            case SURPRISED2:
+                soundPool.play(surprised2ID, 1, 1, 0, 0, 1);
+                break;
+
+            case SAD2:
+                soundPool.play(sad2ID, 1, 1, 0, 0, 1);
+                break;
+
+            /*case AFRAID:
+                soundPool.play(afraidID, 1, 1, 0, 0, 1);
+                break;
+
+            case CRYING:
+                soundPool.play(cryingID, 1, 1, 0, 0, 1);
+                break;
+
+            case GRUMPY:
+                soundPool.play(grumpyID, 1, 1, 0, 0, 1);
+                break;
+
+            case INNOCENT:
+                soundPool.play(innocentID, 1, 1, 0, 0, 1);
+                break;
+
+            case TIRED:
+                soundPool.play(tiredID, 1, 1, 0, 0, 1);
+                break;*/
 
             case MIXED_EMOTIONS:
                 soundPool.play(mixedEmotionsID, 1, 1, 0, 0, 1);

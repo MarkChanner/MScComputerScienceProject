@@ -13,7 +13,9 @@ public interface GameModel {
 
     void finishRound();
 
-    void levelUp();
+    void setToDrop();
+
+    void dropEmoticons();
 
     void resetBoard();
 

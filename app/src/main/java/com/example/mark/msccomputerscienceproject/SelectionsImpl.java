@@ -1,5 +1,7 @@
 package com.example.mark.msccomputerscienceproject;
 
+import android.util.Log;
+
 public class SelectionsImpl implements Selections {
 
     /**
@@ -10,7 +12,7 @@ public class SelectionsImpl implements Selections {
     public static final int Y = 1;
     private int[] selection01 = new int[2];
     private int[] selection02 = new int[2];
-    private boolean selection01Made;
+    private boolean selection01HasAlreadyBeenMade;
 
     public SelectionsImpl() {
         resetUserSelections();
@@ -18,9 +20,10 @@ public class SelectionsImpl implements Selections {
 
     @Override
     public void resetUserSelections() {
+        //Log.d(TAG, "in resetUserSelections()");
         selection01[X] = -1;
         selection01[Y] = -1;
-        selection01Made = false;
+        selection01HasAlreadyBeenMade = false;
 
         selection02[X] = -1;
         selection02[Y] = -1;
@@ -28,39 +31,46 @@ public class SelectionsImpl implements Selections {
 
     @Override
     public boolean selection01Made() {
-        return selection01Made;
+        Log.d(TAG, "in selection01HasAlreadyBeenMade()");
+        return selection01HasAlreadyBeenMade;
     }
 
     @Override
     public int[] getSelection01() {
+        Log.d(TAG, "in getSelection01()");
         return selection01;
     }
 
     @Override
     public void setSelection01(int x, int y) {
+        Log.d(TAG, "in setSelection01(int, int)");
         selection01[X] = x;
         selection01[Y] = y;
-        selection01Made = true;
+        selection01HasAlreadyBeenMade = true;
     }
 
     @Override
     public int[] getSelection02() {
+        Log.d(TAG, "in getSelection02()");
         return selection02;
     }
 
     @Override
     public void setSelection02(int x, int y) {
+        Log.d(TAG, "in setSelection02(int, int)");
         selection02[X] = x;
         selection02[Y] = y;
     }
 
     @Override
     public boolean sameSelectionMadeTwice() {
+        Log.d(TAG, "in sameSelectionMadeTwice()");
         return (selection01[X] == selection02[X] && selection01[Y] == selection02[Y]);
     }
 
     @Override
     public boolean adjacentSelections() {
+        Log.d(TAG, "in adjacentSelections");
         if ((selection01[X] == selection02[X]) &&
                 (selection01[Y] == (selection02[Y] + 1) || selection01[Y] == (selection02[Y] - 1))) {
             return true;
@@ -73,6 +83,7 @@ public class SelectionsImpl implements Selections {
 
     @Override
     public void secondSelectionBecomesFirstSelection() {
+        Log.d(TAG, "in secondSelectionBecomesFirstSelection()");
         selection01[X] = selection02[X];
         selection01[Y] = selection02[Y];
 

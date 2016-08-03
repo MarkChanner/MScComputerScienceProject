@@ -24,6 +24,7 @@ public abstract class AbstractEmoticon implements Emoticon {
     volatile boolean swappingRight;
     volatile boolean swappingLeft;
     volatile boolean isPartOfMatch;
+    volatile boolean isSelected;
 
     public AbstractEmoticon(int arrayX, int arrayY, int emoWidth, int emoHeight, Bitmap bitmap, String emoticonType, int offScreenStartPositionY) {
         this.arrayX = arrayX;
@@ -76,6 +77,18 @@ public abstract class AbstractEmoticon implements Emoticon {
         if (dropping) {
             dropEmoticon();
         }
+    }
+
+    @Override
+    public void setIsSelected(boolean bool) {
+        if (!isDropping()) {
+            isSelected = bool;
+        }
+    }
+
+    @Override
+    public boolean isSelected() {
+        return isSelected;
     }
 
     @Override
@@ -222,5 +235,4 @@ public abstract class AbstractEmoticon implements Emoticon {
     public void setPixelMovement(int pixelMovement) {
         this.pixelMovement = pixelMovement;
     }
-
 }

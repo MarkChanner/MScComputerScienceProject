@@ -16,11 +16,17 @@ public class BitmapCreator {
     private Bitmap surprisedBitmap;
     private Bitmap sadBitmap;
 
-    private Bitmap afraidBitmap;
+    private Bitmap angry2Bitmap;
+    private Bitmap happy2Bitmap;
+    private Bitmap embarrassed2Bitmap;
+    private Bitmap surprised2Bitmap;
+    private Bitmap sad2Bitmap;
+
+    /*private Bitmap afraidBitmap;
     private Bitmap cryingBitmap;
     private Bitmap grumpyBitmap;
     private Bitmap innocentBitmap;
-    private Bitmap tiredBitmap;
+    private Bitmap tiredBitmap;*/
 
     private Bitmap emptyBitmap;
     private Bitmap mockBitmap;
@@ -59,20 +65,20 @@ public class BitmapCreator {
         temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.mock);
         mockBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
 
-        temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.afraid);
-        afraidBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+        temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.angry2);
+        angry2Bitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
 
-        temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.crying);
-        cryingBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+        temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.happy2);
+        happy2Bitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
 
-        temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.grumpy);
-        grumpyBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+        temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.embarrassed2);
+        embarrassed2Bitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
 
-        temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.innocent);
-        innocentBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+        temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.surprised2);
+        surprised2Bitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
 
-        temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.tired);
-        tiredBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+        temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.sad2);
+        sad2Bitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
     }
 
     public Bitmap getAngryBitmap() {
@@ -95,7 +101,27 @@ public class BitmapCreator {
         return sadBitmap;
     }
 
-    public Bitmap getAfraidBitmap() {
+    public Bitmap getAngry2Bitmap() {
+        return angry2Bitmap;
+    }
+
+    public Bitmap getHappy2Bitmap() {
+        return happy2Bitmap;
+    }
+
+    public Bitmap getEmbarrassed2Bitmap() {
+        return embarrassed2Bitmap;
+    }
+
+    public Bitmap getSurprised2Bitmap() {
+        return surprised2Bitmap;
+    }
+
+    public Bitmap getSad2Bitmap() {
+        return sad2Bitmap;
+    }
+
+    /*public Bitmap getAfraidBitmap() {
         return afraidBitmap;
     }
 
@@ -113,7 +139,7 @@ public class BitmapCreator {
 
     public Bitmap getTiredBitmap() {
         return tiredBitmap;
-    }
+    }*/
 
     public Bitmap getMockBitmap() {
         return mockBitmap;

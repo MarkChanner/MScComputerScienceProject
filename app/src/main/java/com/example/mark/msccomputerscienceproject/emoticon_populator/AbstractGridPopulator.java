@@ -21,13 +21,17 @@ public abstract class AbstractGridPopulator implements GridPopulator {
     }
 
     @Override
+    public void setEmoticonCreator(EmoticonCreator emoCreator) {
+        this.emoCreator = emoCreator;
+    }
+
+    @Override
     public Emoticon getRandomEmoticon(int x, int y, int offScreenStartPositionY) {
-        return emoCreator.generateRandomEmoticon(x, y, offScreenStartPositionY);
+        return emoCreator.createRandomEmoticon(x, y, offScreenStartPositionY);
     }
 
     @Override
     public Emoticon getEmptyEmoticon(int x, int y) {
-        return emoCreator.getEmptyEmoticon(x, y);
+        return emoCreator.createEmptyEmoticon(x, y);
     }
-
 }

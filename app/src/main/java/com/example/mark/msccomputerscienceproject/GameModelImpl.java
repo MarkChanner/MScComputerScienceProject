@@ -2,6 +2,9 @@ package com.example.mark.msccomputerscienceproject;
 
 import android.util.Log;
 
+import com.example.mark.msccomputerscienceproject.emoticon_populator.BitmapCreator;
+import com.example.mark.msccomputerscienceproject.emoticon_populator.EmoticonCreator;
+import com.example.mark.msccomputerscienceproject.emoticon_populator.EmoticonCreatorImpl02;
 import com.example.mark.msccomputerscienceproject.emoticon_populator.GridPopulator;
 
 import java.util.ArrayList;
@@ -36,13 +39,19 @@ public class GameModelImpl implements GameModel {
     private GridPopulator populator;
     private MatchFinder matchFinder;
     private Emoticon[][] emoticons;
+    private int emoWidth;
+    private int emoHeight;
 
-    public GameModelImpl(GameController controller, GridPopulator populator, MatchFinder matchFinder, Emoticon[][] emoticons) {
+    private int currentLevelScore = 0;
+
+    public GameModelImpl(GameController controller, GridPopulator populator, MatchFinder matchFinder, Emoticon[][] emoticons, int emoWidth, int emoHeight) {
         this.selections = new SelectionsImpl();
         this.controller = controller;
         this.populator = populator;
         this.matchFinder = matchFinder;
         this.emoticons = emoticons;
+        this.emoWidth = emoWidth;
+        this.emoHeight = emoHeight;
     }
 
     @Override
@@ -91,30 +100,37 @@ public class GameModelImpl implements GameModel {
 
     @Override
     public void handleSelection(int x, int y) {
-        if (!(selections.selection01Made())) {
-            selections.setSelection01(x, y);
-        } else {
-            selections.setSelection02(x, y);
-            controller.unHighlightSelectionRequest();
-            checkValidSelections(x, y);
+        Log.d(TAG, "in handleSelection(int, int)");
+        if (!emoticons[x][y].isDropping()) {
+            emoticons[x][y].setIsSelected(true);
+            if (!(selections.selection01Made())) {
+                selections.setSelection01(x, y);
+            } else {
+                selections.setSelection02(x, y);
+                checkValidSelections(x, y);
+            }
         }
     }
 
     private void checkValidSelections(int x, int y) {
-        if (!(selections.sameSelectionMadeTwice())) {
+        if (!selections.sameSelectionMadeTwice()) {
             if (selections.adjacentSelections()) {
                 processSelections(selections.getSelection01(), selections.getSelection02());
             } else {
-                controller.highlightSelectionRequest(x, y);
+                unHighlightSelections();
+                emoticons[x][y].setIsSelected(true);
                 selections.secondSelectionBecomesFirstSelection();
             }
         } else {
+            unHighlightSelections();
             selections.resetUserSelections();
+
         }
     }
 
     private void processSelections(int[] sel1, int[] sel2) {
-        Log.d(TAG, "in processSelections(Selections)");
+        //Log.d(TAG, "in processSelections(Selections)");
+        unHighlightSelections();
         swapSelections(sel1, sel2);
 
         ArrayList<LinkedList<Emoticon>> matchingX = matchFinder.findVerticalMatches(emoticons);
@@ -130,7 +146,7 @@ public class GameModelImpl implements GameModel {
     }
 
     private void swapSelections(int[] sel1, int[] sel2) {
-        Log.d(TAG, "in swapSelections(int[] int[])");
+        //Log.d(TAG, "in swapSelections(int[] int[])");
         int emo01X = emoticons[sel1[X]][sel1[Y]].getArrayX();
         int emo01Y = emoticons[sel1[X]][sel1[Y]].getArrayY();
         int emo02X = emoticons[sel2[X]][sel2[Y]].getArrayX();
@@ -172,7 +188,7 @@ public class GameModelImpl implements GameModel {
     }
 
     private void waitForSwapAnimationToFinish() {
-        Log.d(TAG, "in waitForSwapAnimationToFinish()");
+        //Log.d(TAG, "in waitForSwapAnimationToFinish()");
         synchronized (swapLock) {
             animatingSwap = true;
             while (animatingSwap) {
@@ -186,22 +202,30 @@ public class GameModelImpl implements GameModel {
     }
 
     private void swapBack(int[] sel1, int[] sel2) {
-        Log.d(TAG, "in swapBack(int[] int[])");
+        //Log.d(TAG, "in swapBack(int[] int[])");
         swapSelections(sel1, sel2);
     }
 
+    private void unHighlightSelections() {
+        for (int x = ROW_START; x < X_MAX; x++) {
+            for (int y = COLUMN_TOP; y < Y_MAX; y++) {
+                emoticons[x][y].setIsSelected(false);
+            }
+        }
+    }
+
     private boolean matchesFound(ArrayList<LinkedList<Emoticon>> matchingX, ArrayList<LinkedList<Emoticon>> matchingY) {
-        Log.d(TAG, "in matchesFound method");
+        //Log.d(TAG, "in matchesFound method");
         return (!(matchingX.isEmpty() && matchingY.isEmpty()));
     }
 
     private void modifyBoard(ArrayList<LinkedList<Emoticon>> matchingX, ArrayList<LinkedList<Emoticon>> matchingY) {
-        Log.d(TAG, "in modifyBoard method");
+        //Log.d(TAG, "in modifyBoard method");
         do {
             highlightMatches(matchingX);
             highlightMatches(matchingY);
             controller.playSound(matchingX, matchingY);
-            controller.controlRequest(ONE_SECOND);
+            controller.control(ONE_SECOND);
             removeFromBoard(matchingX);
             removeFromBoard(matchingY);
             dropEmoticons();
@@ -209,26 +233,35 @@ public class GameModelImpl implements GameModel {
             matchingY = matchFinder.findHorizontalMatches(emoticons);
         } while (matchesFound(matchingX, matchingY));
 
-        if (!matchFinder.anotherMatchPossible(emoticons)) {
+        if (currentLevelScore >= 70) {
+            loadNextLevel();
+        } else if (!matchFinder.anotherMatchPossible(emoticons)) {
             Log.d(TAG, "NO MATCHES AVAILABLE - END GAME CONDITION ENTERED");
             finishRound();
-
         }
     }
 
+    private void loadNextLevel() {
+        Log.d(TAG, "loadNextLevel()");
+        unHighlightSelections();
+        setToDrop();
+        dropEmoticons();
+        currentLevelScore = 0;
+        EmoticonCreator emoCreator02 = new EmoticonCreatorImpl02(BitmapCreator.getInstance(), emoWidth, emoHeight);
+        populator.setEmoticonCreator(emoCreator02);
+        populator.populateBoard(emoticons);
+    }
+
+    @Override
     public void finishRound() {
+        unHighlightSelections();
         setToDrop();
         dropEmoticons();
         controller.setGameEnded(true);
     }
 
-    public void levelUp() {
-        setToDrop();
-        dropEmoticons();
-
-    }
-
-    private void setToDrop() {
+    @Override
+    public void setToDrop() {
         for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
             for (int x = ROW_START; x < X_MAX; x++) {
                 emoticons[x][y].setArrayY(Y_MAX);
@@ -239,16 +272,19 @@ public class GameModelImpl implements GameModel {
     }
 
     private void highlightMatches(ArrayList<LinkedList<Emoticon>> matches) {
+        int points = 0;
         for (List<Emoticon> removeList : matches) {
-            controller.incrementScoreRequest(removeList.size() * 10);
             for (Emoticon e : removeList) {
                 e.setIsPartOfMatch(true);
             }
+            points += (removeList.size() * 10);
         }
+        controller.incrementScoreView(points);
+        currentLevelScore += points;
     }
 
     private void removeFromBoard(ArrayList<LinkedList<Emoticon>> matches) {
-        Log.d(TAG, "in removeFromBoard(ArrayList<LinkedList<Emoticon>>)");
+        //  Log.d(TAG, "in removeFromBoard(ArrayList<LinkedList<Emoticon>>)");
         for (List<Emoticon> removeList : matches) {
             for (Emoticon e : removeList) {
                 int x = e.getArrayX();
@@ -260,8 +296,9 @@ public class GameModelImpl implements GameModel {
         }
     }
 
-    private void dropEmoticons() {
-        Log.d(TAG, "in dropEmoticons()");
+    @Override
+    public void dropEmoticons() {
+        //Log.d(TAG, "in dropEmoticons()");
         int offScreenStartPosition;
         int runnerY;
         for (int x = ROW_START; x < X_MAX; x++) {
@@ -289,7 +326,7 @@ public class GameModelImpl implements GameModel {
     }
 
     private void waitForDropAnimationToComplete() {
-        Log.d(TAG, "in waitForDropAnimationToComplete()");
+        // Log.d(TAG, "in waitForDropAnimationToComplete()");
         synchronized (dropLock) {
             animatingDrop = true;
             while (animatingDrop) {
@@ -305,6 +342,8 @@ public class GameModelImpl implements GameModel {
     @Override
     public void resetBoard() {
         selections.resetUserSelections();
+        emoticons = new AbstractEmoticon[X_MAX][Y_MAX];
         populator.populateBoard(emoticons);
     }
+
 }

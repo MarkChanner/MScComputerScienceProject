@@ -31,7 +31,7 @@ public class GameControllerImpl extends Activity implements GameController {
     private int emoHeight;
     private GameModel gameModel;
     private ScoreBoardView scoreBoardView;
-    private GameBoardView gameBoardView;
+    private GameBoardViewImpl gameBoardView;
 
     volatile boolean gameEnded = false;
 
@@ -40,44 +40,47 @@ public class GameControllerImpl extends Activity implements GameController {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_main);
         LinearLayout screenLayout = (LinearLayout) findViewById(R.id.gameLayout);
-
-        this.music = new MusicPlayer(this);
-        this.soundManager = new SoundManager();
-        soundManager.loadSound(this);
 
         Point size = new Point();
         Display display = getWindowManager().getDefaultDisplay();
         display.getSize(size);
-        int sizeX = (size.x - ((screenLayout.getPaddingLeft() * 2) + screenLayout.getPaddingRight()));
-        int scoreBoardViewSizeX = (int) (sizeX * 0.1);
-        int gameBoardViewSizeX = (int) (sizeX * 0.9);
-        int sizeY = (size.y - (screenLayout.getPaddingTop() + screenLayout.getPaddingBottom()));
-        this.emoWidth = gameBoardViewSizeX / X_MAX;
-        this.emoHeight = sizeY / Y_MAX;
 
+        this.music = new MusicPlayer(this);
+        this.soundManager = new SoundManager();
+        this.soundManager.loadSound(this);
+
+        int screenSizeX = (size.x - ((screenLayout.getPaddingLeft() * 2) + screenLayout.getPaddingRight()));
+        int gameBoardViewSizeX = (int) (screenSizeX * 0.9);
+        int gameBoardViewSizeY = (size.y - (screenLayout.getPaddingTop() + screenLayout.getPaddingBottom()));
+        int scoreBoardViewSizeX = (int) (screenSizeX * 0.1);
+        int scoreBoardViewSizeY = (gameBoardViewSizeY / 3);
+        this.emoWidth = gameBoardViewSizeX / X_MAX;
+        this.emoHeight = gameBoardViewSizeY / Y_MAX;
+
+        Emoticon[][] emoticons = new AbstractEmoticon[X_MAX][Y_MAX];
         BitmapCreator bitmapCreator = BitmapCreator.getInstance();
         bitmapCreator.prepareScaledBitmaps(this, emoWidth, emoHeight);
         EmoticonCreator emoCreator = new EmoticonCreatorImpl(bitmapCreator, emoWidth, emoHeight);
         GridPopulator populator = new GridPopulatorImpl(emoCreator);
-        Emoticon[][] emoticons = new AbstractEmoticon[X_MAX][Y_MAX];
         populator.populateBoard(emoticons);
-        this.gameModel = new GameModelImpl(this, populator, new MatchFinder(), emoticons);
+        this.gameModel = new GameModelImpl(this, populator, new MatchFinder(), emoticons, emoWidth, emoHeight);
 
-        this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, sizeY / 3);
-        this.gameBoardView = new GameBoardView(this, emoticons, gameBoardViewSizeX, sizeY, emoWidth, emoHeight);
-        LinearLayout.LayoutParams scoreParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(scoreBoardViewSizeX, sizeY / 3));
-        screenLayout.addView(scoreBoardView, scoreParams);
-        LinearLayout.LayoutParams boardParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(gameBoardViewSizeX, sizeY));
+        this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, gameBoardViewSizeY / 3);
+        this.gameBoardView = new GameBoardViewImpl(this, emoticons, gameBoardViewSizeX, gameBoardViewSizeY, emoWidth, emoHeight);
+        LinearLayout.LayoutParams boardParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(gameBoardViewSizeX, gameBoardViewSizeY));
         boardParams.setMargins(screenLayout.getPaddingLeft(), 0, gameBoardViewSizeX, 0);
+        LinearLayout.LayoutParams scoreParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(scoreBoardViewSizeX, scoreBoardViewSizeY));
+        screenLayout.addView(scoreBoardView, scoreParams);
         screenLayout.addView(gameBoardView, boardParams);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG, "in onResume()");
+        // Log.d(TAG, "in onResume()");
         music.startMediaPlayer();
         gameBoardView.resume();
     }
@@ -85,7 +88,7 @@ public class GameControllerImpl extends Activity implements GameController {
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(TAG, "in onPause()");
+        // Log.d(TAG, "in onPause()");
         music.pauseMediaPlayer();
         if (isFinishing()) {
             music.stopMediaPlayer();
@@ -95,12 +98,12 @@ public class GameControllerImpl extends Activity implements GameController {
     }
 
     @Override
-    public void handleEvent(MotionEvent event) {
+    public void handle(MotionEvent event) {
+        Log.d(TAG, "handle(MotionEvent");
         int screenX = (int) event.getX();
         int screenY = (int) event.getY();
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (!isGameEnded()) {
-                gameBoardView.highlightSelection(screenX / emoWidth, screenY / emoHeight);
                 gameModel.handleSelection(screenX / emoWidth, screenY / emoHeight);
             } else {
                 gameEnded = false;
@@ -116,22 +119,12 @@ public class GameControllerImpl extends Activity implements GameController {
     }
 
     @Override
-    public void highlightSelectionRequest(int x, int y) {
-        gameBoardView.highlightSelection(x, y);
-    }
-
-    @Override
-    public void unHighlightSelectionRequest() {
-        gameBoardView.unHighlightSelection();
-    }
-
-    @Override
-    public void incrementScoreRequest(int points) {
+    public void incrementScoreView(int points) {
         scoreBoardView.incrementScore(points);
     }
 
     @Override
-    public void controlRequest(int second) {
+    public void control(int second) {
         gameBoardView.control(second);
     }
 
@@ -144,7 +137,6 @@ public class GameControllerImpl extends Activity implements GameController {
     public void playSound(String sound) {
         soundManager.playSound(sound);
     }
-
 
     @Override
     public void setGameEnded(boolean gameEnded) {

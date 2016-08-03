@@ -1,7 +1,9 @@
 package com.example.mark.msccomputerscienceproject.emoticon_populator;
 
 import android.graphics.Bitmap;
+
 import com.example.mark.msccomputerscienceproject.*;
+
 import java.util.Random;
 
 public class EmoticonCreatorImpl implements EmoticonCreator {
@@ -21,7 +23,7 @@ public class EmoticonCreatorImpl implements EmoticonCreator {
      *
      * @return EmoticonImpl
      */
-    public Emoticon generateRandomEmoticon(int x, int y, int offScreenStartPositionY) {
+    public Emoticon createRandomEmoticon(int x, int y, int offScreenStartPositionY) {
         Random random = new Random();
         String emoID = null;
         Bitmap bitmap = null;
@@ -52,7 +54,7 @@ public class EmoticonCreatorImpl implements EmoticonCreator {
         return new EmoticonImpl(x, y, emoWidth, emoHeight, bitmap, emoID, offScreenStartPositionY);
     }
 
-    public Emoticon generateSpecifiedEmoticon(int x, int y, String emoType) {
+    public Emoticon createSpecifiedEmoticon(int x, int y, String emoType) {
         Bitmap bitmap = null;
         switch (emoType) {
             case "ANGRY":
@@ -76,12 +78,12 @@ public class EmoticonCreatorImpl implements EmoticonCreator {
         return new EmoticonImpl(x, y, emoWidth, emoHeight, bitmap, emoType, y);
     }
 
-    public Emoticon generateMockEmoticon(int x, int y) {
+    public Emoticon createMockEmoticon(int x, int y) {
         String mockID = ("" + x + y);
         return new MockEmoticon(x, y, emoWidth, emoHeight, bitmapCreator.getMockBitmap(), mockID);
     }
 
-    public Emoticon getEmptyEmoticon(int x, int y) {
+    public Emoticon createEmptyEmoticon(int x, int y) {
         return new EmptyEmoticon(x, y, emoWidth, emoHeight, bitmapCreator.getEmptyBitmap());
     }
 }

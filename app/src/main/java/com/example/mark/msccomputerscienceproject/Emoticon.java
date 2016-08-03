@@ -15,6 +15,10 @@ public interface Emoticon {
 
     void updateDropping();
 
+    boolean isSelected();
+
+    void setIsSelected(boolean bool);
+
     void setIsPartOfMatch(boolean bool);
 
     boolean isPartOfMatch();
