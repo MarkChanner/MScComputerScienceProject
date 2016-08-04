@@ -42,17 +42,17 @@ public class GameBoardViewImpl extends SurfaceView implements GameBoardView, Run
         super(controller);
     }
 
-    public GameBoardViewImpl(Context controller, Emoticon[][] emoticons, int viewX, int viewY, int emoWidth, int emoHeight) {
+    public GameBoardViewImpl(Context controller, Emoticon[][] emoticons, int viewSizeX, int viewSizeY, int emoWidth, int emoHeight) {
         super(controller);
         this.controller = (GameController) controller;
         this.emoticons = emoticons;
         this.emoWidth = emoWidth;
         this.emoHeight = emoHeight;
         surfaceHolder = getHolder();
-        prepareCanvas(controller, viewX, viewY);
+        prepareCanvas(controller, viewSizeX, viewSizeY);
     }
 
-    private void prepareCanvas(Context context, int boardSizeX, int boardSizeY) {
+    private void prepareCanvas(Context context, int viewSizeX, int viewSizeY) {
         // Log.d(TAG, "in prepareCanvas(Context, int, int)");
         boardColour = new Paint();
         boardColour.setColor(ContextCompat.getColor(context, R.color.gameboard));
@@ -70,17 +70,17 @@ public class GameBoardViewImpl extends SurfaceView implements GameBoardView, Run
         borderColour.setStyle(Paint.Style.STROKE);
         borderColour.setStrokeWidth(8f);
 
-        gridBitmap = Bitmap.createBitmap(boardSizeX, boardSizeY, Bitmap.Config.RGB_565);
+        gridBitmap = Bitmap.createBitmap(viewSizeX, viewSizeY, Bitmap.Config.RGB_565);
         Canvas gridCanvas = new Canvas(gridBitmap);
-        gridCanvas.drawRect(ZERO, ZERO, boardSizeX, boardSizeY, boardColour);
+        gridCanvas.drawRect(ZERO, ZERO, viewSizeX, viewSizeY, boardColour);
 
         for (int i = 0; i < X_MAX; i++) {
-            gridCanvas.drawLine(i * emoWidth, ZERO, i * emoWidth, boardSizeY, gridLineColour); // Vertical
+            gridCanvas.drawLine(i * emoWidth, ZERO, i * emoWidth, viewSizeY, gridLineColour); // Vertical
         }
         for (int i = 0; i < Y_MAX; i++) {
-            gridCanvas.drawLine(ZERO, i * emoHeight, boardSizeX, i * emoHeight, gridLineColour); // Horizontal
+            gridCanvas.drawLine(ZERO, i * emoHeight, viewSizeX, i * emoHeight, gridLineColour); // Horizontal
         }
-        gridCanvas.drawRect(ZERO, ZERO, boardSizeX, boardSizeY, borderColour);
+        gridCanvas.drawRect(ZERO, ZERO, viewSizeX, viewSizeY, borderColour);
         gridCanvas.drawBitmap(gridBitmap, ZERO, ZERO, null);
     }
 

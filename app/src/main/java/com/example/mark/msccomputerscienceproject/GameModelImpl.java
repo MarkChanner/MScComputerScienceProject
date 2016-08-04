@@ -253,14 +253,6 @@ public class GameModelImpl implements GameModel {
     }
 
     @Override
-    public void finishRound() {
-        unHighlightSelections();
-        setToDrop();
-        dropEmoticons();
-        controller.setGameEnded(true);
-    }
-
-    @Override
     public void setToDrop() {
         for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
             for (int x = ROW_START; x < X_MAX; x++) {
@@ -346,4 +338,11 @@ public class GameModelImpl implements GameModel {
         populator.populateBoard(emoticons);
     }
 
+    @Override
+    public void finishRound() {
+        unHighlightSelections();
+        setToDrop();
+        dropEmoticons();
+        controller.setGameEnded(true);
+    }
 }

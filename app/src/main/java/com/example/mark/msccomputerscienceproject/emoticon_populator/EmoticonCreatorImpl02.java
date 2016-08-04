@@ -4,6 +4,9 @@ import android.graphics.Bitmap;
 import com.example.mark.msccomputerscienceproject.*;
 import java.util.Random;
 
+/**
+ * @author Mark Channer for Birkbeck MSc Computer Science project
+ */
 public class EmoticonCreatorImpl02 implements EmoticonCreator {
 
     private BitmapCreator bitmapCreator;

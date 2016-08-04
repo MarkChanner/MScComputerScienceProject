@@ -60,9 +60,4 @@ public class ScoreBoardView extends TextView {
         score += points;
         invalidate();
     }
-
-    public int getScore() {
-        return score;
-    }
-
 }

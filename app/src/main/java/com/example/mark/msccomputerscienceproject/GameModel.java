@@ -11,11 +11,11 @@ public interface GameModel {
 
     void handleSelection(int x, int y);
 
-    void finishRound();
-
     void setToDrop();
 
     void dropEmoticons();
+
+    void finishRound();
 
     void resetBoard();
 

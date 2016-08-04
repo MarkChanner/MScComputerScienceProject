@@ -32,7 +32,6 @@ public class GameControllerImpl extends Activity implements GameController {
     private GameModel gameModel;
     private ScoreBoardView scoreBoardView;
     private GameBoardViewImpl gameBoardView;
-
     volatile boolean gameEnded = false;
 
     @Override
@@ -68,7 +67,7 @@ public class GameControllerImpl extends Activity implements GameController {
         populator.populateBoard(emoticons);
         this.gameModel = new GameModelImpl(this, populator, new MatchFinder(), emoticons, emoWidth, emoHeight);
 
-        this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, gameBoardViewSizeY / 3);
+        this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, scoreBoardViewSizeY);
         this.gameBoardView = new GameBoardViewImpl(this, emoticons, gameBoardViewSizeX, gameBoardViewSizeY, emoWidth, emoHeight);
         LinearLayout.LayoutParams boardParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(gameBoardViewSizeX, gameBoardViewSizeY));
         boardParams.setMargins(screenLayout.getPaddingLeft(), 0, gameBoardViewSizeX, 0);
@@ -85,6 +84,9 @@ public class GameControllerImpl extends Activity implements GameController {
         gameBoardView.resume();
     }
 
+    /**
+     * This is where persistent state should be saved
+     */
     @Override
     protected void onPause() {
         super.onPause();
