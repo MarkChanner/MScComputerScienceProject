@@ -29,7 +29,7 @@ public class GameControllerImpl extends Activity implements GameController {
     private SoundManager soundManager;
     private GameModel gameModel;
     private ScoreBoardView scoreBoardView;
-    private GameBoardViewImpl gameBoardView;
+    private GameBoardView gameBoardView;
 	private int emoWidth;
     private int emoHeight;
     volatile boolean gameEnded = false;
@@ -68,7 +68,7 @@ public class GameControllerImpl extends Activity implements GameController {
         this.gameModel = new GameModelImpl(this, populator, new MatchFinder(), emoticons, emoWidth, emoHeight);
 
         this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, scoreBoardViewSizeY);
-        this.gameBoardView = new GameBoardViewImpl(this, emoticons, gameBoardViewSizeX, gameBoardViewSizeY, emoWidth, emoHeight);
+        this.gameBoardView = new GameBoardView(this, emoticons, gameBoardViewSizeX, gameBoardViewSizeY, emoWidth, emoHeight);
         LinearLayout.LayoutParams boardParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(gameBoardViewSizeX, gameBoardViewSizeY));
         boardParams.setMargins(screenLayout.getPaddingLeft(), 0, gameBoardViewSizeX, 0);
         LinearLayout.LayoutParams scoreParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(scoreBoardViewSizeX, scoreBoardViewSizeY));

@@ -28,7 +28,7 @@ public class MockGameController extends Activity implements GameController {
     private Emoticon[][] emoticons;
     private GameModel gameModel;
     private ScoreBoardView scoreBoardView;
-    private GameBoardViewImpl gameBoardView;
+    private GameBoardView gameBoardView;
 
     volatile boolean gameEnded = false;
 
@@ -66,7 +66,7 @@ public class MockGameController extends Activity implements GameController {
         populator.populateBoard(emoticons);
         this.gameModel = new GameModelImpl(this, populator, new MatchFinder(), emoticons, emoWidth, emoHeight);
         this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, sizeY / 3);
-        this.gameBoardView = new GameBoardViewImpl(this, emoticons, gameBoardViewSizeX, sizeY, emoWidth, emoHeight);
+        this.gameBoardView = new GameBoardView(this, emoticons, gameBoardViewSizeX, sizeY, emoWidth, emoHeight);
 
         LinearLayout.LayoutParams scoreParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(scoreBoardViewSizeX, sizeY / 3));
         screenLayout.addView(scoreBoardView, scoreParams);

@@ -15,7 +15,7 @@ import android.view.MotionEvent;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public class GameBoardViewImpl extends SurfaceView implements GameBoardView, Runnable {
+public class GameBoardView extends SurfaceView implements Runnable {
 
     public static final String TAG = "GameBoardView";
     public static final int X_MAX = GameControllerImpl.X_MAX;
@@ -38,11 +38,11 @@ public class GameBoardViewImpl extends SurfaceView implements GameBoardView, Run
     private Thread gameViewThread = null;
     volatile boolean running = false;
 
-    public GameBoardViewImpl(Context controller) {
+    public GameBoardView(Context controller) {
         super(controller);
     }
 
-    public GameBoardViewImpl(Context controller, Emoticon[][] emoticons, int viewSizeX, int viewSizeY, int emoWidth, int emoHeight) {
+    public GameBoardView(Context controller, Emoticon[][] emoticons, int viewSizeX, int viewSizeY, int emoWidth, int emoHeight) {
         super(controller);
         this.controller = (GameController) controller;
         this.emoticons = emoticons;
@@ -84,7 +84,6 @@ public class GameBoardViewImpl extends SurfaceView implements GameBoardView, Run
         gridCanvas.drawBitmap(gridBitmap, ZERO, ZERO, null);
     }
 
-    @Override
     public void control(int ms) {
         //  Log.d(TAG, "in control(int)");
         try {
@@ -94,7 +93,6 @@ public class GameBoardViewImpl extends SurfaceView implements GameBoardView, Run
         }
     }
 
-    @Override
     public void pause() {
         //  Log.d(TAG, "in pause()");
         running = false;
@@ -108,7 +106,6 @@ public class GameBoardViewImpl extends SurfaceView implements GameBoardView, Run
         }
     }
 
-    @Override
     public void resume() {
         //  Log.d(TAG, "in resume()");
         running = true;
@@ -130,7 +127,6 @@ public class GameBoardViewImpl extends SurfaceView implements GameBoardView, Run
         }
     }
 
-    @Override
     public void drawBoard(Canvas canvas) {
         if (!controller.isGameEnded()) {
             canvas.drawBitmap(gridBitmap, ZERO, ZERO, null); // Draws background
