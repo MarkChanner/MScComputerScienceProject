@@ -27,11 +27,11 @@ public class GameControllerImpl extends Activity implements GameController {
 
     private MusicPlayer music;
     private SoundManager soundManager;
-    private int emoWidth;
-    private int emoHeight;
     private GameModel gameModel;
     private ScoreBoardView scoreBoardView;
     private GameBoardViewImpl gameBoardView;
+	private int emoWidth;
+    private int emoHeight;
     volatile boolean gameEnded = false;
 
     @Override
@@ -84,9 +84,6 @@ public class GameControllerImpl extends Activity implements GameController {
         gameBoardView.resume();
     }
 
-    /**
-     * This is where persistent state should be saved
-     */
     @Override
     protected void onPause() {
         super.onPause();
