@@ -3,7 +3,10 @@ package com.example.mark.msccomputerscienceproject;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.mark.msccomputerscienceproject.emoticon_populator.AbstractEmoticonFactory;
 import com.example.mark.msccomputerscienceproject.emoticon_populator.AbstractGridPopulator;
+import com.example.mark.msccomputerscienceproject.emoticon_populator.BitmapCreator;
+import com.example.mark.msccomputerscienceproject.emoticon_populator.EmoticonFactoryCreator;
 import com.example.mark.msccomputerscienceproject.emoticon_populator.GridPopulatorImpl;
 
 import java.util.ArrayList;
@@ -37,6 +40,9 @@ public class GameModelImpl implements GameModel {
     private Emoticon[][] emoticons;
     private Selections selections;
     private MatchFinder matchFinder;
+    private BitmapCreator bitmapCreator;
+    private EmoticonFactoryCreator emoFactoryCreator;
+    private AbstractEmoticonFactory emoCreator;
     private AbstractGridPopulator populator;
 
     private int level = 1;
@@ -47,8 +53,12 @@ public class GameModelImpl implements GameModel {
         this.emoticons = emoticons;
         this.selections = new SelectionsImpl();
         this.matchFinder = new MatchFinder();
+        this.bitmapCreator = BitmapCreator.getInstance();
         Context context = (Context) controller;
-        this.populator = new GridPopulatorImpl(context, emoWidth, emoHeight);
+        this.bitmapCreator.prepareScaledBitmaps(context, emoWidth, emoHeight);
+        this.emoFactoryCreator = new EmoticonFactoryCreator(context, emoWidth, emoHeight);
+        this.emoCreator = emoFactoryCreator.getEmoticonFactory(level);
+        this.populator = new GridPopulatorImpl(emoCreator);
         this.populator.populateBoard(emoticons);
     }
 
@@ -245,7 +255,8 @@ public class GameModelImpl implements GameModel {
         dropEmoticons();
         currentLevelScore = 0;
         level++;
-        populator.setEmoticonFactory(level);
+        AbstractEmoticonFactory emoticonCreator = emoFactoryCreator.getEmoticonFactory(level);
+        populator.setEmoticonFactory(emoticonCreator);
         populator.populateBoard(emoticons);
     }
 

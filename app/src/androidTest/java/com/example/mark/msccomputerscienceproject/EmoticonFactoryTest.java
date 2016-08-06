@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 
 import com.example.mark.msccomputerscienceproject.emoticon_populator.AbstractEmoticonFactory;
+import com.example.mark.msccomputerscienceproject.emoticon_populator.BitmapCreator;
 import com.example.mark.msccomputerscienceproject.emoticon_populator.EmoticonFactoryLevel01;
 
 import org.junit.Before;
@@ -32,9 +33,9 @@ public class EmoticonFactoryTest {
     public void testGenerateEmoticon() throws Exception {
         int x = 3;
         int y = 3;
-        int level = 1;
         int offScreenStartPositionY = 10;
-        AbstractEmoticonFactory emoCreator = new EmoticonFactoryLevel01(context, level, emoWidth, emoHeight);
+        BitmapCreator bc = BitmapCreator.getInstance();
+        AbstractEmoticonFactory emoCreator = new EmoticonFactoryLevel01(bc, emoWidth, emoHeight);
         Emoticon emo = emoCreator.createRandomEmoticon(x, y, offScreenStartPositionY);
         assertThat(emo, instanceOf(Emoticon.class));
     }

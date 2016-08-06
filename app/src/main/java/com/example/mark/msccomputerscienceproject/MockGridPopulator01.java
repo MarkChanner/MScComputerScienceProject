@@ -1,14 +1,13 @@
 package com.example.mark.msccomputerscienceproject;
 
-import android.content.Context;
-
+import com.example.mark.msccomputerscienceproject.emoticon_populator.AbstractEmoticonFactory;
 import com.example.mark.msccomputerscienceproject.emoticon_populator.AbstractGridPopulator;
 
 public class MockGridPopulator01 extends AbstractGridPopulator {
 
 
-    public MockGridPopulator01(Context context, int emoWidth, int emoHeight) {
-        super(context, emoWidth, emoHeight);
+    public MockGridPopulator01(AbstractEmoticonFactory emoticonFactory) {
+        super(emoticonFactory);
     }
 
     @Override

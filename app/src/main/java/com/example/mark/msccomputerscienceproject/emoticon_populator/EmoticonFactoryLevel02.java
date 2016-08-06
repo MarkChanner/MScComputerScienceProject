@@ -1,6 +1,5 @@
 package com.example.mark.msccomputerscienceproject.emoticon_populator;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 
 import com.example.mark.msccomputerscienceproject.*;
@@ -12,8 +11,8 @@ import java.util.Random;
  */
 public class EmoticonFactoryLevel02 extends AbstractEmoticonFactory {
 
-    public EmoticonFactoryLevel02(Context context, int level, int emoWidth, int emoHeight) {
-        super(context, level, emoWidth, emoHeight);
+    public EmoticonFactoryLevel02(BitmapCreator bitmapCreator, int emoWidth, int emoHeight) {
+        super(bitmapCreator, emoWidth, emoHeight);
     }
 
     /**
