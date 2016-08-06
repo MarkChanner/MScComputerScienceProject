@@ -1,5 +1,7 @@
 package com.example.mark.msccomputerscienceproject.emoticon_populator;
 
+import android.content.Context;
+
 import com.example.mark.msccomputerscienceproject.Emoticon;
 
 /**
@@ -10,8 +12,8 @@ import com.example.mark.msccomputerscienceproject.Emoticon;
  */
 public class GridPopulatorImpl extends AbstractGridPopulator {
 
-    public GridPopulatorImpl(EmoticonCreator emoCreator) {
-        super(emoCreator);
+    public GridPopulatorImpl(Context context, int emoWidth, int emoHeight) {
+        super(context, emoWidth, emoHeight);
     }
 
     @Override

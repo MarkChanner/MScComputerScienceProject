@@ -11,7 +11,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
-import com.example.mark.msccomputerscienceproject.emoticon_populator.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -20,30 +19,25 @@ import java.util.LinkedList;
  */
 public class MockGameController extends Activity implements GameController {
 
-    private final static String TAG = "MockGameController";
+    private final static String TAG = "GameControllerImpl";
     public static final int X_MAX = 8;
     public static final int Y_MAX = 7;
-    private int emoWidth;
-    private int emoHeight;
-    private Emoticon[][] emoticons;
+
+    private MusicPlayer music;
+    private SoundManager soundManager;
     private GameModel gameModel;
     private ScoreBoardView scoreBoardView;
     private GameBoardView gameBoardView;
-
+    private int emoWidth;
+    private int emoHeight;
     volatile boolean gameEnded = false;
-
-    // moved outside temp
-    int sizeX;
-    int scoreBoardViewSizeX;
-    int gameBoardViewSizeX;
-    int sizeY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_main);
         LinearLayout screenLayout = (LinearLayout) findViewById(R.id.gameLayout);
 
@@ -51,28 +45,27 @@ public class MockGameController extends Activity implements GameController {
         Display display = getWindowManager().getDefaultDisplay();
         display.getSize(size);
 
-        sizeX = (size.x - ((screenLayout.getPaddingLeft() * 2) + screenLayout.getPaddingRight()));
-        scoreBoardViewSizeX = (int) (sizeX * 0.1);
-        gameBoardViewSizeX = (int) (sizeX * 0.9);
-        sizeY = (size.y - (screenLayout.getPaddingTop() + screenLayout.getPaddingBottom()));
+        this.music = new MusicPlayer(this);
+        this.soundManager = new SoundManager();
+        this.soundManager.loadSound(this);
+
+        int screenSizeX = (size.x - ((screenLayout.getPaddingLeft() * 2) + screenLayout.getPaddingRight()));
+        int gameBoardViewSizeX = (int) (screenSizeX * 0.9);
+        int gameBoardViewSizeY = (size.y - (screenLayout.getPaddingTop() + screenLayout.getPaddingBottom()));
+        int scoreBoardViewSizeX = (int) (screenSizeX * 0.1);
+        int scoreBoardViewSizeY = (gameBoardViewSizeY / 3);
         this.emoWidth = gameBoardViewSizeX / X_MAX;
-        this.emoHeight = sizeY / Y_MAX;
-        this.emoticons = new AbstractEmoticon[X_MAX][Y_MAX];
+        this.emoHeight = gameBoardViewSizeY / Y_MAX;
 
-        BitmapCreator bitmapCreator = BitmapCreator.getInstance();
-        bitmapCreator.prepareScaledBitmaps(this, emoWidth, emoHeight);
-        EmoticonCreator emoCreator = new EmoticonCreatorImpl(bitmapCreator, emoWidth, emoHeight);
-        GridPopulator populator = new MockGridPopulator01(emoCreator);
-        populator.populateBoard(emoticons);
-        this.gameModel = new GameModelImpl(this, populator, new MatchFinder(), emoticons, emoWidth, emoHeight);
-        this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, sizeY / 3);
-        this.gameBoardView = new GameBoardView(this, emoticons, gameBoardViewSizeX, sizeY, emoWidth, emoHeight);
+        Emoticon[][] emoticons = new AbstractEmoticon[X_MAX][Y_MAX];
+        this.gameModel = new GameModelImpl(this, emoticons, emoWidth, emoHeight);
 
-        LinearLayout.LayoutParams scoreParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(scoreBoardViewSizeX, sizeY / 3));
-        screenLayout.addView(scoreBoardView, scoreParams);
-
-        LinearLayout.LayoutParams boardParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(gameBoardViewSizeX, sizeY));
+        this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, scoreBoardViewSizeY);
+        this.gameBoardView = new GameBoardView(this, emoticons, gameBoardViewSizeX, gameBoardViewSizeY, emoWidth, emoHeight);
+        LinearLayout.LayoutParams boardParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(gameBoardViewSizeX, gameBoardViewSizeY));
         boardParams.setMargins(screenLayout.getPaddingLeft(), 0, gameBoardViewSizeX, 0);
+        LinearLayout.LayoutParams scoreParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(scoreBoardViewSizeX, scoreBoardViewSizeY));
+        screenLayout.addView(scoreBoardView, scoreParams);
         screenLayout.addView(gameBoardView, boardParams);
     }
 

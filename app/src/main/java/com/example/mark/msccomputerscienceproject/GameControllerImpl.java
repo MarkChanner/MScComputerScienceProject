@@ -11,8 +11,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
-import com.example.mark.msccomputerscienceproject.emoticon_populator.*;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -30,7 +28,7 @@ public class GameControllerImpl extends Activity implements GameController {
     private GameModel gameModel;
     private ScoreBoardView scoreBoardView;
     private GameBoardView gameBoardView;
-	private int emoWidth;
+    private int emoWidth;
     private int emoHeight;
     volatile boolean gameEnded = false;
 
@@ -56,22 +54,18 @@ public class GameControllerImpl extends Activity implements GameController {
         int gameBoardViewSizeY = (size.y - (screenLayout.getPaddingTop() + screenLayout.getPaddingBottom()));
         int scoreBoardViewSizeX = (int) (screenSizeX * 0.1);
         int scoreBoardViewSizeY = (gameBoardViewSizeY / 3);
-        this.emoWidth = gameBoardViewSizeX / X_MAX;
-        this.emoHeight = gameBoardViewSizeY / Y_MAX;
 
         Emoticon[][] emoticons = new AbstractEmoticon[X_MAX][Y_MAX];
-        BitmapCreator bitmapCreator = BitmapCreator.getInstance();
-        bitmapCreator.prepareScaledBitmaps(this, emoWidth, emoHeight);
-        EmoticonCreator emoCreator = new EmoticonCreatorImpl(bitmapCreator, emoWidth, emoHeight);
-        GridPopulator populator = new GridPopulatorImpl(emoCreator);
-        populator.populateBoard(emoticons);
-        this.gameModel = new GameModelImpl(this, populator, new MatchFinder(), emoticons, emoWidth, emoHeight);
-
+        this.emoWidth = gameBoardViewSizeX / X_MAX;
+        this.emoHeight = gameBoardViewSizeY / Y_MAX;
+        this.gameModel = new GameModelImpl(this, emoticons, emoWidth, emoHeight);
         this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, scoreBoardViewSizeY);
         this.gameBoardView = new GameBoardView(this, emoticons, gameBoardViewSizeX, gameBoardViewSizeY, emoWidth, emoHeight);
+
         LinearLayout.LayoutParams boardParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(gameBoardViewSizeX, gameBoardViewSizeY));
         boardParams.setMargins(screenLayout.getPaddingLeft(), 0, gameBoardViewSizeX, 0);
         LinearLayout.LayoutParams scoreParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(scoreBoardViewSizeX, scoreBoardViewSizeY));
+
         screenLayout.addView(scoreBoardView, scoreParams);
         screenLayout.addView(gameBoardView, boardParams);
     }

@@ -1,11 +1,10 @@
 package com.example.mark.msccomputerscienceproject;
 
+import android.content.Context;
 import android.util.Log;
 
-import com.example.mark.msccomputerscienceproject.emoticon_populator.BitmapCreator;
-import com.example.mark.msccomputerscienceproject.emoticon_populator.EmoticonCreator;
-import com.example.mark.msccomputerscienceproject.emoticon_populator.EmoticonCreatorImpl02;
-import com.example.mark.msccomputerscienceproject.emoticon_populator.GridPopulator;
+import com.example.mark.msccomputerscienceproject.emoticon_populator.AbstractGridPopulator;
+import com.example.mark.msccomputerscienceproject.emoticon_populator.GridPopulatorImpl;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -34,24 +33,23 @@ public class GameModelImpl implements GameModel {
     private final Object swapLock = new Object();
     private final Object dropLock = new Object();
 
-    private Selections selections;
     private GameController controller;
-    private GridPopulator populator;
-    private MatchFinder matchFinder;
     private Emoticon[][] emoticons;
-    private int emoWidth;
-    private int emoHeight;
+    private Selections selections;
+    private MatchFinder matchFinder;
+    private AbstractGridPopulator populator;
 
+    private int level = 1;
     private int currentLevelScore = 0;
 
-    public GameModelImpl(GameController controller, GridPopulator populator, MatchFinder matchFinder, Emoticon[][] emoticons, int emoWidth, int emoHeight) {
-        this.selections = new SelectionsImpl();
+    public GameModelImpl(GameController controller, Emoticon[][] emoticons, int emoWidth, int emoHeight) {
         this.controller = controller;
-        this.populator = populator;
-        this.matchFinder = matchFinder;
         this.emoticons = emoticons;
-        this.emoWidth = emoWidth;
-        this.emoHeight = emoHeight;
+        this.selections = new SelectionsImpl();
+        this.matchFinder = new MatchFinder();
+        Context context = (Context) controller;
+        this.populator = new GridPopulatorImpl(context, emoWidth, emoHeight);
+        this.populator.populateBoard(emoticons);
     }
 
     @Override
@@ -103,7 +101,7 @@ public class GameModelImpl implements GameModel {
         Log.d(TAG, "in handleSelection(int, int)");
         if (!emoticons[x][y].isDropping()) {
             emoticons[x][y].setIsSelected(true);
-            if (!(selections.selection01Made())) {
+            if (!selections.selection01Made()) {
                 selections.setSelection01(x, y);
             } else {
                 selections.setSelection02(x, y);
@@ -124,7 +122,6 @@ public class GameModelImpl implements GameModel {
         } else {
             unHighlightSelections();
             selections.resetUserSelections();
-
         }
     }
 
@@ -247,8 +244,8 @@ public class GameModelImpl implements GameModel {
         setToDrop();
         dropEmoticons();
         currentLevelScore = 0;
-        EmoticonCreator emoCreator02 = new EmoticonCreatorImpl02(BitmapCreator.getInstance(), emoWidth, emoHeight);
-        populator.setEmoticonCreator(emoCreator02);
+        level++;
+        populator.setEmoticonFactory(level);
         populator.populateBoard(emoticons);
     }
 

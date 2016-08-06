@@ -1,5 +1,7 @@
 package com.example.mark.msccomputerscienceproject.emoticon_populator;
 
+import android.content.Context;
+
 import com.example.mark.msccomputerscienceproject.*;
 
 /**
@@ -8,30 +10,46 @@ import com.example.mark.msccomputerscienceproject.*;
  * the start of the game, another emoticon is chosen until one that does not form a match is
  * found { @inheritDocs }
  */
-public abstract class AbstractGridPopulator implements GridPopulator {
+public abstract class AbstractGridPopulator {
 
     public static final int X_MAX = GameControllerImpl.X_MAX;
     public static final int Y_MAX = GameControllerImpl.Y_MAX;
     public static final int ROW_START = 0;
     public static final int COLUMN_TOP = 0;
-    private EmoticonCreator emoCreator;
+    public static final int LEVEL_ONE = 1;
+    public static final int LEVEL_TWO = 2;
+    protected AbstractEmoticonFactory emoFactory;
+    private Context context;
+    private int emoWidth;
+    private int emoHeight;
 
-    public AbstractGridPopulator(EmoticonCreator emoCreator) {
-        this.emoCreator = emoCreator;
+    public AbstractGridPopulator(Context context, int emoWidth, int emoHeight) {
+        this.context = context;
+        this.emoWidth = emoWidth;
+        this.emoHeight = emoHeight;
+        this.emoFactory = new EmoticonFactoryLevel01(context, emoWidth, emoHeight);
     }
 
-    @Override
-    public void setEmoticonCreator(EmoticonCreator emoCreator) {
-        this.emoCreator = emoCreator;
+    public abstract void populateBoard(Emoticon[][] emoticons);
+
+    public void setEmoticonFactory(int level) {
+        switch (level) {
+            case LEVEL_ONE:
+                emoFactory = new EmoticonFactoryLevel01(context, emoWidth, emoHeight);
+                break;
+            case LEVEL_TWO:
+                emoFactory = new EmoticonFactoryLevel02(context, emoWidth, emoHeight);
+                break;
+            default:
+                break;
+        }
     }
 
-    @Override
     public Emoticon getRandomEmoticon(int x, int y, int offScreenStartPositionY) {
-        return emoCreator.createRandomEmoticon(x, y, offScreenStartPositionY);
+        return emoFactory.createRandomEmoticon(x, y, offScreenStartPositionY);
     }
 
-    @Override
     public Emoticon getEmptyEmoticon(int x, int y) {
-        return emoCreator.createEmptyEmoticon(x, y);
+        return emoFactory.createEmptyEmoticon(x, y);
     }
 }

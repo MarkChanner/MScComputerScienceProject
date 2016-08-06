@@ -1,5 +1,6 @@
 package com.example.mark.msccomputerscienceproject.emoticon_populator;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 
 import com.example.mark.msccomputerscienceproject.*;
@@ -9,16 +10,10 @@ import java.util.Random;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public class EmoticonCreatorImpl implements EmoticonCreator {
+public class EmoticonFactoryLevel01 extends AbstractEmoticonFactory {
 
-    private BitmapCreator bitmapCreator;
-    private int emoWidth;
-    private int emoHeight;
-
-    public EmoticonCreatorImpl(BitmapCreator bitmapCreator, int emoWidth, int emoHeight) {
-        this.bitmapCreator = bitmapCreator;
-        this.emoWidth = emoWidth;
-        this.emoHeight = emoHeight;
+    public EmoticonFactoryLevel01(Context context, int emoWidth, int emoHeight) {
+        super(context, emoWidth, emoHeight);
     }
 
     /**
@@ -26,6 +21,7 @@ public class EmoticonCreatorImpl implements EmoticonCreator {
      *
      * @return EmoticonImpl
      */
+    @Override
     public Emoticon createRandomEmoticon(int x, int y, int offScreenStartPositionY) {
         Random random = new Random();
         String emoID = null;
@@ -57,6 +53,7 @@ public class EmoticonCreatorImpl implements EmoticonCreator {
         return new EmoticonImpl(x, y, emoWidth, emoHeight, bitmap, emoID, offScreenStartPositionY);
     }
 
+    @Override
     public Emoticon createSpecifiedEmoticon(int x, int y, String emoType) {
         Bitmap bitmap = null;
         switch (emoType) {
@@ -79,14 +76,5 @@ public class EmoticonCreatorImpl implements EmoticonCreator {
                 break;
         }
         return new EmoticonImpl(x, y, emoWidth, emoHeight, bitmap, emoType, y);
-    }
-
-    public Emoticon createMockEmoticon(int x, int y) {
-        String mockID = ("" + x + y);
-        return new MockEmoticon(x, y, emoWidth, emoHeight, bitmapCreator.getMockBitmap(), mockID);
-    }
-
-    public Emoticon createEmptyEmoticon(int x, int y) {
-        return new EmptyEmoticon(x, y, emoWidth, emoHeight, bitmapCreator.getEmptyBitmap());
     }
 }
