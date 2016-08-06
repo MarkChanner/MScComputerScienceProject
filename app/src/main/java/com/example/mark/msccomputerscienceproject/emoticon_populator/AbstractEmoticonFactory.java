@@ -11,15 +11,31 @@ import com.example.mark.msccomputerscienceproject.MockEmoticon;
  */
 public abstract class AbstractEmoticonFactory {
 
+    public static final int LEVEL_ONE = 1;
+    public static final int LEVEL_TWO = 2;
     protected int emoWidth;
     protected int emoHeight;
     protected BitmapCreator bitmapCreator;
 
-    public AbstractEmoticonFactory(Context context, int emoWidth, int emoHeight) {
+    public AbstractEmoticonFactory(Context context, int level, int emoWidth, int emoHeight) {
         this.emoWidth = emoWidth;
         this.emoHeight = emoHeight;
-        this.bitmapCreator = BitmapCreator.getInstance();
-        this.bitmapCreator.prepareScaledBitmaps(context, emoWidth, emoHeight);
+        initializeBitmapCreator(context, level);
+    }
+
+    private void initializeBitmapCreator(Context context, int level) {
+        switch (level) {
+            case LEVEL_ONE:
+                this.bitmapCreator = BitmapCreator.getInstance();
+                this.bitmapCreator.prepareScaledBitmaps(context, emoWidth, emoHeight);
+                break;
+            case LEVEL_TWO:
+                this.bitmapCreator = BitmapCreator.getInstance();
+                this.bitmapCreator.prepareScaledBitmaps(context, emoWidth, emoHeight);
+                break;
+            default:
+                break;
+        }
     }
 
     public abstract Emoticon createRandomEmoticon(int x, int y, int offScreenStartPositionY);

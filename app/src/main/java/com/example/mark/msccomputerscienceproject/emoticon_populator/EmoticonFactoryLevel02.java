@@ -12,8 +12,8 @@ import java.util.Random;
  */
 public class EmoticonFactoryLevel02 extends AbstractEmoticonFactory {
 
-    public EmoticonFactoryLevel02(Context context, int emoWidth, int emoHeight) {
-        super(context, emoWidth, emoHeight);
+    public EmoticonFactoryLevel02(Context context, int level, int emoWidth, int emoHeight) {
+        super(context, level, emoWidth, emoHeight);
     }
 
     /**

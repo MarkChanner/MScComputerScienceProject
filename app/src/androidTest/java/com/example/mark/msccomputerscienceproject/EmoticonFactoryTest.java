@@ -32,8 +32,9 @@ public class EmoticonFactoryTest {
     public void testGenerateEmoticon() throws Exception {
         int x = 3;
         int y = 3;
+        int level = 1;
         int offScreenStartPositionY = 10;
-        AbstractEmoticonFactory emoCreator = new EmoticonFactoryLevel01(context, emoWidth, emoHeight);
+        AbstractEmoticonFactory emoCreator = new EmoticonFactoryLevel01(context, level, emoWidth, emoHeight);
         Emoticon emo = emoCreator.createRandomEmoticon(x, y, offScreenStartPositionY);
         assertThat(emo, instanceOf(Emoticon.class));
     }

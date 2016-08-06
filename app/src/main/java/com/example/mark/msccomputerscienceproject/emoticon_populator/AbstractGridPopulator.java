@@ -27,7 +27,7 @@ public abstract class AbstractGridPopulator {
         this.context = context;
         this.emoWidth = emoWidth;
         this.emoHeight = emoHeight;
-        this.emoFactory = new EmoticonFactoryLevel01(context, emoWidth, emoHeight);
+        this.emoFactory = new EmoticonFactoryLevel01(context, LEVEL_ONE, emoWidth, emoHeight);
     }
 
     public abstract void populateBoard(Emoticon[][] emoticons);
@@ -35,10 +35,10 @@ public abstract class AbstractGridPopulator {
     public void setEmoticonFactory(int level) {
         switch (level) {
             case LEVEL_ONE:
-                emoFactory = new EmoticonFactoryLevel01(context, emoWidth, emoHeight);
+                emoFactory = new EmoticonFactoryLevel01(context, LEVEL_ONE, emoWidth, emoHeight);
                 break;
             case LEVEL_TWO:
-                emoFactory = new EmoticonFactoryLevel02(context, emoWidth, emoHeight);
+                emoFactory = new EmoticonFactoryLevel02(context, LEVEL_TWO, emoWidth, emoHeight);
                 break;
             default:
                 break;
