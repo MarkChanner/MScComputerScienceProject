@@ -10,6 +10,7 @@
         android:theme="@style/AppTheme">
         <activity android:name="MockGameController"></activity>
         <activity android:name="GameControllerImpl"
+            android:label="Mixed Emotions"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
