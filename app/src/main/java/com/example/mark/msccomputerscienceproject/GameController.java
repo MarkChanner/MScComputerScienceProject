@@ -9,11 +9,11 @@ public interface GameController {
 
     void handle(MotionEvent event);
 
-    void updateEmoticonCoordinates();
+    void updateGameModelView();
 
-    void incrementScoreView(int points);
+    void updateScoreBoardView(int points);
 
-    void control(int second);
+    void controlGameModelView(int second);
 
     void playSound(String sound);
 

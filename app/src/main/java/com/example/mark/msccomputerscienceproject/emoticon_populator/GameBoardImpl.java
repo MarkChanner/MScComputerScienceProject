@@ -8,10 +8,10 @@ import com.example.mark.msccomputerscienceproject.Emoticon;
  * the start of the game, another emoticon is chosen until one that does not form a match is
  * found { @inheritDocs }
  */
-public class GridPopulatorImpl extends AbstractGridPopulator {
+public class GameBoardImpl extends AbstractGameBoard {
 
-    public GridPopulatorImpl(AbstractEmoticonFactory emoticonFactory) {
-        super(emoticonFactory);
+    public GameBoardImpl(AbstractEmoticonCreator emoCreator) {
+        super(emoCreator);
     }
 
     @Override

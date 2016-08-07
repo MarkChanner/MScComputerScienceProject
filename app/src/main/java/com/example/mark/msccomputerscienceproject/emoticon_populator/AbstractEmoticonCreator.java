@@ -7,13 +7,13 @@ import com.example.mark.msccomputerscienceproject.MockEmoticon;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public abstract class AbstractEmoticonFactory {
+public abstract class AbstractEmoticonCreator {
 
     protected int emoWidth;
     protected int emoHeight;
     protected BitmapCreator bitmapCreator;
 
-    public AbstractEmoticonFactory(BitmapCreator bitmapCreator, int emoWidth, int emoHeight) {
+    public AbstractEmoticonCreator(BitmapCreator bitmapCreator, int emoWidth, int emoHeight) {
         this.bitmapCreator = bitmapCreator;
         this.emoWidth = emoWidth;
         this.emoHeight = emoHeight;

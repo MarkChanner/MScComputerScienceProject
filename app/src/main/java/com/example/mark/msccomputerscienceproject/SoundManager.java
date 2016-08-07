@@ -45,7 +45,6 @@ public class SoundManager {
      */
     private SoundPool soundPool;
     private int swap_back = -1;
-    private int matchFoundID = -1;
     private int angryID = -1;
     private int happyID = -1;
     private int embarrassedID = -1;
@@ -73,9 +72,6 @@ public class SoundManager {
             AssetFileDescriptor descriptor;
 
             // Second parameter specifies priority of sound effect
-            descriptor = assetManager.openFd("match_found.ogg");
-            matchFoundID = soundPool.load(descriptor, 0);
-
             descriptor = assetManager.openFd("swap_back.ogg");
             swap_back = soundPool.load(descriptor, 0);
 
@@ -179,10 +175,6 @@ public class SoundManager {
         switch (sound) {
             case INVALID_MOVE:
                 soundPool.play(swap_back, 1, 1, 0, 0, 1);
-                break;
-
-            case MATCH_FOUND:
-                soundPool.play(matchFoundID, 1, 1, 0, 0, 1);
                 break;
 
             case ANGRY:

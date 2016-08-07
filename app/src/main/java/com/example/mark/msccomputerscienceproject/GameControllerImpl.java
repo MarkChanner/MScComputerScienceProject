@@ -1,15 +1,15 @@
 package com.example.mark.msccomputerscienceproject;
 
 import android.app.Activity;
-import android.graphics.Point;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Display;
-import android.view.MotionEvent;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.graphics.Point;
+import android.view.Display;
+import android.view.ViewGroup;
+import android.view.MotionEvent;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -26,8 +26,8 @@ public class GameControllerImpl extends Activity implements GameController {
     private MusicPlayer music;
     private SoundManager soundManager;
     private GameModel gameModel;
-    private ScoreBoardView scoreBoardView;
     private GameBoardView gameBoardView;
+    private ScoreBoardView scoreBoardView;
     private int emoWidth;
     private int emoHeight;
     volatile boolean gameEnded = false;
@@ -37,35 +37,37 @@ public class GameControllerImpl extends Activity implements GameController {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_main);
         LinearLayout screenLayout = (LinearLayout) findViewById(R.id.gameLayout);
-
-        Point size = new Point();
-        Display display = getWindowManager().getDefaultDisplay();
-        display.getSize(size);
 
         this.music = new MusicPlayer(this);
         this.soundManager = new SoundManager();
         this.soundManager.loadSound(this);
 
+        // Gets screen dimensions and uses them to specify View and Bitmap dimensions
+        Point size = new Point();
+        Display display = getWindowManager().getDefaultDisplay();
+        display.getSize(size);
         int screenSizeX = (size.x - ((screenLayout.getPaddingLeft() * 2) + screenLayout.getPaddingRight()));
         int gameBoardViewSizeX = (int) (screenSizeX * 0.9);
         int gameBoardViewSizeY = (size.y - (screenLayout.getPaddingTop() + screenLayout.getPaddingBottom()));
         int scoreBoardViewSizeX = (int) (screenSizeX * 0.1);
         int scoreBoardViewSizeY = (gameBoardViewSizeY / 3);
-
-        Emoticon[][] emoticons = new AbstractEmoticon[X_MAX][Y_MAX];
         this.emoWidth = gameBoardViewSizeX / X_MAX;
         this.emoHeight = gameBoardViewSizeY / Y_MAX;
-        this.gameModel = new GameModelImpl(this, emoticons, emoWidth, emoHeight);
-        this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, scoreBoardViewSizeY);
-        this.gameBoardView = new GameBoardView(this, emoticons, gameBoardViewSizeX, gameBoardViewSizeY, emoWidth, emoHeight);
 
+        // Instantiates Model and View objects
+        Emoticon[][] emoticons = new AbstractEmoticon[X_MAX][Y_MAX];
+        this.gameModel = new GameModelImpl(this, emoticons, emoWidth, emoHeight);
+        this.gameBoardView = new GameBoardView(this, emoticons, gameBoardViewSizeX, gameBoardViewSizeY, emoWidth, emoHeight);
+        this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, scoreBoardViewSizeY);
+
+        // Sets layout of Views
         LinearLayout.LayoutParams boardParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(gameBoardViewSizeX, gameBoardViewSizeY));
         boardParams.setMargins(screenLayout.getPaddingLeft(), 0, gameBoardViewSizeX, 0);
         LinearLayout.LayoutParams scoreParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(scoreBoardViewSizeX, scoreBoardViewSizeY));
 
+        // ScoreBoardView must be added to Layout before GameBoardView
         screenLayout.addView(scoreBoardView, scoreParams);
         screenLayout.addView(gameBoardView, boardParams);
     }
@@ -73,7 +75,7 @@ public class GameControllerImpl extends Activity implements GameController {
     @Override
     protected void onResume() {
         super.onResume();
-        // Log.d(TAG, "in onResume()");
+        Log.d(TAG, "onResume()");
         music.startMediaPlayer();
         gameBoardView.resume();
     }
@@ -81,7 +83,7 @@ public class GameControllerImpl extends Activity implements GameController {
     @Override
     protected void onPause() {
         super.onPause();
-        // Log.d(TAG, "in onPause()");
+        Log.d(TAG, "onPause()");
         music.pauseMediaPlayer();
         if (isFinishing()) {
             music.stopMediaPlayer();
@@ -92,7 +94,7 @@ public class GameControllerImpl extends Activity implements GameController {
 
     @Override
     public void handle(MotionEvent event) {
-        Log.d(TAG, "handle(MotionEvent");
+        Log.d(TAG, "handle(MotionEvent)");
         int screenX = (int) event.getX();
         int screenY = (int) event.getY();
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -106,19 +108,19 @@ public class GameControllerImpl extends Activity implements GameController {
     }
 
     @Override
-    public void updateEmoticonCoordinates() {
+    public void updateGameModelView() {
         gameModel.updateEmoticonSwapCoordinates();
         gameModel.updateEmoticonDropCoordinates();
     }
 
     @Override
-    public void incrementScoreView(int points) {
-        scoreBoardView.incrementScore(points);
+    public void controlGameModelView(int second) {
+        gameBoardView.control(second);
     }
 
     @Override
-    public void control(int second) {
-        gameBoardView.control(second);
+    public void updateScoreBoardView(int points) {
+        scoreBoardView.incrementScore(points);
     }
 
     @Override

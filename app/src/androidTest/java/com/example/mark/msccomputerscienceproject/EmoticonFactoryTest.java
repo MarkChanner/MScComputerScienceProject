@@ -3,9 +3,9 @@ package com.example.mark.msccomputerscienceproject;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 
-import com.example.mark.msccomputerscienceproject.emoticon_populator.AbstractEmoticonFactory;
 import com.example.mark.msccomputerscienceproject.emoticon_populator.BitmapCreator;
-import com.example.mark.msccomputerscienceproject.emoticon_populator.EmoticonFactoryLevel01;
+import com.example.mark.msccomputerscienceproject.emoticon_populator.EmoticonCreatorFactory;
+import com.example.mark.msccomputerscienceproject.emoticon_populator.AbstractEmoticonCreator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,24 +18,25 @@ import static org.junit.Assert.assertThat;
  */
 public class EmoticonFactoryTest {
 
-    private Context context;
-    private int emoWidth;
-    private int emoHeight;
+    private EmoticonCreatorFactory emoCreatorFactory;
 
     @Before
     public void setUp() throws Exception {
-        context = InstrumentationRegistry.getTargetContext();
-        emoWidth = 20;
-        emoHeight = 20;
+        Context context = InstrumentationRegistry.getTargetContext();
+        int emoWidth = 20;
+        int emoHeight = 20;
+        BitmapCreator bitmapCreator = BitmapCreator.getInstance();
+        bitmapCreator.prepareScaledBitmaps(context, emoWidth, emoHeight);
+        emoCreatorFactory = new EmoticonCreatorFactory(bitmapCreator, emoWidth, emoHeight);
     }
 
     @Test
     public void testGenerateEmoticon() throws Exception {
+        int level = 1;
         int x = 3;
         int y = 3;
         int offScreenStartPositionY = 10;
-        BitmapCreator bc = BitmapCreator.getInstance();
-        AbstractEmoticonFactory emoCreator = new EmoticonFactoryLevel01(bc, emoWidth, emoHeight);
+        AbstractEmoticonCreator emoCreator = emoCreatorFactory.getEmoticonCreator(level);
         Emoticon emo = emoCreator.createRandomEmoticon(x, y, offScreenStartPositionY);
         assertThat(emo, instanceOf(Emoticon.class));
     }

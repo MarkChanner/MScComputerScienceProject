@@ -8,29 +8,34 @@ import com.example.mark.msccomputerscienceproject.*;
  * the start of the game, another emoticon is chosen until one that does not form a match is
  * found { @inheritDocs }
  */
-public abstract class AbstractGridPopulator {
+public abstract class AbstractGameBoard {
 
     public static final int X_MAX = GameControllerImpl.X_MAX;
     public static final int Y_MAX = GameControllerImpl.Y_MAX;
     public static final int ROW_START = 0;
     public static final int COLUMN_TOP = 0;
-    protected AbstractEmoticonFactory emoFactory;
+    protected AbstractEmoticonCreator emoCreator;
 
-    public AbstractGridPopulator(AbstractEmoticonFactory emoFactory) {
-        this.emoFactory = emoFactory;
+    public AbstractGameBoard(AbstractEmoticonCreator emoCreator) {
+        this.emoCreator = emoCreator;
     }
 
+    /**
+     * abstract method to be implemented by subclasses
+     *
+     * @param emoticons the emoticon array to be populated with Emoticons
+     */
     public abstract void populateBoard(Emoticon[][] emoticons);
 
-    public void setEmoticonFactory(AbstractEmoticonFactory emoFactory) {
-        this.emoFactory = emoFactory;
-    }
-
     public Emoticon getRandomEmoticon(int x, int y, int offScreenStartPositionY) {
-        return emoFactory.createRandomEmoticon(x, y, offScreenStartPositionY);
+        return emoCreator.createRandomEmoticon(x, y, offScreenStartPositionY);
     }
 
     public Emoticon getEmptyEmoticon(int x, int y) {
-        return emoFactory.createEmptyEmoticon(x, y);
+        return emoCreator.createEmptyEmoticon(x, y);
+    }
+
+    public void setEmoticonFactory(AbstractEmoticonCreator emoCreator) {
+        this.emoCreator = emoCreator;
     }
 }

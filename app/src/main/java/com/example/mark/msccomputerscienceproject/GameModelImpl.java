@@ -3,11 +3,7 @@ package com.example.mark.msccomputerscienceproject;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.mark.msccomputerscienceproject.emoticon_populator.AbstractEmoticonFactory;
-import com.example.mark.msccomputerscienceproject.emoticon_populator.AbstractGridPopulator;
-import com.example.mark.msccomputerscienceproject.emoticon_populator.BitmapCreator;
-import com.example.mark.msccomputerscienceproject.emoticon_populator.EmoticonFactoryCreator;
-import com.example.mark.msccomputerscienceproject.emoticon_populator.GridPopulatorImpl;
+import com.example.mark.msccomputerscienceproject.emoticon_populator.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -30,6 +26,7 @@ public class GameModelImpl implements GameModel {
     public static final String EMPTY = "EMPTY";
     public static final String INVALID_MOVE = "INVALID_MOVE";
     public static final int ONE_SECOND = 1000;
+    public static final int MAX_GAME_LEVELS = 2;
 
     private volatile boolean animatingSwap = false;
     private volatile boolean animatingDrop = false;
@@ -41,25 +38,27 @@ public class GameModelImpl implements GameModel {
     private Selections selections;
     private MatchFinder matchFinder;
     private BitmapCreator bitmapCreator;
-    private EmoticonFactoryCreator emoFactoryCreator;
-    private AbstractEmoticonFactory emoCreator;
-    private AbstractGridPopulator populator;
-
+    private EmoticonCreatorFactory emoCreatorFactory;
+    private AbstractGameBoard emoticonPopulator;
     private int level = 1;
     private int currentLevelScore = 0;
 
     public GameModelImpl(GameController controller, Emoticon[][] emoticons, int emoWidth, int emoHeight) {
         this.controller = controller;
+        Context context = (Context) controller;
+        initializeGame(context, emoticons, emoWidth, emoHeight);
+    }
+
+    private void initializeGame(Context context, Emoticon[][] emoticons, int emoWidth, int emoHeight) {
         this.emoticons = emoticons;
         this.selections = new SelectionsImpl();
         this.matchFinder = new MatchFinder();
         this.bitmapCreator = BitmapCreator.getInstance();
-        Context context = (Context) controller;
         this.bitmapCreator.prepareScaledBitmaps(context, emoWidth, emoHeight);
-        this.emoFactoryCreator = new EmoticonFactoryCreator(context, emoWidth, emoHeight);
-        this.emoCreator = emoFactoryCreator.getEmoticonFactory(level);
-        this.populator = new GridPopulatorImpl(emoCreator);
-        this.populator.populateBoard(emoticons);
+        this.emoCreatorFactory = new EmoticonCreatorFactory(bitmapCreator, emoWidth, emoHeight);
+        AbstractEmoticonCreator emoCreator = emoCreatorFactory.getEmoticonCreator(level);
+        this.emoticonPopulator = new GameBoardImpl(emoCreator);
+        this.emoticonPopulator.populateBoard(emoticons);
     }
 
     @Override
@@ -232,7 +231,7 @@ public class GameModelImpl implements GameModel {
             highlightMatches(matchingX);
             highlightMatches(matchingY);
             controller.playSound(matchingX, matchingY);
-            controller.control(ONE_SECOND);
+            controller.controlGameModelView(ONE_SECOND);
             removeFromBoard(matchingX);
             removeFromBoard(matchingY);
             dropEmoticons();
@@ -254,10 +253,11 @@ public class GameModelImpl implements GameModel {
         setToDrop();
         dropEmoticons();
         currentLevelScore = 0;
-        level++;
-        AbstractEmoticonFactory emoticonCreator = emoFactoryCreator.getEmoticonFactory(level);
-        populator.setEmoticonFactory(emoticonCreator);
-        populator.populateBoard(emoticons);
+        if (this.level < MAX_GAME_LEVELS) {
+            level++;
+        }
+        emoticonPopulator.setEmoticonFactory(emoCreatorFactory.getEmoticonCreator(level));
+        emoticonPopulator.populateBoard(emoticons);
     }
 
     @Override
@@ -279,7 +279,7 @@ public class GameModelImpl implements GameModel {
             }
             points += (removeList.size() * 10);
         }
-        controller.incrementScoreView(points);
+        controller.updateScoreBoardView(points);
         currentLevelScore += points;
     }
 
@@ -290,7 +290,7 @@ public class GameModelImpl implements GameModel {
                 int x = e.getArrayX();
                 int y = e.getArrayY();
                 if (!(emoticons[x][y].getEmoticonType().equals(EMPTY))) {
-                    emoticons[x][y] = populator.getEmptyEmoticon(x, y);
+                    emoticons[x][y] = emoticonPopulator.getEmptyEmoticon(x, y);
                 }
             }
         }
@@ -314,9 +314,9 @@ public class GameModelImpl implements GameModel {
                         emoticons[x][y] = emoticons[x][runnerY];
                         emoticons[x][y].setArrayY(tempY);
                         emoticons[x][y].setDropping(true);
-                        emoticons[x][runnerY] = populator.getEmptyEmoticon(x, runnerY);
+                        emoticons[x][runnerY] = emoticonPopulator.getEmptyEmoticon(x, runnerY);
                     } else {
-                        emoticons[x][y] = populator.getRandomEmoticon(x, y, offScreenStartPosition);
+                        emoticons[x][y] = emoticonPopulator.getRandomEmoticon(x, y, offScreenStartPosition);
                         offScreenStartPosition--;
                     }
                 }
@@ -343,7 +343,7 @@ public class GameModelImpl implements GameModel {
     public void resetBoard() {
         selections.resetUserSelections();
         emoticons = new AbstractEmoticon[X_MAX][Y_MAX];
-        populator.populateBoard(emoticons);
+        emoticonPopulator.populateBoard(emoticons);
     }
 
     @Override

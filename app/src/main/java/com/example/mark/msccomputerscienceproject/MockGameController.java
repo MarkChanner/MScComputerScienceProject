@@ -98,18 +98,18 @@ public class MockGameController extends Activity implements GameController {
     }
 
     @Override
-    public void updateEmoticonCoordinates() {
+    public void updateGameModelView() {
         gameModel.updateEmoticonSwapCoordinates();
         gameModel.updateEmoticonDropCoordinates();
     }
 
     @Override
-    public void incrementScoreView(int points) {
+    public void updateScoreBoardView(int points) {
         scoreBoardView.incrementScore(points);
     }
 
     @Override
-    public void control(int second) {
+    public void controlGameModelView(int second) {
         gameBoardView.control(second);
     }
 
