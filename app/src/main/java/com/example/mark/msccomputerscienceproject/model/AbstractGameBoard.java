@@ -1,6 +1,4 @@
-package com.example.mark.msccomputerscienceproject.emoticon_populator;
-
-import com.example.mark.msccomputerscienceproject.*;
+package com.example.mark.msccomputerscienceproject.model;
 
 /**
  * Populates 2d Emoticons array at random.
@@ -10,8 +8,8 @@ import com.example.mark.msccomputerscienceproject.*;
  */
 public abstract class AbstractGameBoard {
 
-    public static final int X_MAX = GameControllerImpl.X_MAX;
-    public static final int Y_MAX = GameControllerImpl.Y_MAX;
+    public static final int X_MAX = GameModelImpl.X_MAX;
+    public static final int Y_MAX = GameModelImpl.Y_MAX;
     public static final int ROW_START = 0;
     public static final int COLUMN_TOP = 0;
     protected AbstractEmoticonCreator emoCreator;

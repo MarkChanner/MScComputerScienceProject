@@ -1,4 +1,4 @@
-package com.example.mark.msccomputerscienceproject;
+package com.example.mark.msccomputerscienceproject.model;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -6,8 +6,8 @@ import java.util.LinkedList;
 public class MatchFinder {
 
     private static final String TAG = "MatchFinder";
-    public static final int X_MAX = GameControllerImpl.X_MAX;
-    public static final int Y_MAX = GameControllerImpl.Y_MAX;
+    public static final int X_MAX = GameModelImpl.X_MAX;
+    public static final int Y_MAX = GameModelImpl.Y_MAX;
     public static final int ROW_START = 0;
     public static final int COLUMN_TOP = 0;
     public static final int COLUMN_BOTTOM = (Y_MAX - 1);
@@ -81,12 +81,11 @@ public class MatchFinder {
     }
 
     public boolean anotherMatchPossible(Emoticon[][] emoticons) {
-        // Log.d(TAG, "in anotherMatchPossible()");
+        //Log.d(TAG, "anotherMatchPossible(Emoticon[][])");
         return (verticalMatchPossible(emoticons) || horizontalMatchPossible(emoticons));
     }
 
     private boolean verticalMatchPossible(Emoticon[][] emoticons) {
-        //Log.d(TAG, "in verticalMatchPossible()");
         String type;
         for (int x = ROW_START; x < X_MAX; x++) {
             for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
@@ -107,7 +106,6 @@ public class MatchFinder {
     }
 
     private boolean verticalA(Emoticon[][] emoticons, String type, int x, int y) {
-        // Log.d(TAG, "in verticalA");
         return ((y - 2 >= COLUMN_TOP && verticalAboveA(emoticons, type, x, y)) ||
                 (y + 1 <= COLUMN_BOTTOM && verticalBelowA(emoticons, type, x, y)));
     }
@@ -117,7 +115,6 @@ public class MatchFinder {
      * COLUMN_TOP was  checked in the calling method
      */
     private boolean verticalAboveA(Emoticon[][] emoticons, String type, int x, int y) {
-        //Log.d(TAG, "in verticalAboveA");
         return ((y - 3 >= COLUMN_TOP && emoticons[x][y - 3].getEmoticonType().equals(type)) ||
                 (x - 1 >= ROW_START && emoticons[x - 1][y - 2].getEmoticonType().equals(type)) ||
                 (x + 1 < X_MAX && emoticons[x + 1][y - 2].getEmoticonType().equals(type)));
@@ -128,20 +125,17 @@ public class MatchFinder {
      * COLUMN_BOTTOM was checked in the calling method
      */
     private boolean verticalBelowA(Emoticon[][] emoticons, String type, int x, int y) {
-        // Log.d(TAG, "in verticalBelowA");
         return ((y + 2 <= COLUMN_BOTTOM && emoticons[x][y + 2].getEmoticonType().equals(type)) ||
                 (x - 1 >= ROW_START && emoticons[x - 1][y + 1].getEmoticonType().equals(type)) ||
                 (x + 1 < X_MAX && emoticons[x + 1][y + 1].getEmoticonType().equals(type)));
     }
 
     private boolean verticalB(Emoticon[][] emoticons, String type, int x, int y) {
-        // Log.d(TAG, "in verticalB");
         return ((x - 1 >= ROW_START && emoticons[x - 1][y - 1].getEmoticonType().equals(type)) ||
                 (x + 1 < X_MAX && emoticons[x + 1][y - 1].getEmoticonType().equals(type)));
     }
 
     private boolean horizontalMatchPossible(Emoticon[][] emoticons) {
-        // Log.d(TAG, "in horizontalMatchPossible()");
         String type;
         for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
             for (int x = ROW_START; x < X_MAX; x++) {
@@ -161,7 +155,6 @@ public class MatchFinder {
     }
 
     private boolean horizontalA(Emoticon[][] emoticons, String type, int x, int y) {
-        // Log.d(TAG, "in horizontalA()");
         return ((x + 2 < X_MAX && horizontalRightA(emoticons, type, x, y)) ||
                 (x - 1 >= ROW_START && horizontalLeftA(emoticons, type, x, y)));
     }

@@ -1,8 +1,4 @@
-package com.example.mark.msccomputerscienceproject.emoticon_populator;
-
-import com.example.mark.msccomputerscienceproject.Emoticon;
-import com.example.mark.msccomputerscienceproject.EmptyEmoticon;
-import com.example.mark.msccomputerscienceproject.MockEmoticon;
+package com.example.mark.msccomputerscienceproject.model;
 
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project

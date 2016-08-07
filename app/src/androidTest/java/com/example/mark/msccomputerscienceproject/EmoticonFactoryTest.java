@@ -1,11 +1,9 @@
 package com.example.mark.msccomputerscienceproject;
 
+import com.example.mark.msccomputerscienceproject.model.*;
+
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
-
-import com.example.mark.msccomputerscienceproject.emoticon_populator.BitmapCreator;
-import com.example.mark.msccomputerscienceproject.emoticon_populator.EmoticonCreatorFactory;
-import com.example.mark.msccomputerscienceproject.emoticon_populator.AbstractEmoticonCreator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -40,5 +38,4 @@ public class EmoticonFactoryTest {
         Emoticon emo = emoCreator.createRandomEmoticon(x, y, offScreenStartPositionY);
         assertThat(emo, instanceOf(Emoticon.class));
     }
-
 }

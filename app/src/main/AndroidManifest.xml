@@ -8,8 +8,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="MockGameController"></activity>
-        <activity android:name="GameControllerImpl"
+        <activity android:name=".controller.MockGameController"></activity>
+        <activity android:name=".controller.GameControllerImpl"
             android:label="Mixed Emotions"
             android:screenOrientation="landscape">
             <intent-filter>

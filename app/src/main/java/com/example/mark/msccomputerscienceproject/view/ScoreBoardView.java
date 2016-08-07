@@ -1,4 +1,6 @@
-package com.example.mark.msccomputerscienceproject;
+package com.example.mark.msccomputerscienceproject.view;
+
+import com.example.mark.msccomputerscienceproject.R;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -56,7 +58,7 @@ public class ScoreBoardView extends TextView {
         canvas.drawText("" + score, pointsX, pointsY, paint);
     }
 
-    protected void incrementScore(int points) {
+    public void incrementScore(int points) {
         score += points;
         invalidate();
     }

@@ -1,4 +1,9 @@
-package com.example.mark.msccomputerscienceproject;
+package com.example.mark.msccomputerscienceproject.view;
+
+import com.example.mark.msccomputerscienceproject.controller.GameController;
+import com.example.mark.msccomputerscienceproject.controller.GameControllerImpl;
+import com.example.mark.msccomputerscienceproject.model.Emoticon;
+import com.example.mark.msccomputerscienceproject.R;
 
 import android.graphics.Bitmap;
 import android.support.v4.content.ContextCompat;

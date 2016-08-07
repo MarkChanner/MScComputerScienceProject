@@ -1,4 +1,6 @@
-package com.example.mark.msccomputerscienceproject;
+package com.example.mark.msccomputerscienceproject.controller;
+
+import com.example.mark.msccomputerscienceproject.model.Emoticon;
 
 import android.view.MotionEvent;
 

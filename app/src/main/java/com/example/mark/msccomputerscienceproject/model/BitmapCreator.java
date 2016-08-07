@@ -1,10 +1,10 @@
-package com.example.mark.msccomputerscienceproject.emoticon_populator;
+package com.example.mark.msccomputerscienceproject.model;
+
+import com.example.mark.msccomputerscienceproject.R;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
-import com.example.mark.msccomputerscienceproject.R;
 
 public class BitmapCreator {
 
@@ -21,12 +21,6 @@ public class BitmapCreator {
     private Bitmap embarrassed2Bitmap;
     private Bitmap surprised2Bitmap;
     private Bitmap sad2Bitmap;
-
-    /*private Bitmap afraidBitmap;
-    private Bitmap cryingBitmap;
-    private Bitmap grumpyBitmap;
-    private Bitmap innocentBitmap;
-    private Bitmap tiredBitmap;*/
 
     private Bitmap emptyBitmap;
     private Bitmap mockBitmap;
@@ -120,26 +114,6 @@ public class BitmapCreator {
     public Bitmap getSad2Bitmap() {
         return sad2Bitmap;
     }
-
-    /*public Bitmap getAfraidBitmap() {
-        return afraidBitmap;
-    }
-
-    public Bitmap getCryingBitmap() {
-        return cryingBitmap;
-    }
-
-    public Bitmap getGrumpyBitmap() {
-        return grumpyBitmap;
-    }
-
-    public Bitmap getInnocentBitmap() {
-        return innocentBitmap;
-    }
-
-    public Bitmap getTiredBitmap() {
-        return tiredBitmap;
-    }*/
 
     public Bitmap getMockBitmap() {
         return mockBitmap;

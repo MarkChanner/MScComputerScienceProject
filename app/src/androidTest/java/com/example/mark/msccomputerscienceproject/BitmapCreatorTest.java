@@ -1,11 +1,10 @@
 package com.example.mark.msccomputerscienceproject;
 
+import com.example.mark.msccomputerscienceproject.model.BitmapCreator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.test.InstrumentationRegistry;
-
-import com.example.mark.msccomputerscienceproject.emoticon_populator.BitmapCreator;
 
 import org.junit.After;
 import org.junit.Before;

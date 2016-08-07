@@ -1,13 +1,7 @@
 package com.example.mark.msccomputerscienceproject.TestPackage;
 
+import com.example.mark.msccomputerscienceproject.model.*;
 import android.graphics.Bitmap;
-
-import com.example.mark.msccomputerscienceproject.AbstractEmoticon;
-import com.example.mark.msccomputerscienceproject.GameControllerImpl;
-import com.example.mark.msccomputerscienceproject.emoticon_populator.BitmapCreator;
-import com.example.mark.msccomputerscienceproject.Emoticon;
-import com.example.mark.msccomputerscienceproject.MatchFinder;
-import com.example.mark.msccomputerscienceproject.MockEmoticon;
 
 import org.junit.After;
 import org.junit.Before;
@@ -25,8 +19,8 @@ import static org.junit.Assert.assertEquals;
  */
 public class MatchFinderTest {
 
-    public static final int X_MAX = GameControllerImpl.X_MAX;
-    public static final int Y_MAX = GameControllerImpl.Y_MAX;
+    public static final int X_MAX = GameModelImpl.X_MAX;
+    public static final int Y_MAX = GameModelImpl.Y_MAX;
     public static final int ROW_START = 0;
     public static final int COLUMN_TOP = 0;
 

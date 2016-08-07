@@ -1,4 +1,4 @@
-package com.example.mark.msccomputerscienceproject.emoticon_populator;
+package com.example.mark.msccomputerscienceproject.model;
 
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project

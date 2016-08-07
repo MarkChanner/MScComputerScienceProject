@@ -1,6 +1,4 @@
-package com.example.mark.msccomputerscienceproject.emoticon_populator;
-
-import com.example.mark.msccomputerscienceproject.Emoticon;
+package com.example.mark.msccomputerscienceproject.model;
 
 /**
  * Populates 2d Emoticons array at random.

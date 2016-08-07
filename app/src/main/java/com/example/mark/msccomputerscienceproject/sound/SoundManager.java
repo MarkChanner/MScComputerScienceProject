@@ -1,4 +1,6 @@
-package com.example.mark.msccomputerscienceproject;
+package com.example.mark.msccomputerscienceproject.sound;
+
+import com.example.mark.msccomputerscienceproject.model.Emoticon;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
@@ -19,7 +21,6 @@ public class SoundManager {
     private static final String TAG = "SoundManager";
 
     public static final String INVALID_MOVE = "INVALID_MOVE";
-    public static final String MATCH_FOUND = "MATCH_FOUND";
     public static final String MIXED_EMOTIONS = "MIXED_EMOTIONS";
 
     public static final String ANGRY = "ANGRY";
@@ -28,17 +29,14 @@ public class SoundManager {
     public static final String SURPRISED = "SURPRISED";
     public static final String SAD = "SAD";
 
+    /**
+     * The below will become new emotions
+     */
     public static final String ANGRY2 = "ANGRY2";
     public static final String HAPPY2 = "HAPPY2";
     public static final String EMBARRASSED2 = "EMBARRASSED2";
     public static final String SURPRISED2 = "SURPRISED2";
     public static final String SAD2 = "SAD2";
-
-    /*public static final String AFRAID = "AFRAID";
-    public static final String CRYING = "CRYING";
-    public static final String GRUMPY = "GRUMPY";
-    public static final String INNOCENT = "INNOCENT";
-    public static final String TIRED = "TIRED";*/
 
     /**
      * Try to keep the sound small and at a low bitrate
@@ -56,12 +54,6 @@ public class SoundManager {
     private int embarrassed2ID = -1;
     private int surprised2ID = -1;
     private int sad2ID = -1;
-
-    /*private int afraidID = -1;
-    private int cryingID = -1;
-    private int grumpyID = -1;
-    private int innocentID = -1;
-    private int tiredID = -1;*/
 
     private int mixedEmotionsID = -1;
 
@@ -105,22 +97,6 @@ public class SoundManager {
 
             descriptor = assetManager.openFd("sad2.ogg");
             sad2ID = soundPool.load(descriptor, 0);
-
-
-            /*descriptor = assetManager.openFd("afraid.ogg");
-            afraidID = soundPool.load(descriptor, 0);
-
-            descriptor = assetManager.openFd("crying.ogg");
-            cryingID = soundPool.load(descriptor, 0);
-
-            descriptor = assetManager.openFd("grumpy.ogg");
-            grumpyID = soundPool.load(descriptor, 0);
-
-            descriptor = assetManager.openFd("innocent.ogg");
-            innocentID = soundPool.load(descriptor, 0);
-
-            descriptor = assetManager.openFd("tired.ogg");
-            tiredID = soundPool.load(descriptor, 0);*/
 
             descriptor = assetManager.openFd("mixed_emotions.ogg");
             mixedEmotionsID = soundPool.load(descriptor, 0);
@@ -167,7 +143,7 @@ public class SoundManager {
                 }
             }
         }
-       // Log.d(TAG, "return FALSE from mixedEmoticonsSameDirection");
+        // Log.d(TAG, "return FALSE from mixedEmoticonsSameDirection");
         return false;
     }
 
@@ -216,26 +192,6 @@ public class SoundManager {
             case SAD2:
                 soundPool.play(sad2ID, 1, 1, 0, 0, 1);
                 break;
-
-            /*case AFRAID:
-                soundPool.play(afraidID, 1, 1, 0, 0, 1);
-                break;
-
-            case CRYING:
-                soundPool.play(cryingID, 1, 1, 0, 0, 1);
-                break;
-
-            case GRUMPY:
-                soundPool.play(grumpyID, 1, 1, 0, 0, 1);
-                break;
-
-            case INNOCENT:
-                soundPool.play(innocentID, 1, 1, 0, 0, 1);
-                break;
-
-            case TIRED:
-                soundPool.play(tiredID, 1, 1, 0, 0, 1);
-                break;*/
 
             case MIXED_EMOTIONS:
                 soundPool.play(mixedEmotionsID, 1, 1, 0, 0, 1);

@@ -1,15 +1,20 @@
-package com.example.mark.msccomputerscienceproject;
+package com.example.mark.msccomputerscienceproject.controller;
+
+import com.example.mark.msccomputerscienceproject.model.*;
+import com.example.mark.msccomputerscienceproject.view.*;
+import com.example.mark.msccomputerscienceproject.sound.*;
+import com.example.mark.msccomputerscienceproject.R;
 
 import android.app.Activity;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Display;
+import android.view.MotionEvent;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
-import android.graphics.Point;
-import android.view.Display;
-import android.view.ViewGroup;
-import android.view.MotionEvent;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -17,7 +22,7 @@ import java.util.LinkedList;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public class GameControllerImpl extends Activity implements GameController {
+public class MockGameController extends Activity implements GameController {
 
     private final static String TAG = "GameControllerImpl";
     public static final int X_MAX = 8;
@@ -26,8 +31,8 @@ public class GameControllerImpl extends Activity implements GameController {
     private MusicPlayer music;
     private SoundManager soundManager;
     private GameModel gameModel;
-    private GameBoardView gameBoardView;
     private ScoreBoardView scoreBoardView;
+    private GameBoardView gameBoardView;
     private int emoWidth;
     private int emoHeight;
     volatile boolean gameEnded = false;
@@ -37,17 +42,18 @@ public class GameControllerImpl extends Activity implements GameController {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_main);
         LinearLayout screenLayout = (LinearLayout) findViewById(R.id.gameLayout);
+
+        Point size = new Point();
+        Display display = getWindowManager().getDefaultDisplay();
+        display.getSize(size);
 
         this.music = new MusicPlayer(this);
         this.soundManager = new SoundManager();
         this.soundManager.loadSound(this);
 
-        // Gets screen dimensions and uses them to specify View and Bitmap dimensions
-        Point size = new Point();
-        Display display = getWindowManager().getDefaultDisplay();
-        display.getSize(size);
         int screenSizeX = (size.x - ((screenLayout.getPaddingLeft() * 2) + screenLayout.getPaddingRight()));
         int gameBoardViewSizeX = (int) (screenSizeX * 0.9);
         int gameBoardViewSizeY = (size.y - (screenLayout.getPaddingTop() + screenLayout.getPaddingBottom()));
@@ -56,18 +62,14 @@ public class GameControllerImpl extends Activity implements GameController {
         this.emoWidth = gameBoardViewSizeX / X_MAX;
         this.emoHeight = gameBoardViewSizeY / Y_MAX;
 
-        // Instantiates Model and View objects
         Emoticon[][] emoticons = new AbstractEmoticon[X_MAX][Y_MAX];
         this.gameModel = new GameModelImpl(this, emoticons, emoWidth, emoHeight);
-        this.gameBoardView = new GameBoardView(this, emoticons, gameBoardViewSizeX, gameBoardViewSizeY, emoWidth, emoHeight);
-        this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, scoreBoardViewSizeY);
 
-        // Sets layout of Views
+        this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, scoreBoardViewSizeY);
+        this.gameBoardView = new GameBoardView(this, emoticons, gameBoardViewSizeX, gameBoardViewSizeY, emoWidth, emoHeight);
         LinearLayout.LayoutParams boardParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(gameBoardViewSizeX, gameBoardViewSizeY));
         boardParams.setMargins(screenLayout.getPaddingLeft(), 0, gameBoardViewSizeX, 0);
         LinearLayout.LayoutParams scoreParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(scoreBoardViewSizeX, scoreBoardViewSizeY));
-
-        // ScoreBoardView must be added to Layout before GameBoardView
         screenLayout.addView(scoreBoardView, scoreParams);
         screenLayout.addView(gameBoardView, boardParams);
     }
@@ -75,26 +77,19 @@ public class GameControllerImpl extends Activity implements GameController {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume()");
-        music.startMediaPlayer();
+        Log.d(TAG, "in onResume()");
         gameBoardView.resume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(TAG, "onPause()");
-        music.pauseMediaPlayer();
-        if (isFinishing()) {
-            music.stopMediaPlayer();
-            music.releaseMediaPlayer();
-        }
+        Log.d(TAG, "in onPause()");
         gameBoardView.pause();
     }
 
     @Override
     public void handle(MotionEvent event) {
-        Log.d(TAG, "handle(MotionEvent)");
         int screenX = (int) event.getX();
         int screenY = (int) event.getY();
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -114,23 +109,23 @@ public class GameControllerImpl extends Activity implements GameController {
     }
 
     @Override
-    public void controlGameBoardView(int second) {
-        gameBoardView.control(second);
-    }
-
-    @Override
     public void updateScoreBoardView(int points) {
         scoreBoardView.incrementScore(points);
     }
 
     @Override
+    public void controlGameBoardView(int second) {
+        gameBoardView.control(second);
+    }
+
+    @Override
     public void playSound(ArrayList<LinkedList<Emoticon>> matchingX, ArrayList<LinkedList<Emoticon>> matchingY) {
-        soundManager.announceMatchedEmoticons(matchingX, matchingY);
+        // do nothing
     }
 
     @Override
     public void playSound(String sound) {
-        soundManager.playSound(sound);
+        // do nothing
     }
 
     @Override
