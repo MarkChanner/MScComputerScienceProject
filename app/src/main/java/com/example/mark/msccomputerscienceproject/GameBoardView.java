@@ -85,7 +85,7 @@ public class GameBoardView extends SurfaceView implements Runnable {
     }
 
     public void control(int ms) {
-        //  Log.d(TAG, "in controlGameModelView(int)");
+        //  Log.d(TAG, "in controlGameBoardView(int)");
         try {
             Thread.sleep(ms);
         } catch (InterruptedException e) {
@@ -120,7 +120,7 @@ public class GameBoardView extends SurfaceView implements Runnable {
         while (running) {
             if (surfaceHolder.getSurface().isValid()) {
                 canvas = surfaceHolder.lockCanvas();
-                controller.updateGameModelView();
+                controller.updateModel();
                 drawBoard(canvas);
                 surfaceHolder.unlockCanvasAndPost(canvas);
             }

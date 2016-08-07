@@ -25,7 +25,7 @@ public abstract class AbstractGameBoard {
      *
      * @param emoticons the emoticon array to be populated with Emoticons
      */
-    public abstract void populateBoard(Emoticon[][] emoticons);
+    public abstract void populate(Emoticon[][] emoticons);
 
     public Emoticon getRandomEmoticon(int x, int y, int offScreenStartPositionY) {
         return emoCreator.createRandomEmoticon(x, y, offScreenStartPositionY);

@@ -98,7 +98,7 @@ public class MockGameController extends Activity implements GameController {
     }
 
     @Override
-    public void updateGameModelView() {
+    public void updateModel() {
         gameModel.updateEmoticonSwapCoordinates();
         gameModel.updateEmoticonDropCoordinates();
     }
@@ -109,7 +109,7 @@ public class MockGameController extends Activity implements GameController {
     }
 
     @Override
-    public void controlGameModelView(int second) {
+    public void controlGameBoardView(int second) {
         gameBoardView.control(second);
     }
 

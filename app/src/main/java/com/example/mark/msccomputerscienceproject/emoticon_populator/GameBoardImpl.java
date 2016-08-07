@@ -15,7 +15,7 @@ public class GameBoardImpl extends AbstractGameBoard {
     }
 
     @Override
-    public void populateBoard(Emoticon[][] emoticons) {
+    public void populate(Emoticon[][] emoticons) {
         Emoticon newEmoticon;
         for (int x = ROW_START; x < X_MAX; x++) {
             int dropGap = Y_MAX * 2;
