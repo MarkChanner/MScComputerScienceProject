@@ -3,13 +3,13 @@ package com.example.mark.msccomputerscienceproject.model;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public abstract class AbstractEmoticonCreator implements EmoticonCreator {
+public abstract class AbstractEmoticonFactory implements EmoticonFactory {
 
     protected int emoWidth;
     protected int emoHeight;
     protected BitmapCreator bitmapCreator;
 
-    public AbstractEmoticonCreator(BitmapCreator bitmapCreator, int emoWidth, int emoHeight) {
+    public AbstractEmoticonFactory(BitmapCreator bitmapCreator, int emoWidth, int emoHeight) {
         this.bitmapCreator = bitmapCreator;
         this.emoWidth = emoWidth;
         this.emoHeight = emoHeight;

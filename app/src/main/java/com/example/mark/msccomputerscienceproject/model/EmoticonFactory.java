@@ -3,7 +3,7 @@ package com.example.mark.msccomputerscienceproject.model;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public interface EmoticonCreator {
+public interface EmoticonFactory {
 
     Emoticon getRandomEmoticon(int x, int y, int offScreenStartPositionY);
 

@@ -7,9 +7,9 @@ import java.util.Random;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public class EmoticonCreatorLevel01 extends AbstractEmoticonCreator {
+public class EmoticonFactoryLevel01 extends AbstractEmoticonFactory {
 
-    public EmoticonCreatorLevel01(BitmapCreator bitmapCreator, int emoWidth, int emoHeight) {
+    public EmoticonFactoryLevel01(BitmapCreator bitmapCreator, int emoWidth, int emoHeight) {
         super(bitmapCreator, emoWidth, emoHeight);
     }
 

@@ -10,7 +10,7 @@ public class GameBoardImpl implements GameBoard {
     public static final int ROW_START = 0;
     public static final int COLUMN_TOP = 0;
     private Emoticon[][] emoticons = new AbstractEmoticon[X_MAX][Y_MAX];
-    private AbstractEmoticonCreator emoCreator;
+    private AbstractEmoticonFactory emoFactory;
     private BitmapCreator bitmapCreator;
     private int emoWidth;
     private int emoHeight;
@@ -24,20 +24,20 @@ public class GameBoardImpl implements GameBoard {
 
     public void setEmoticonCreator(int level) {
         if (level == LEVEL_ONE) {
-            emoCreator = new EmoticonCreatorLevel01(bitmapCreator, emoWidth, emoHeight);
+            emoFactory = new EmoticonFactoryLevel01(bitmapCreator, emoWidth, emoHeight);
         } else if (level == LEVEL_TWO) {
-            emoCreator = new EmoticonCreatorLevel02(bitmapCreator, emoWidth, emoHeight);
+            emoFactory = new EmoticonFactoryLevel02(bitmapCreator, emoWidth, emoHeight);
         } else {
-            emoCreator = new EmoticonCreatorLevel02(bitmapCreator, emoWidth, emoHeight);
+            emoFactory = new EmoticonFactoryLevel02(bitmapCreator, emoWidth, emoHeight);
         }
     }
 
     public Emoticon getRandomGamePiece(int x, int y, int offScreenStartPosition) {
-        return emoCreator.getRandomEmoticon(x, y, offScreenStartPosition);
+        return emoFactory.getRandomEmoticon(x, y, offScreenStartPosition);
     }
 
     public void setRandomGamePiece(int x, int y, int offScreenStartPosition) {
-        emoticons[x][y] = emoCreator.getRandomEmoticon(x, y, offScreenStartPosition);
+        emoticons[x][y] = emoFactory.getRandomEmoticon(x, y, offScreenStartPosition);
     }
 
     public void setBlankGamePiece(int x, int y) {
@@ -45,7 +45,7 @@ public class GameBoardImpl implements GameBoard {
     }
 
     public Emoticon getEmptyGamePiece(int x, int y) {
-        return emoCreator.createEmptyEmoticon(x, y);
+        return emoFactory.createEmptyEmoticon(x, y);
     }
 
     public Emoticon getGamePiece(int x, int y) {
