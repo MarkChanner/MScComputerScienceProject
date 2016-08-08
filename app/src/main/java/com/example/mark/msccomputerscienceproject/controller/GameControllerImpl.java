@@ -66,7 +66,7 @@ public class GameControllerImpl extends Activity implements GameController {
         bitmapCreator.prepareScaledBitmaps(this, emoWidth, emoHeight);
         EmoticonCreatorFactory emoCreatorFactory = new EmoticonCreatorFactory(bitmapCreator, emoWidth, emoHeight);
         int level = 1;
-        GameBoardImpl gameBoard = new GameBoardImpl(emoCreatorFactory, level);
+        GameBoard gameBoard = new GameBoardImpl(emoCreatorFactory, level);
         this.gameModel = new GameModelImpl(this, gameBoard);
         this.gameBoardView = new GameBoardView(this, gameBoard, gameBoardViewSizeX, gameBoardViewSizeY, emoWidth, emoHeight);
         this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, scoreBoardViewSizeY);

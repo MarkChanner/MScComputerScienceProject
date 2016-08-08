@@ -3,7 +3,7 @@ package com.example.mark.msccomputerscienceproject.view;
 import com.example.mark.msccomputerscienceproject.controller.GameController;
 import com.example.mark.msccomputerscienceproject.controller.GameControllerImpl;
 import com.example.mark.msccomputerscienceproject.model.Emoticon;
-import com.example.mark.msccomputerscienceproject.model.GameBoardImpl;
+import com.example.mark.msccomputerscienceproject.model.GameBoard;
 import com.example.mark.msccomputerscienceproject.R;
 
 import android.graphics.Bitmap;
@@ -32,7 +32,7 @@ public class GameBoardView extends SurfaceView implements Runnable {
     private final Rect highlightMatchRect = new Rect();
     private SurfaceHolder surfaceHolder;
     private GameController controller;
-    private GameBoardImpl gamePieces;
+    private GameBoard gameBoard;
     private int emoWidth;
     private int emoHeight;
 
@@ -48,10 +48,10 @@ public class GameBoardView extends SurfaceView implements Runnable {
         super(controller);
     }
 
-    public GameBoardView(Context controller, GameBoardImpl gamePieces, int viewSizeX, int viewSizeY, int emoWidth, int emoHeight) {
+    public GameBoardView(Context controller, GameBoard gameBoard, int viewSizeX, int viewSizeY, int emoWidth, int emoHeight) {
         super(controller);
         this.controller = (GameController) controller;
-        this.gamePieces = gamePieces;
+        this.gameBoard = gameBoard;
         this.emoWidth = emoWidth;
         this.emoHeight = emoHeight;
         surfaceHolder = getHolder();
@@ -141,7 +141,7 @@ public class GameBoardView extends SurfaceView implements Runnable {
 
             for (int y = Y_MAX - 1; y >= 0; y--) {
                 for (int x = 0; x < X_MAX; x++) {
-                    Emoticon e = gamePieces.getGamePiece(x, y);
+                    Emoticon e = gameBoard.getGamePiece(x, y);
 
                     if (e.isPartOfMatch() || e.isSelected()) {
                         int emoToHighlightX = e.getViewPositionX();

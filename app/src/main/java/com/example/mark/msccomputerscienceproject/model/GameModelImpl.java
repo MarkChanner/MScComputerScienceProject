@@ -34,13 +34,13 @@ public class GameModelImpl implements GameModel {
     private final Object dropLock = new Object();
 
     private GameController controller;
-    private GameBoardImpl gameBoard;
+    private GameBoard gameBoard;
     private Selections selections;
     private MatchFinder matchFinder;
     private int level;
     private int currentLevelScore = 0;
 
-    public GameModelImpl(GameController controller, GameBoardImpl gameBoard) {
+    public GameModelImpl(GameController controller, GameBoard gameBoard) {
         this.controller = controller;
         this.gameBoard = gameBoard;
         initializeGame();
