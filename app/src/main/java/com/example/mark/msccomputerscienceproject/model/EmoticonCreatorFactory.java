@@ -27,15 +27,15 @@ public class EmoticonCreatorFactory {
      * @param level the next level of the game to create
      * @return AbstractEmoticonCreator subclass
      */
-    public AbstractEmoticonCreator getEmoticonCreator(int level) {
-        AbstractEmoticonCreator emoticonFactory;
+    public EmoticonCreator createEmoticonCreator(int level) {
+        EmoticonCreator emoticonFactory;
         switch (level) {
             case LEVEL_ONE:
                 emoticonFactory = new EmoticonCreatorLevel01(bitmapCreator, emoWidth, emoHeight);
                 break;
             case LEVEL_TWO:
                 emoticonFactory = new EmoticonCreatorLevel02(bitmapCreator, emoWidth, emoHeight);
-            break;
+                break;
             default:
                 emoticonFactory = new EmoticonCreatorLevel02(bitmapCreator, emoWidth, emoHeight);
                 break;

@@ -3,7 +3,7 @@ package com.example.mark.msccomputerscienceproject.model;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public abstract class AbstractEmoticonCreator {
+public abstract class AbstractEmoticonCreator implements EmoticonCreator {
 
     protected int emoWidth;
     protected int emoHeight;
@@ -16,13 +16,6 @@ public abstract class AbstractEmoticonCreator {
     }
 
     public abstract Emoticon createRandomEmoticon(int x, int y, int offScreenStartPositionY);
-
-    public abstract Emoticon createSpecifiedEmoticon(int x, int y, String emoType);
-
-    public Emoticon createMockEmoticon(int x, int y) {
-        String mockID = ("" + x + y);
-        return new MockEmoticon(x, y, emoWidth, emoHeight, bitmapCreator.getMockBitmap(), mockID);
-    }
 
     public Emoticon createEmptyEmoticon(int x, int y) {
         return new EmptyEmoticon(x, y, emoWidth, emoHeight, bitmapCreator.getEmptyBitmap());

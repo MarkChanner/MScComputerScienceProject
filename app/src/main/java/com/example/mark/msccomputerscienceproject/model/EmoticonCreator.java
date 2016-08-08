@@ -1,7 +1,12 @@
 package com.example.mark.msccomputerscienceproject.model;
 
 /**
- * Created by Mark on 08/08/2016.
+ * @author Mark Channer for Birkbeck MSc Computer Science project
  */
 public interface EmoticonCreator {
+
+    Emoticon createRandomEmoticon(int x, int y, int offScreenStartPositionY);
+
+    Emoticon createEmptyEmoticon(int x, int y);
+
 }

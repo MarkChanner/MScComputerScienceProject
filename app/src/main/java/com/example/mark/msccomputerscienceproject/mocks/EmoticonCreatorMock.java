@@ -1,7 +1,12 @@
 package com.example.mark.msccomputerscienceproject.mocks;
 
 /**
- * Created by Mark on 08/08/2016.
+ * @author Mark Channer for Birkbeck MSc Computer Science project
  */
 public interface EmoticonCreatorMock {
+
+    MockEmoticon createMockEmoticon(int x, int y);
+
+    MockEmoticon createSpecificMockEmoticon(int x, int y, String emoType);
+
 }

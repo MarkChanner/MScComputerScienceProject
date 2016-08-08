@@ -50,28 +50,4 @@ public class EmoticonCreatorLevel01 extends AbstractEmoticonCreator {
         return new EmoticonImpl(x, y, emoWidth, emoHeight, bitmap, emoID, offScreenStartPositionY);
     }
 
-    @Override
-    public Emoticon createSpecifiedEmoticon(int x, int y, String emoType) {
-        Bitmap bitmap = null;
-        switch (emoType) {
-            case "ANGRY":
-                bitmap = bitmapCreator.getAngryBitmap();
-                break;
-            case "HAPPY":
-                bitmap = bitmapCreator.getHappyBitmap();
-                break;
-            case "EMBARRASSED":
-                bitmap = bitmapCreator.getEmbarrassedBitmap();
-                break;
-            case "SURPRISED":
-                bitmap = bitmapCreator.getSurprisedBitmap();
-                break;
-            case "SAD":
-                bitmap = bitmapCreator.getSadBitmap();
-                break;
-            default:
-                break;
-        }
-        return new EmoticonImpl(x, y, emoWidth, emoHeight, bitmap, emoType, y);
-    }
 }

@@ -1,5 +1,6 @@
-package com.example.mark.msccomputerscienceproject.controller;
+package com.example.mark.msccomputerscienceproject.mocks;
 
+import com.example.mark.msccomputerscienceproject.controller.GameController;
 import com.example.mark.msccomputerscienceproject.model.*;
 import com.example.mark.msccomputerscienceproject.view.*;
 import com.example.mark.msccomputerscienceproject.sound.*;
@@ -62,14 +63,20 @@ public class MockGameController extends Activity implements GameController {
         this.emoWidth = gameBoardViewSizeX / X_MAX;
         this.emoHeight = gameBoardViewSizeY / Y_MAX;
 
-        Emoticon[][] emoticons = new AbstractEmoticon[X_MAX][Y_MAX];
-        this.gameModel = new GameModelImpl(this, emoticons, emoWidth, emoHeight);
-
+        // Instantiates Model and View objects
+        BitmapCreator bitmapCreator = BitmapCreator.getInstance();
+        bitmapCreator.prepareScaledBitmaps(this, emoWidth, emoHeight);
+        EmoticonCreatorFactory emoCreatorFactory = new EmoticonCreatorFactory(bitmapCreator, emoWidth, emoHeight);
+        int level = 1;
+        GameBoardImpl gameBoard = new GameBoardImpl(emoCreatorFactory, level);
+        this.gameModel = new GameModelImpl(this, gameBoard);
+        this.gameBoardView = new GameBoardView(this, gameBoard, gameBoardViewSizeX, gameBoardViewSizeY, emoWidth, emoHeight);
         this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, scoreBoardViewSizeY);
-        this.gameBoardView = new GameBoardView(this, emoticons, gameBoardViewSizeX, gameBoardViewSizeY, emoWidth, emoHeight);
+
         LinearLayout.LayoutParams boardParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(gameBoardViewSizeX, gameBoardViewSizeY));
         boardParams.setMargins(screenLayout.getPaddingLeft(), 0, gameBoardViewSizeX, 0);
         LinearLayout.LayoutParams scoreParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(scoreBoardViewSizeX, scoreBoardViewSizeY));
+
         screenLayout.addView(scoreBoardView, scoreParams);
         screenLayout.addView(gameBoardView, boardParams);
     }

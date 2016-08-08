@@ -62,9 +62,13 @@ public class GameControllerImpl extends Activity implements GameController {
         this.emoHeight = gameBoardViewSizeY / Y_MAX;
 
         // Instantiates Model and View objects
-        Emoticon[][] emoticons = new AbstractEmoticon[X_MAX][Y_MAX];
-        this.gameModel = new GameModelImpl(this, emoticons, emoWidth, emoHeight);
-        this.gameBoardView = new GameBoardView(this, emoticons, gameBoardViewSizeX, gameBoardViewSizeY, emoWidth, emoHeight);
+        BitmapCreator bitmapCreator = BitmapCreator.getInstance();
+        bitmapCreator.prepareScaledBitmaps(this, emoWidth, emoHeight);
+        EmoticonCreatorFactory emoCreatorFactory = new EmoticonCreatorFactory(bitmapCreator, emoWidth, emoHeight);
+        int level = 1;
+        GameBoardImpl gameBoard = new GameBoardImpl(emoCreatorFactory, level);
+        this.gameModel = new GameModelImpl(this, gameBoard);
+        this.gameBoardView = new GameBoardView(this, gameBoard, gameBoardViewSizeX, gameBoardViewSizeY, emoWidth, emoHeight);
         this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, scoreBoardViewSizeY);
 
         // Sets layout of Views
