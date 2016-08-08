@@ -19,27 +19,22 @@ public class EmoticonCreatorFactory {
 
     /**
      * Returns the correct subclass of AbstractEmoticonCreator.
-     *
+     * <p/>
      * Note that there are only two levels at present, so any
      * value of level higher than two will return an
      * EmoticonCreatorLevel02 object.
      *
      * @param level the next level of the game to create
-     * @return AbstractEmoticonCreator subclass
+     * @return EmoticonCreator subclass
      */
     public EmoticonCreator createEmoticonCreator(int level) {
-        EmoticonCreator emoticonFactory;
-        switch (level) {
-            case LEVEL_ONE:
-                emoticonFactory = new EmoticonCreatorLevel01(bitmapCreator, emoWidth, emoHeight);
-                break;
-            case LEVEL_TWO:
-                emoticonFactory = new EmoticonCreatorLevel02(bitmapCreator, emoWidth, emoHeight);
-                break;
-            default:
-                emoticonFactory = new EmoticonCreatorLevel02(bitmapCreator, emoWidth, emoHeight);
-                break;
+        if (level == LEVEL_ONE) {
+            return new EmoticonCreatorLevel01(bitmapCreator, emoWidth, emoHeight);
+        } else if (level == LEVEL_TWO) {
+            return new EmoticonCreatorLevel02(bitmapCreator, emoWidth, emoHeight);
+        } else {
+            return new EmoticonCreatorLevel02(bitmapCreator, emoWidth, emoHeight);
         }
-        return emoticonFactory;
+
     }
 }
