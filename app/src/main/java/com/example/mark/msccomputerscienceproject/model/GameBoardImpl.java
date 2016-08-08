@@ -1,6 +1,6 @@
 package com.example.mark.msccomputerscienceproject.model;
 
-public class GameBoardImpl {
+public class GameBoardImpl implements GameBoard {
 
     public static final int X_MAX = GameModelImpl.X_MAX;
     public static final int Y_MAX = GameModelImpl.Y_MAX;
