@@ -16,7 +16,7 @@ import static org.junit.Assert.assertThat;
  */
 public class EmoticonFactoryTest {
 
-    private EmoticonCreatorFactory emoCreatorFactory;
+    /*private EmoticonCreatorFactory emoCreatorFactory;
 
     @Before
     public void setUp() throws Exception {
@@ -37,5 +37,5 @@ public class EmoticonFactoryTest {
         AbstractEmoticonCreator emoCreator = emoCreatorFactory.getEmoticonCreator(level);
         Emoticon emo = emoCreator.createRandomEmoticon(x, y, offScreenStartPositionY);
         assertThat(emo, instanceOf(Emoticon.class));
-    }
+    }*/
 }
