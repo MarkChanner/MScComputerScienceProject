@@ -16,10 +16,10 @@ public class EmoticonCreatorLevel01 extends AbstractEmoticonCreator {
     /**
      * Returns one of five emoticons that are chosen at random
      *
-     * @return EmoticonImpl
+     * @return Emoticon
      */
     @Override
-    public Emoticon createRandomEmoticon(int x, int y, int offScreenStartPositionY) {
+    protected Emoticon createRandomEmoticon(int x, int y, int offScreenStartPositionY) {
         Random random = new Random();
         String emoID = null;
         Bitmap bitmap = null;

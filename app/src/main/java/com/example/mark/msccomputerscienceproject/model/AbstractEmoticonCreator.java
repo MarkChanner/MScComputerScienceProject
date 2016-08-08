@@ -15,7 +15,12 @@ public abstract class AbstractEmoticonCreator implements EmoticonCreator {
         this.emoHeight = emoHeight;
     }
 
-    public abstract Emoticon createRandomEmoticon(int x, int y, int offScreenStartPositionY);
+    // Factory method defers instantiation of emoticon to subclass
+    protected abstract Emoticon createRandomEmoticon(int x, int y, int offScreenStartPositionY);
+
+    public Emoticon getRandomEmoticon(int x, int y, int offScreenStartPositionY) {
+        return createRandomEmoticon(x, y, offScreenStartPositionY);
+    }
 
     public Emoticon createEmptyEmoticon(int x, int y) {
         return new EmptyEmoticon(x, y, emoWidth, emoHeight, bitmapCreator.getEmptyBitmap());

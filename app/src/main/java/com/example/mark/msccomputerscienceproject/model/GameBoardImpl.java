@@ -9,26 +9,35 @@ public class GameBoardImpl implements GameBoard {
     public static final int Y_MAX = GameModelImpl.Y_MAX;
     public static final int ROW_START = 0;
     public static final int COLUMN_TOP = 0;
-
-    private EmoticonCreatorFactory emoCreatorFactory;
-    private EmoticonCreator emoCreator;
     private Emoticon[][] emoticons = new AbstractEmoticon[X_MAX][Y_MAX];
+    private AbstractEmoticonCreator emoCreator;
+    private BitmapCreator bitmapCreator;
+    private int emoWidth;
+    private int emoHeight;
 
-    public GameBoardImpl(EmoticonCreatorFactory emoCreatorFactory, int level) {
-        this.emoCreatorFactory = emoCreatorFactory;
+    public GameBoardImpl(BitmapCreator bitmapCreator, int emoWidth, int emoHeight, int level) {
+        this.bitmapCreator = bitmapCreator;
+        this.emoWidth = emoWidth;
+        this.emoHeight = emoHeight;
         setEmoticonCreator(level);
     }
 
     public void setEmoticonCreator(int level) {
-        emoCreator = emoCreatorFactory.createEmoticonCreator(level);
+        if (level == LEVEL_ONE) {
+            emoCreator = new EmoticonCreatorLevel01(bitmapCreator, emoWidth, emoHeight);
+        } else if (level == LEVEL_TWO) {
+            emoCreator = new EmoticonCreatorLevel02(bitmapCreator, emoWidth, emoHeight);
+        } else {
+            emoCreator = new EmoticonCreatorLevel02(bitmapCreator, emoWidth, emoHeight);
+        }
     }
 
     public Emoticon getRandomGamePiece(int x, int y, int offScreenStartPosition) {
-        return emoCreator.createRandomEmoticon(x, y, offScreenStartPosition);
+        return emoCreator.getRandomEmoticon(x, y, offScreenStartPosition);
     }
 
     public void setRandomGamePiece(int x, int y, int offScreenStartPosition) {
-        emoticons[x][y] = emoCreator.createRandomEmoticon(x, y, offScreenStartPosition);
+        emoticons[x][y] = emoCreator.getRandomEmoticon(x, y, offScreenStartPosition);
     }
 
     public void setBlankGamePiece(int x, int y) {

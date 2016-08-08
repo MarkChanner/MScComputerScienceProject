@@ -66,9 +66,9 @@ public class MockGameController extends Activity implements GameController {
         // Instantiates Model and View objects
         BitmapCreator bitmapCreator = BitmapCreator.getInstance();
         bitmapCreator.prepareScaledBitmaps(this, emoWidth, emoHeight);
-        EmoticonCreatorFactory emoCreatorFactory = new EmoticonCreatorFactory(bitmapCreator, emoWidth, emoHeight);
+        //EmoticonCreatorFactory emoCreatorFactory = new EmoticonCreatorFactory(bitmapCreator, emoWidth, emoHeight);
         int level = 1;
-        GameBoardImpl gameBoard = new GameBoardImpl(emoCreatorFactory, level);
+        GameBoard gameBoard = new GameBoardImpl(bitmapCreator, emoWidth, emoHeight, level);
         this.gameModel = new GameModelImpl(this, gameBoard);
         this.gameBoardView = new GameBoardView(this, gameBoard, gameBoardViewSizeX, gameBoardViewSizeY, emoWidth, emoHeight);
         this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, scoreBoardViewSizeY);
