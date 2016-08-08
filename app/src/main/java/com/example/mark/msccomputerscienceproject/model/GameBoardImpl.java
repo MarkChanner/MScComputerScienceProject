@@ -10,7 +10,7 @@ public class GameBoardImpl implements GameBoard {
     public static final int ROW_START = 0;
     public static final int COLUMN_TOP = 0;
     private Emoticon[][] emoticons = new AbstractEmoticon[X_MAX][Y_MAX];
-    private AbstractEmoticonFactory emoFactory;
+    private EmoticonFactory emoFactory;
     private BitmapCreator bitmapCreator;
     private int emoWidth;
     private int emoHeight;
