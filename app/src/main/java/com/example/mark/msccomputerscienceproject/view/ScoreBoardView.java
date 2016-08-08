@@ -11,6 +11,9 @@ import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
 import android.widget.TextView;
 
+/**
+ * @author Mark Channer for Birkbeck MSc Computer Science project
+ */
 public class ScoreBoardView extends TextView {
 
     public static final int ZERO = 0;

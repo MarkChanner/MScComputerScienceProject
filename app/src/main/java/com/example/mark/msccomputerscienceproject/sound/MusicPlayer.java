@@ -8,6 +8,9 @@ import android.util.Log;
 
 import java.io.IOException;
 
+/**
+ * @author Mark Channer for Birkbeck MSc Computer Science project
+ */
 public class MusicPlayer {
 
     private final static String TAG = "MusicPlayer";

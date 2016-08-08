@@ -6,6 +6,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+/**
+ * @author Mark Channer for Birkbeck MSc Computer Science project
+ */
 public class BitmapCreator {
 
     private static BitmapCreator instance;

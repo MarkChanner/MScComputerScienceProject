@@ -3,6 +3,9 @@ package com.example.mark.msccomputerscienceproject.model;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+/**
+ * @author Mark Channer for Birkbeck MSc Computer Science project
+ */
 public class MatchFinder {
 
     private static final String TAG = "MatchFinder";

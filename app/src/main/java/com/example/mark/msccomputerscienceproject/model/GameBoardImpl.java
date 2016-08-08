@@ -1,5 +1,8 @@
 package com.example.mark.msccomputerscienceproject.model;
 
+/**
+ * @author Mark Channer for Birkbeck MSc Computer Science project
+ */
 public class GameBoardImpl implements GameBoard {
 
     public static final int X_MAX = GameModelImpl.X_MAX;

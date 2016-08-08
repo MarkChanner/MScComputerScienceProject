@@ -7,6 +7,9 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+/**
+ * @author Mark Channer for Birkbeck MSc Computer Science project
+ */
 public interface GameController {
 
     void handle(MotionEvent event);
