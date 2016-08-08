@@ -1,6 +1,10 @@
-package com.example.mark.msccomputerscienceproject.model;
+package com.example.mark.msccomputerscienceproject.mocks;
 
-public class MockGridPopulator01 extends AbstractGameBoard{
+import com.example.mark.msccomputerscienceproject.model.AbstractEmoticonCreator;
+import com.example.mark.msccomputerscienceproject.model.AbstractGameBoard;
+import com.example.mark.msccomputerscienceproject.model.Emoticon;
+
+public class MockGridPopulator01 extends AbstractGameBoard {
 
 
     public MockGridPopulator01(AbstractEmoticonCreator emoCreator) {
