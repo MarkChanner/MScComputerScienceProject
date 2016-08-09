@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public abstract class AbstractEmoticon {
+public abstract class GamePiece {
 
     public static final int DIVISOR = 2;
     private int arrayX;
@@ -26,7 +26,7 @@ public abstract class AbstractEmoticon {
     volatile boolean isPartOfMatch;
     volatile boolean isSelected;
 
-    public AbstractEmoticon(int arrayX, int arrayY, int emoWidth, int emoHeight, Bitmap bitmap, String emoType, int offScreenStartPositionY) {
+    public GamePiece(int arrayX, int arrayY, int emoWidth, int emoHeight, Bitmap bitmap, String emoType, int offScreenStartPositionY) {
         this.arrayX = arrayX;
         this.arrayY = arrayY;
         this.emoWidth = emoWidth;

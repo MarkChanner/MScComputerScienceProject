@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public class EmptyEmoticon extends AbstractEmoticon {
+public class EmptyEmoticon extends GamePiece {
 
     public static final String EMOTION_TYPE = "EMPTY";
 

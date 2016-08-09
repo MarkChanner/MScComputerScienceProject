@@ -126,7 +126,7 @@ public class MockGameController extends Activity implements GameController {
     }
 
     @Override
-    public void playSound(ArrayList<LinkedList<AbstractEmoticon>> matchingX, ArrayList<LinkedList<AbstractEmoticon>> matchingY) {
+    public void playSound(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
         // do nothing
     }
 

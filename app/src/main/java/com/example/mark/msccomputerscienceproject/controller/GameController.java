@@ -2,7 +2,7 @@ package com.example.mark.msccomputerscienceproject.controller;
 
 import android.view.MotionEvent;
 
-import com.example.mark.msccomputerscienceproject.model.AbstractEmoticon;
+import com.example.mark.msccomputerscienceproject.model.GamePiece;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -22,7 +22,7 @@ public interface GameController {
 
     void playSound(String sound);
 
-    void playSound(ArrayList<LinkedList<AbstractEmoticon>> matchingX, ArrayList<LinkedList<AbstractEmoticon>> matchingY);
+    void playSound(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY);
 
     boolean gameOver();
 

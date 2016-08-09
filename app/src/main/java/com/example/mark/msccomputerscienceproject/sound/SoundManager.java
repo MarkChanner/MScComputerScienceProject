@@ -7,7 +7,7 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.util.Log;
 
-import com.example.mark.msccomputerscienceproject.model.AbstractEmoticon;
+import com.example.mark.msccomputerscienceproject.model.GamePiece;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -106,7 +106,7 @@ public class SoundManager {
         }
     }
 
-    public void announceMatchedEmoticons(ArrayList<LinkedList<AbstractEmoticon>> matchingX, ArrayList<LinkedList<AbstractEmoticon>> matchingY) {
+    public void announceMatchedEmoticons(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
         //Log.d(TAG, "in PlayMatchedEmoticons method");
         if (mixedEmotionsSameDirection(matchingX)
                 || mixedEmotionsSameDirection(matchingY)
@@ -119,7 +119,7 @@ public class SoundManager {
         }
     }
 
-    private boolean mixedEmotionsSameDirection(ArrayList<LinkedList<AbstractEmoticon>> matchingLine) {
+    private boolean mixedEmotionsSameDirection(ArrayList<LinkedList<GamePiece>> matchingLine) {
         if (!matchingLine.isEmpty() && matchingLine.size() > 1) {
             String emoTypeMarker = matchingLine.get(0).getFirst().getEmoType();
             for (int i = 1; i < matchingLine.size(); i++) {
@@ -133,7 +133,7 @@ public class SoundManager {
         return false;
     }
 
-    private boolean mixedEmotionsCrossDirection(ArrayList<LinkedList<AbstractEmoticon>> matchingX, ArrayList<LinkedList<AbstractEmoticon>> matchingY) {
+    private boolean mixedEmotionsCrossDirection(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
         if (!(matchingX.isEmpty() || matchingY.isEmpty())) {
             String emoTypeMarker = matchingX.get(0).getFirst().getEmoType();
             for (int i = 0; i < matchingY.size(); i++) {

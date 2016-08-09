@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public abstract class MockAbstractEmoticon implements MockEmoticon {
+public abstract class MockGamePiece {
 
     public static final int DIVISOR = 2;
     private int arrayX;
@@ -26,7 +26,7 @@ public abstract class MockAbstractEmoticon implements MockEmoticon {
     volatile boolean isPartOfMatch;
     volatile boolean isSelected;
 
-    public MockAbstractEmoticon(int arrayX, int arrayY, int emoWidth, int emoHeight, Bitmap bitmap, String emoticonType) {
+    public MockGamePiece(int arrayX, int arrayY, int emoWidth, int emoHeight, Bitmap bitmap, String emoticonType) {
         this.arrayX = arrayX;
         this.arrayY = arrayY;
         this.emoWidth = emoWidth;
@@ -38,7 +38,6 @@ public abstract class MockAbstractEmoticon implements MockEmoticon {
         dropping = true;
     }
 
-    @Override
     public boolean isSwapping() {
         if (swappingUp) {
             return true;
@@ -53,7 +52,6 @@ public abstract class MockAbstractEmoticon implements MockEmoticon {
         }
     }
 
-    @Override
     public void updateSwapping() {
         if (swappingUp) {
             swapUp();
@@ -66,46 +64,38 @@ public abstract class MockAbstractEmoticon implements MockEmoticon {
         }
     }
 
-    @Override
     public boolean isDropping() {
         return dropping;
     }
 
-    @Override
     public void updateDropping() {
         if (dropping) {
             dropEmoticon();
         }
     }
 
-    @Override
     public void setIsSelected(boolean bool) {
         if (!isDropping()) {
             isSelected = bool;
         }
     }
 
-    @Override
     public boolean isSelected() {
         return isSelected;
     }
 
-    @Override
     public void setIsPartOfMatch(boolean bool) {
         isPartOfMatch = bool;
     }
 
-    @Override
     public boolean isPartOfMatch() {
         return isPartOfMatch;
     }
 
-    @Override
     public void setDropping(boolean bool) {
         dropping = bool;
     }
 
-    @Override
     public void dropEmoticon() {
         int newPosition = (arrayY * emoHeight);
         int pixelRate = pixelMovement;
@@ -118,12 +108,10 @@ public abstract class MockAbstractEmoticon implements MockEmoticon {
         }
     }
 
-    @Override
     public void setSwappingUp(boolean bool) {
         swappingUp = bool;
     }
 
-    @Override
     public void swapUp() {
         int newPosition = emoHeight * arrayY;
         int pixelRate = pixelMovement;
@@ -136,12 +124,10 @@ public abstract class MockAbstractEmoticon implements MockEmoticon {
         }
     }
 
-    @Override
     public void setSwappingDown(boolean bool) {
         swappingDown = bool;
     }
 
-    @Override
     public void swapDown() {
         int newPosition = emoHeight * arrayY;
         int pixelRate = pixelMovement;
@@ -154,12 +140,10 @@ public abstract class MockAbstractEmoticon implements MockEmoticon {
         }
     }
 
-    @Override
     public void setSwappingRight(boolean bool) {
         swappingRight = bool;
     }
 
-    @Override
     public void swapRight() {
         int newPosition = emoWidth * arrayX;
         int pixelRate = pixelMovement;
@@ -172,12 +156,10 @@ public abstract class MockAbstractEmoticon implements MockEmoticon {
         }
     }
 
-    @Override
     public void setSwappingLeft(boolean bool) {
         swappingLeft = bool;
     }
 
-    @Override
     public void swapLeft() {
         int newPosition = emoWidth * arrayX;
         int pixelRate = pixelMovement;
@@ -190,47 +172,38 @@ public abstract class MockAbstractEmoticon implements MockEmoticon {
         }
     }
 
-    @Override
     public int getArrayX() {
         return arrayX;
     }
 
-    @Override
     public void setArrayX(int arrayX) {
         this.arrayX = arrayX;
     }
 
-    @Override
     public int getArrayY() {
         return arrayY;
     }
 
-    @Override
     public void setArrayY(int arrayY) {
         this.arrayY = arrayY;
     }
 
-    @Override
     public int getViewPositionX() {
         return screenPositionX;
     }
 
-    @Override
     public int getViewPositionY() {
         return screenPositionY;
     }
 
-    @Override
     public Bitmap getBitmap() {
         return bitmap;
     }
 
-    @Override
     public String getEmoticonType() {
         return emoticonType;
     }
 
-    @Override
     public void setPixelMovement(int pixelMovement) {
         this.pixelMovement = pixelMovement;
     }

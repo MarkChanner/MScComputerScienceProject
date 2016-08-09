@@ -22,7 +22,7 @@ public class EmoticonCreatorMockImpl implements EmoticonCreatorMock {
     @Override
     public MockEmoticon createMockEmoticon(int x, int y) {
         String mockID = ("" + x + y);
-        return new MockEmoticonImpl(x, y, emoWidth, emoHeight, bitmapCreator.getMockBitmap(), mockID);
+        return new MockEmoticon(x, y, emoWidth, emoHeight, bitmapCreator.getMockBitmap(), mockID);
     }
 
     @Override
@@ -47,6 +47,6 @@ public class EmoticonCreatorMockImpl implements EmoticonCreatorMock {
             default:
                 break;
         }
-        return new MockEmoticonImpl(x, y, emoWidth, emoHeight, bitmap, emoType);
+        return new MockEmoticon(x, y, emoWidth, emoHeight, bitmap, emoType);
     }
 }

@@ -16,13 +16,13 @@ public abstract class AbstractEmoticonFactory {
     }
 
     // Factory method defers instantiation of emoticon to subclass
-    protected abstract AbstractEmoticon createRandomEmo(int x, int y, int offScreenStartPositionY);
+    protected abstract GamePiece createRandomEmo(int x, int y, int offScreenStartPositionY);
 
-    public AbstractEmoticon getRandomEmo(int x, int y, int offScreenStartPositionY) {
+    public GamePiece getRandomEmo(int x, int y, int offScreenStartPositionY) {
         return createRandomEmo(x, y, offScreenStartPositionY);
     }
 
-    public AbstractEmoticon createEmptyEmo(int x, int y) {
+    public GamePiece createEmptyEmo(int x, int y) {
         return new EmptyEmoticon(x, y, emoWidth, emoHeight, bitmapCreator.getEmptyBitmap());
     }
 

@@ -9,7 +9,7 @@ public class GameBoardImpl implements GameBoard {
     public static final int Y_MAX = GameModelImpl.Y_MAX;
     public static final int ROW_START = 0;
     public static final int COLUMN_TOP = 0;
-    private AbstractEmoticon[][] emoticons = new AbstractEmoticon[X_MAX][Y_MAX];
+    private GamePiece[][] emoticons = new GamePiece[X_MAX][Y_MAX];
     private AbstractEmoticonFactory emoFactory;
     private BitmapCreator bitmapCreator;
     private int emoWidth;
@@ -32,7 +32,7 @@ public class GameBoardImpl implements GameBoard {
         }
     }
 
-    public AbstractEmoticon getRandomGamePiece(int x, int y, int offScreenStartPosition) {
+    public GamePiece getRandomGamePiece(int x, int y, int offScreenStartPosition) {
         return emoFactory.getRandomEmo(x, y, offScreenStartPosition);
     }
 
@@ -44,15 +44,15 @@ public class GameBoardImpl implements GameBoard {
         emoticons[x][y] = getEmptyGamePiece(x, y);
     }
 
-    public AbstractEmoticon getEmptyGamePiece(int x, int y) {
+    public GamePiece getEmptyGamePiece(int x, int y) {
         return emoFactory.createEmptyEmo(x, y);
     }
 
-    public AbstractEmoticon getGamePiece(int x, int y) {
+    public GamePiece getGamePiece(int x, int y) {
         return emoticons[x][y];
     }
 
-    public void setGamePiece(int x, int y, AbstractEmoticon emo) {
+    public void setGamePiece(int x, int y, GamePiece emo) {
         this.emoticons[x][y] = emo;
     }
 
@@ -63,7 +63,7 @@ public class GameBoardImpl implements GameBoard {
     }
 
     public void populate() {
-        AbstractEmoticon randomEmo;
+        GamePiece randomEmo;
         for (int x = ROW_START; x < X_MAX; x++) {
 
             int dropGap = Y_MAX * 2;
@@ -92,7 +92,7 @@ public class GameBoardImpl implements GameBoard {
     }
 
     public void resetBoard() {
-        emoticons = new AbstractEmoticon[X_MAX][Y_MAX];
+        emoticons = new GamePiece[X_MAX][Y_MAX];
         populate();
     }
 }

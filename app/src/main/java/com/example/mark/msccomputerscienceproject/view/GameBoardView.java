@@ -1,9 +1,9 @@
 package com.example.mark.msccomputerscienceproject.view;
 
 import com.example.mark.msccomputerscienceproject.controller.*;
-import com.example.mark.msccomputerscienceproject.model.AbstractEmoticon;
 import com.example.mark.msccomputerscienceproject.model.GameBoard;
 import com.example.mark.msccomputerscienceproject.R;
+import com.example.mark.msccomputerscienceproject.model.GamePiece;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
@@ -164,7 +164,7 @@ public class GameBoardView extends SurfaceView implements Runnable {
     private void highlightAnyMatches(Canvas canvas) {
         for (int y = Y_MAX - 1; y >= 0; y--) {
             for (int x = 0; x < X_MAX; x++) {
-                AbstractEmoticon emo = board.getGamePiece(x, y);
+                GamePiece emo = board.getGamePiece(x, y);
 
                 if (emo.isPartOfMatch() || emo.isSelected()) {
                     int highlightX = emo.getViewPositionX();
