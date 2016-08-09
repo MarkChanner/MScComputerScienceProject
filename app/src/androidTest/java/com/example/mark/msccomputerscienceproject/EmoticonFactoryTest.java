@@ -16,26 +16,29 @@ import static org.junit.Assert.assertThat;
  */
 public class EmoticonFactoryTest {
 
-    /*private EmoticonCreatorFactory emoCreatorFactory;
+    private int emoWidth;
+    private int emoHeight;
 
     @Before
     public void setUp() throws Exception {
         Context context = InstrumentationRegistry.getTargetContext();
-        int emoWidth = 20;
-        int emoHeight = 20;
+        emoWidth = 20;
+        emoHeight = 20;
         BitmapCreator bitmapCreator = BitmapCreator.getInstance();
         bitmapCreator.prepareScaledBitmaps(context, emoWidth, emoHeight);
-        emoCreatorFactory = new EmoticonCreatorFactory(bitmapCreator, emoWidth, emoHeight);
     }
 
     @Test
     public void testGenerateEmoticon() throws Exception {
-        int level = 1;
         int x = 3;
         int y = 3;
         int offScreenStartPositionY = 10;
-        AbstractEmoticonCreator emoCreator = emoCreatorFactory.getEmoticonCreator(level);
-        Emoticon emo = emoCreator.createRandomEmo(x, y, offScreenStartPositionY);
-        assertThat(emo, instanceOf(Emoticon.class));
-    }*/
+        GamePieceFactory emoFactory01 = new EmoticonFactoryLevel01(emoWidth, emoHeight);
+        GamePieceFactory emoFactory02 = new EmoticonFactoryLevel01(emoWidth, emoHeight);
+        GamePiece emo01 = emoFactory01.createRandomGamePiece(x, y, offScreenStartPositionY);
+        GamePiece emo02 = emoFactory02.createRandomGamePiece(x, y, offScreenStartPositionY);
+        assertThat(emo01, instanceOf(Emoticon.class));
+        assertThat(emo02, instanceOf(Emoticon.class));
+
+    }
 }
