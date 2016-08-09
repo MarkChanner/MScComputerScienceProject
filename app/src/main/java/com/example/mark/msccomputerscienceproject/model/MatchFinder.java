@@ -16,10 +16,10 @@ public class MatchFinder {
     public static final int COLUMN_BOTTOM = (Y_MAX - 1);
     public static final String EMPTY = "EMPTY";
 
-    public ArrayList<LinkedList<Emoticon>> findVerticalMatches(GameBoard gameBoard) {
-        LinkedList<Emoticon> consecutiveEmoticons = new LinkedList<>();
-        ArrayList<LinkedList<Emoticon>> bigList = new ArrayList<>();
-        Emoticon emo;
+    public ArrayList<LinkedList<AbstractEmoticon>> findVerticalMatches(GameBoard gameBoard) {
+        LinkedList<AbstractEmoticon> consecutiveEmoticons = new LinkedList<>();
+        ArrayList<LinkedList<AbstractEmoticon>> bigList = new ArrayList<>();
+        AbstractEmoticon emo;
         for (int x = ROW_START; x < X_MAX; x++) {
             consecutiveEmoticons.add(gameBoard.getGamePiece(x, COLUMN_BOTTOM));
 
@@ -40,10 +40,10 @@ public class MatchFinder {
         return bigList;
     }
 
-    public ArrayList<LinkedList<Emoticon>> findHorizontalMatches(GameBoard gameBoard) {
-        LinkedList<Emoticon> consecutiveEmoticons = new LinkedList<>();
-        ArrayList<LinkedList<Emoticon>> bigList = new ArrayList<>();
-        Emoticon emo;
+    public ArrayList<LinkedList<AbstractEmoticon>> findHorizontalMatches(GameBoard gameBoard) {
+        LinkedList<AbstractEmoticon> consecutiveEmoticons = new LinkedList<>();
+        ArrayList<LinkedList<AbstractEmoticon>> bigList = new ArrayList<>();
+        AbstractEmoticon emo;
         for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
             consecutiveEmoticons.add(gameBoard.getGamePiece(ROW_START, y));
 
@@ -64,13 +64,13 @@ public class MatchFinder {
 
     }
 
-    private void examineList(LinkedList<Emoticon> consecutiveEmotions, ArrayList<LinkedList<Emoticon>> bigList) {
+    private void examineList(LinkedList<AbstractEmoticon> consecutiveEmotions, ArrayList<LinkedList<AbstractEmoticon>> bigList) {
         if ((consecutiveEmotions.size() >= 3) && (allSameType(consecutiveEmotions))) {
             bigList.add(consecutiveEmotions);
         }
     }
 
-    private boolean allSameType(LinkedList<Emoticon> consecutiveEmoticons) {
+    private boolean allSameType(LinkedList<AbstractEmoticon> consecutiveEmoticons) {
         String previousEmo = consecutiveEmoticons.getFirst().getEmoType();
         String nextEmo;
         for (int i = 1; i < consecutiveEmoticons.size(); i++) {

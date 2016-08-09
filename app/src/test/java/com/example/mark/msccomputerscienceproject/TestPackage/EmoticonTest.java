@@ -1,6 +1,5 @@
 package com.example.mark.msccomputerscienceproject.TestPackage;
 
-import com.example.mark.msccomputerscienceproject.model.Emoticon;
 import com.example.mark.msccomputerscienceproject.model.EmoticonImpl;
 import android.graphics.Bitmap;
 

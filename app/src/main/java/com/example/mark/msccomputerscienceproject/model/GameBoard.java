@@ -10,17 +10,17 @@ public interface GameBoard {
 
     void setEmoFactory(int level);
 
-    Emoticon getRandomGamePiece(int x, int y, int offScreenStartPosition);
+    AbstractEmoticon getRandomGamePiece(int x, int y, int offScreenStartPosition);
 
     void setRandomGamePiece(int x, int y, int offScreenStartPosition);
 
     void setBlankGamePiece(int x, int y);
 
-    Emoticon getEmptyGamePiece(int x, int y);
+    AbstractEmoticon getEmptyGamePiece(int x, int y);
 
-    Emoticon getGamePiece(int x, int y);
+    AbstractEmoticon getGamePiece(int x, int y);
 
-    void setGamePiece(int x, int y, Emoticon emoticon);
+    void setGamePiece(int x, int y, AbstractEmoticon emoticon);
 
     void setToDrop(int x, int y);
 

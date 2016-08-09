@@ -132,7 +132,7 @@ public class GameControllerImpl extends Activity implements GameController {
     }
 
     @Override
-    public void playSound(ArrayList<LinkedList<Emoticon>> matchingX, ArrayList<LinkedList<Emoticon>> matchingY) {
+    public void playSound(ArrayList<LinkedList<AbstractEmoticon>> matchingX, ArrayList<LinkedList<AbstractEmoticon>> matchingY) {
         soundManager.announceMatchedEmoticons(matchingX, matchingY);
     }
 

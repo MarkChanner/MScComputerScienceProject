@@ -129,8 +129,8 @@ public class GameModelImpl implements GameModel {
         unHighlightSelections();
         swapSelections(sel1, sel2);
 
-        ArrayList<LinkedList<Emoticon>> matchingX = matchFinder.findVerticalMatches(gameBoard);
-        ArrayList<LinkedList<Emoticon>> matchingY = matchFinder.findHorizontalMatches(gameBoard);
+        ArrayList<LinkedList<AbstractEmoticon>> matchingX = matchFinder.findVerticalMatches(gameBoard);
+        ArrayList<LinkedList<AbstractEmoticon>> matchingY = matchFinder.findHorizontalMatches(gameBoard);
 
         if (matchesFound(matchingX, matchingY)) {
             modifyBoard(matchingX, matchingY);
@@ -147,7 +147,7 @@ public class GameModelImpl implements GameModel {
         int emo01Y = gameBoard.getGamePiece(sel1[X], sel1[Y]).getArrayY();
         int emo02X = gameBoard.getGamePiece(sel2[X], sel2[Y]).getArrayX();
         int emo02Y = gameBoard.getGamePiece(sel2[X], sel2[Y]).getArrayY();
-        Emoticon newEmo2 = gameBoard.getGamePiece(sel1[X], sel1[Y]);
+        AbstractEmoticon newEmo2 = gameBoard.getGamePiece(sel1[X], sel1[Y]);
 
         gameBoard.setGamePiece(sel1[X], sel1[Y], gameBoard.getGamePiece(sel2[X], sel2[Y]));
         gameBoard.getGamePiece(sel1[X], sel1[Y]).setArrayX(emo01X);
@@ -157,12 +157,12 @@ public class GameModelImpl implements GameModel {
         gameBoard.getGamePiece(sel2[X], sel2[Y]).setArrayX(emo02X);
         gameBoard.getGamePiece(sel2[X], sel2[Y]).setArrayY(emo02Y);
 
-        Emoticon emo1 = gameBoard.getGamePiece(sel1[X], sel1[Y]);
-        Emoticon emo2 = gameBoard.getGamePiece(sel2[X], sel2[Y]);
+        AbstractEmoticon emo1 = gameBoard.getGamePiece(sel1[X], sel1[Y]);
+        AbstractEmoticon emo2 = gameBoard.getGamePiece(sel2[X], sel2[Y]);
         setEmoAnimation(emo1, emo2);
     }
 
-    private void setEmoAnimation(Emoticon emo1, Emoticon emo2) {
+    private void setEmoAnimation(AbstractEmoticon emo1, AbstractEmoticon emo2) {
         if (emo1.getArrayX() == emo2.getArrayX()) {
             if (emo1.getArrayY() < emo2.getArrayY()) {
                 emo1.setSwappingUp(true);
@@ -209,12 +209,12 @@ public class GameModelImpl implements GameModel {
         }
     }
 
-    private boolean matchesFound(ArrayList<LinkedList<Emoticon>> matchingX, ArrayList<LinkedList<Emoticon>> matchingY) {
+    private boolean matchesFound(ArrayList<LinkedList<AbstractEmoticon>> matchingX, ArrayList<LinkedList<AbstractEmoticon>> matchingY) {
         Log.d(TAG, "matchesFound method");
         return (!(matchingX.isEmpty() && matchingY.isEmpty()));
     }
 
-    private void modifyBoard(ArrayList<LinkedList<Emoticon>> matchingX, ArrayList<LinkedList<Emoticon>> matchingY) {
+    private void modifyBoard(ArrayList<LinkedList<AbstractEmoticon>> matchingX, ArrayList<LinkedList<AbstractEmoticon>> matchingY) {
         Log.d(TAG, "modifyBoard method");
         do {
             highlightMatches(matchingX);
@@ -258,10 +258,10 @@ public class GameModelImpl implements GameModel {
         }
     }
 
-    private void highlightMatches(ArrayList<LinkedList<Emoticon>> matches) {
+    private void highlightMatches(ArrayList<LinkedList<AbstractEmoticon>> matches) {
         int points = 0;
-        for (List<Emoticon> removeList : matches) {
-            for (Emoticon emo : removeList) {
+        for (List<AbstractEmoticon> removeList : matches) {
+            for (AbstractEmoticon emo : removeList) {
                 emo.setIsPartOfMatch(true);
             }
             points += (removeList.size() * 10);
@@ -270,10 +270,10 @@ public class GameModelImpl implements GameModel {
         currentLevelScore += points;
     }
 
-    private void remove(ArrayList<LinkedList<Emoticon>> matches) {
+    private void remove(ArrayList<LinkedList<AbstractEmoticon>> matches) {
         Log.d(TAG, "remove(ArrayList<LinkedList<Emoticon>>)");
-        for (List<Emoticon> removeList : matches) {
-            for (Emoticon emo : removeList) {
+        for (List<AbstractEmoticon> removeList : matches) {
+            for (AbstractEmoticon emo : removeList) {
                 int x = emo.getArrayX();
                 int y = emo.getArrayY();
                 if (!gameBoard.getGamePiece(x, y).getEmoType().equals(EMPTY)) {
