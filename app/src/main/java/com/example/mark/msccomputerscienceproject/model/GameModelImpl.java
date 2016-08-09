@@ -53,8 +53,9 @@ public class GameModelImpl implements GameModel {
         gameBoard.populate();
     }
 
+
     @Override
-    public void updateEmoticonSwapCoordinates() {
+    public void updateEmoSwapCoordinates() {
         boolean emoticonsSwapping = false;
         for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
             for (int x = ROW_START; x < X_MAX; x++) {
@@ -75,7 +76,7 @@ public class GameModelImpl implements GameModel {
     }
 
     @Override
-    public void updateEmoticonDropCoordinates() {
+    public void updateEmoDropCoordinates() {
         boolean emoticonsDropping = false;
         for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
             for (int x = ROW_START; x < X_MAX; x++) {
@@ -146,37 +147,37 @@ public class GameModelImpl implements GameModel {
         int emo01Y = gameBoard.getGamePiece(sel1[X], sel1[Y]).getArrayY();
         int emo02X = gameBoard.getGamePiece(sel2[X], sel2[Y]).getArrayX();
         int emo02Y = gameBoard.getGamePiece(sel2[X], sel2[Y]).getArrayY();
-        Emoticon newEmoticon2 = gameBoard.getGamePiece(sel1[X], sel1[Y]);
+        Emoticon newEmo2 = gameBoard.getGamePiece(sel1[X], sel1[Y]);
 
         gameBoard.setGamePiece(sel1[X], sel1[Y], gameBoard.getGamePiece(sel2[X], sel2[Y]));
         gameBoard.getGamePiece(sel1[X], sel1[Y]).setArrayX(emo01X);
         gameBoard.getGamePiece(sel1[X], sel1[Y]).setArrayY(emo01Y);
 
-        gameBoard.setGamePiece(sel2[X], sel2[Y], newEmoticon2);
+        gameBoard.setGamePiece(sel2[X], sel2[Y], newEmo2);
         gameBoard.getGamePiece(sel2[X], sel2[Y]).setArrayX(emo02X);
         gameBoard.getGamePiece(sel2[X], sel2[Y]).setArrayY(emo02Y);
 
-        Emoticon e1 = gameBoard.getGamePiece(sel1[X], sel1[Y]);
-        Emoticon e2 = gameBoard.getGamePiece(sel2[X], sel2[Y]);
-        setEmoticonAnimation(e1, e2);
+        Emoticon emo1 = gameBoard.getGamePiece(sel1[X], sel1[Y]);
+        Emoticon emo2 = gameBoard.getGamePiece(sel2[X], sel2[Y]);
+        setEmoAnimation(emo1, emo2);
     }
 
-    private void setEmoticonAnimation(Emoticon e1, Emoticon e2) {
-        if (e1.getArrayX() == e2.getArrayX()) {
-            if (e1.getArrayY() < e2.getArrayY()) {
-                e1.setSwappingUp(true);
-                e2.setSwappingDown(true);
+    private void setEmoAnimation(Emoticon emo1, Emoticon emo2) {
+        if (emo1.getArrayX() == emo2.getArrayX()) {
+            if (emo1.getArrayY() < emo2.getArrayY()) {
+                emo1.setSwappingUp(true);
+                emo2.setSwappingDown(true);
             } else {
-                e2.setSwappingUp(true);
-                e1.setSwappingDown(true);
+                emo2.setSwappingUp(true);
+                emo1.setSwappingDown(true);
             }
-        } else if (e1.getArrayY() == e2.getArrayY()) {
-            if (e1.getArrayX() < e2.getArrayX()) {
-                e1.setSwappingLeft(true);
-                e2.setSwappingRight(true);
+        } else if (emo1.getArrayY() == emo2.getArrayY()) {
+            if (emo1.getArrayX() < emo2.getArrayX()) {
+                emo1.setSwappingLeft(true);
+                emo2.setSwappingRight(true);
             } else {
-                e2.setSwappingLeft(true);
-                e1.setSwappingRight(true);
+                emo2.setSwappingLeft(true);
+                emo1.setSwappingRight(true);
             }
         }
         waitForSwapAnimationToFinish();
@@ -243,7 +244,7 @@ public class GameModelImpl implements GameModel {
         currentLevelScore = 0;
         if (this.level < MAX_GAME_LEVELS) {
             level++;
-            gameBoard.setEmoticonCreator(level);
+            gameBoard.setEmoFactory(level);
         }
         gameBoard.populate();
     }
@@ -260,8 +261,8 @@ public class GameModelImpl implements GameModel {
     private void highlightMatches(ArrayList<LinkedList<Emoticon>> matches) {
         int points = 0;
         for (List<Emoticon> removeList : matches) {
-            for (Emoticon e : removeList) {
-                e.setIsPartOfMatch(true);
+            for (Emoticon emo : removeList) {
+                emo.setIsPartOfMatch(true);
             }
             points += (removeList.size() * 10);
         }
@@ -272,10 +273,10 @@ public class GameModelImpl implements GameModel {
     private void remove(ArrayList<LinkedList<Emoticon>> matches) {
         Log.d(TAG, "remove(ArrayList<LinkedList<Emoticon>>)");
         for (List<Emoticon> removeList : matches) {
-            for (Emoticon e : removeList) {
-                int x = e.getArrayX();
-                int y = e.getArrayY();
-                if (!gameBoard.getGamePiece(x, y).getEmoticonType().equals(EMPTY)) {
+            for (Emoticon emo : removeList) {
+                int x = emo.getArrayX();
+                int y = emo.getArrayY();
+                if (!gameBoard.getGamePiece(x, y).getEmoType().equals(EMPTY)) {
                     gameBoard.setBlankGamePiece(x, y);
                 }
             }
@@ -290,9 +291,9 @@ public class GameModelImpl implements GameModel {
         for (int x = ROW_START; x < X_MAX; x++) {
             offScreenStartPosition = -1;
             for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
-                if (gameBoard.getGamePiece(x, y).getEmoticonType().equals(EMPTY)) {
+                if (gameBoard.getGamePiece(x, y).getEmoType().equals(EMPTY)) {
                     runnerY = y;
-                    while ((runnerY >= COLUMN_TOP) && (gameBoard.getGamePiece(x, runnerY).getEmoticonType().equals(EMPTY))) {
+                    while ((runnerY >= COLUMN_TOP) && (gameBoard.getGamePiece(x, runnerY).getEmoType().equals(EMPTY))) {
                         runnerY--;
                     }
                     if (runnerY >= COLUMN_TOP) {

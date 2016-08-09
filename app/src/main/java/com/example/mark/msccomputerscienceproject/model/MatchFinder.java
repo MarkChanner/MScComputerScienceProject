@@ -19,18 +19,18 @@ public class MatchFinder {
     public ArrayList<LinkedList<Emoticon>> findVerticalMatches(GameBoard gameBoard) {
         LinkedList<Emoticon> consecutiveEmoticons = new LinkedList<>();
         ArrayList<LinkedList<Emoticon>> bigList = new ArrayList<>();
-        Emoticon emoticon;
+        Emoticon emo;
         for (int x = ROW_START; x < X_MAX; x++) {
             consecutiveEmoticons.add(gameBoard.getGamePiece(x, COLUMN_BOTTOM));
 
 
             for (int y = (COLUMN_BOTTOM - 1); y >= COLUMN_TOP; y--) {
-                emoticon = gameBoard.getGamePiece(x, y);
-                if (!emoticon.getEmoticonType().equals(consecutiveEmoticons.getLast().getEmoticonType())) {
+                emo = gameBoard.getGamePiece(x, y);
+                if (!emo.getEmoType().equals(consecutiveEmoticons.getLast().getEmoType())) {
                     examineList(consecutiveEmoticons, bigList);
                     consecutiveEmoticons = new LinkedList<>();
                 }
-                consecutiveEmoticons.add(emoticon);
+                consecutiveEmoticons.add(emo);
                 if (y == COLUMN_TOP) {
                     examineList(consecutiveEmoticons, bigList);
                     consecutiveEmoticons = new LinkedList<>();
@@ -43,17 +43,17 @@ public class MatchFinder {
     public ArrayList<LinkedList<Emoticon>> findHorizontalMatches(GameBoard gameBoard) {
         LinkedList<Emoticon> consecutiveEmoticons = new LinkedList<>();
         ArrayList<LinkedList<Emoticon>> bigList = new ArrayList<>();
-        Emoticon emoticon;
+        Emoticon emo;
         for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
             consecutiveEmoticons.add(gameBoard.getGamePiece(ROW_START, y));
 
             for (int x = (ROW_START + 1); x < X_MAX; x++) {
-                emoticon = gameBoard.getGamePiece(x, y);
-                if (!(emoticon.getEmoticonType().equals(consecutiveEmoticons.getLast().getEmoticonType()))) {
+                emo = gameBoard.getGamePiece(x, y);
+                if (!(emo.getEmoType().equals(consecutiveEmoticons.getLast().getEmoType()))) {
                     examineList(consecutiveEmoticons, bigList);
                     consecutiveEmoticons = new LinkedList<>();
                 }
-                consecutiveEmoticons.add(emoticon);
+                consecutiveEmoticons.add(emo);
                 if (x == (X_MAX - 1)) {
                     examineList(consecutiveEmoticons, bigList);
                     consecutiveEmoticons = new LinkedList<>();
@@ -71,14 +71,14 @@ public class MatchFinder {
     }
 
     private boolean allSameType(LinkedList<Emoticon> consecutiveEmoticons) {
-        String previousEmoticon = consecutiveEmoticons.getFirst().getEmoticonType();
-        String nextEmoticon;
+        String previousEmo = consecutiveEmoticons.getFirst().getEmoType();
+        String nextEmo;
         for (int i = 1; i < consecutiveEmoticons.size(); i++) {
-            nextEmoticon = consecutiveEmoticons.get(i).getEmoticonType();
-            if (nextEmoticon.equals(EMPTY) || (!(nextEmoticon.equals(previousEmoticon)))) {
+            nextEmo = consecutiveEmoticons.get(i).getEmoType();
+            if (nextEmo.equals(EMPTY) || (!(nextEmo.equals(previousEmo)))) {
                 return false;
             } else {
-                previousEmoticon = nextEmoticon;
+                previousEmo = nextEmo;
             }
         }
         return true;
@@ -94,13 +94,13 @@ public class MatchFinder {
         for (int x = ROW_START; x < X_MAX; x++) {
             for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
 
-                type = gameBoard.getGamePiece(x, y).getEmoticonType();
+                type = gameBoard.getGamePiece(x, y).getEmoType();
 
                 if ((y - 1 >= COLUMN_TOP &&
-                        gameBoard.getGamePiece(x, y - 1).getEmoticonType().equals(type) &&
+                        gameBoard.getGamePiece(x, y - 1).getEmoType().equals(type) &&
                         verticalA(gameBoard, type, x, y)) ||
                         (y - 2 >= COLUMN_TOP &&
-                                gameBoard.getGamePiece(x, y - 2).getEmoticonType().equals(type) &&
+                                gameBoard.getGamePiece(x, y - 2).getEmoType().equals(type) &&
                                 verticalB(gameBoard, type, x, y))) {
                     return true;
                 }
@@ -119,9 +119,9 @@ public class MatchFinder {
      * COLUMN_TOP was  checked in the calling method
      */
     private boolean verticalAboveA(GameBoard gameBoard, String type, int x, int y) {
-        return ((y - 3 >= COLUMN_TOP && gameBoard.getGamePiece(x, y - 3).getEmoticonType().equals(type)) ||
-                (x - 1 >= ROW_START && gameBoard.getGamePiece(x - 1, y - 2).getEmoticonType().equals(type)) ||
-                (x + 1 < X_MAX && gameBoard.getGamePiece(x + 1, y - 2).getEmoticonType().equals(type)));
+        return ((y - 3 >= COLUMN_TOP && gameBoard.getGamePiece(x, y - 3).getEmoType().equals(type)) ||
+                (x - 1 >= ROW_START && gameBoard.getGamePiece(x - 1, y - 2).getEmoType().equals(type)) ||
+                (x + 1 < X_MAX && gameBoard.getGamePiece(x + 1, y - 2).getEmoType().equals(type)));
     }
 
     /**
@@ -129,14 +129,14 @@ public class MatchFinder {
      * COLUMN_BOTTOM was checked in the calling method
      */
     private boolean verticalBelowA(GameBoard gameBoard, String type, int x, int y) {
-        return ((y + 2 <= COLUMN_BOTTOM && gameBoard.getGamePiece(x, y + 2).getEmoticonType().equals(type)) ||
-                (x - 1 >= ROW_START && gameBoard.getGamePiece(x - 1, y + 1).getEmoticonType().equals(type)) ||
-                (x + 1 < X_MAX && gameBoard.getGamePiece(x + 1, y + 1).getEmoticonType().equals(type)));
+        return ((y + 2 <= COLUMN_BOTTOM && gameBoard.getGamePiece(x, y + 2).getEmoType().equals(type)) ||
+                (x - 1 >= ROW_START && gameBoard.getGamePiece(x - 1, y + 1).getEmoType().equals(type)) ||
+                (x + 1 < X_MAX && gameBoard.getGamePiece(x + 1, y + 1).getEmoType().equals(type)));
     }
 
     private boolean verticalB(GameBoard gameBoard, String type, int x, int y) {
-        return ((x - 1 >= ROW_START && gameBoard.getGamePiece(x - 1, y - 1).getEmoticonType().equals(type)) ||
-                (x + 1 < X_MAX && gameBoard.getGamePiece(x + 1, y - 1).getEmoticonType().equals(type)));
+        return ((x - 1 >= ROW_START && gameBoard.getGamePiece(x - 1, y - 1).getEmoType().equals(type)) ||
+                (x + 1 < X_MAX && gameBoard.getGamePiece(x + 1, y - 1).getEmoType().equals(type)));
     }
 
     private boolean horizontalMatchPossible(GameBoard gameBoard) {
@@ -144,12 +144,12 @@ public class MatchFinder {
         for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
             for (int x = ROW_START; x < X_MAX; x++) {
 
-                type = gameBoard.getGamePiece(x, y).getEmoticonType();
+                type = gameBoard.getGamePiece(x, y).getEmoType();
 
                 if ((x + 1 < X_MAX &&
-                        gameBoard.getGamePiece(x + 1, y).getEmoticonType().equals(type) &&
+                        gameBoard.getGamePiece(x + 1, y).getEmoType().equals(type) &&
                         horizontalA(gameBoard, type, x, y)) ||
-                        (x + 2 < X_MAX && gameBoard.getGamePiece(x + 2, y).getEmoticonType().equals(type) &&
+                        (x + 2 < X_MAX && gameBoard.getGamePiece(x + 2, y).getEmoType().equals(type) &&
                                 horizontalB(gameBoard, type, x, y))) {
                     return true;
                 }
@@ -168,9 +168,9 @@ public class MatchFinder {
      * below X_MAX was checked in the calling method
      */
     private boolean horizontalRightA(GameBoard gameBoard, String type, int x, int y) {
-        return ((x + 3 < X_MAX && gameBoard.getGamePiece(x + 3, y).getEmoticonType().equals(type)) ||
-                (y - 1 >= COLUMN_TOP && gameBoard.getGamePiece(x + 2, y - 1).getEmoticonType().equals(type)) ||
-                (y + 1 <= COLUMN_BOTTOM && gameBoard.getGamePiece(x + 2, y + 1).getEmoticonType().equals(type)));
+        return ((x + 3 < X_MAX && gameBoard.getGamePiece(x + 3, y).getEmoType().equals(type)) ||
+                (y - 1 >= COLUMN_TOP && gameBoard.getGamePiece(x + 2, y - 1).getEmoType().equals(type)) ||
+                (y + 1 <= COLUMN_BOTTOM && gameBoard.getGamePiece(x + 2, y + 1).getEmoType().equals(type)));
     }
 
     /**
@@ -178,13 +178,13 @@ public class MatchFinder {
      * above  ROW_START was checked in the calling method
      */
     private boolean horizontalLeftA(GameBoard gameBoard, String type, int x, int y) {
-        return ((x - 2 >= ROW_START && gameBoard.getGamePiece(x - 2, y).getEmoticonType().equals(type)) ||
-                (y - 1 >= COLUMN_TOP && gameBoard.getGamePiece(x - 1, y - 1).getEmoticonType().equals(type)) ||
-                (y + 1 <= COLUMN_BOTTOM && gameBoard.getGamePiece(x - 1, y + 1).getEmoticonType().equals(type)));
+        return ((x - 2 >= ROW_START && gameBoard.getGamePiece(x - 2, y).getEmoType().equals(type)) ||
+                (y - 1 >= COLUMN_TOP && gameBoard.getGamePiece(x - 1, y - 1).getEmoType().equals(type)) ||
+                (y + 1 <= COLUMN_BOTTOM && gameBoard.getGamePiece(x - 1, y + 1).getEmoType().equals(type)));
     }
 
     private boolean horizontalB(GameBoard gameBoard, String type, int x, int y) {
-        return ((y - 1 >= COLUMN_TOP && gameBoard.getGamePiece(x + 1, y - 1).getEmoticonType().equals(type)) ||
-                (y + 1 <= COLUMN_BOTTOM && gameBoard.getGamePiece(x + 1, y + 1).getEmoticonType().equals(type)));
+        return ((y - 1 >= COLUMN_TOP && gameBoard.getGamePiece(x + 1, y - 1).getEmoType().equals(type)) ||
+                (y + 1 <= COLUMN_BOTTOM && gameBoard.getGamePiece(x + 1, y + 1).getEmoType().equals(type)));
     }
 }

@@ -19,7 +19,7 @@ public class EmoticonFactoryLevel01 extends AbstractEmoticonFactory {
      * @return Emoticon
      */
     @Override
-    protected Emoticon createRandomEmoticon(int x, int y, int offScreenStartPositionY) {
+    protected Emoticon createRandomEmo(int x, int y, int offScreenStartPositionY) {
         Random random = new Random();
         String emoID = null;
         Bitmap bitmap = null;

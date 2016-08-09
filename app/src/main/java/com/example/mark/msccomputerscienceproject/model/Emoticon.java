@@ -57,7 +57,7 @@ public interface Emoticon {
 
     Bitmap getBitmap();
 
-    String getEmoticonType();
+    String getEmoType();
 
     void setPixelMovement(int pixelMovement);
 

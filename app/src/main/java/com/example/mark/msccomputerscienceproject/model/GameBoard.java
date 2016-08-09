@@ -8,7 +8,7 @@ public interface GameBoard {
     int LEVEL_ONE = 1;
     int LEVEL_TWO = 2;
 
-    void setEmoticonCreator(int level);
+    void setEmoFactory(int level);
 
     Emoticon getRandomGamePiece(int x, int y, int offScreenStartPosition);
 

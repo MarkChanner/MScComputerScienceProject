@@ -26,13 +26,13 @@ public abstract class AbstractEmoticon implements Emoticon {
     volatile boolean isPartOfMatch;
     volatile boolean isSelected;
 
-    public AbstractEmoticon(int arrayX, int arrayY, int emoWidth, int emoHeight, Bitmap bitmap, String emoticonType, int offScreenStartPositionY) {
+    public AbstractEmoticon(int arrayX, int arrayY, int emoWidth, int emoHeight, Bitmap bitmap, String emoType, int offScreenStartPositionY) {
         this.arrayX = arrayX;
         this.arrayY = arrayY;
         this.emoWidth = emoWidth;
         this.emoHeight = emoHeight;
         this.bitmap = bitmap;
-        this.emoticonType = emoticonType;
+        this.emoticonType = emoType;
         screenPositionX = (arrayX * emoWidth);
         screenPositionY = (offScreenStartPositionY * emoHeight);
         pixelMovement = (emoHeight / 8);
@@ -227,7 +227,7 @@ public abstract class AbstractEmoticon implements Emoticon {
     }
 
     @Override
-    public String getEmoticonType() {
+    public String getEmoType() {
         return emoticonType;
     }
 

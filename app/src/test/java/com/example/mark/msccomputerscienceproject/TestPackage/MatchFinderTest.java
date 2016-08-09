@@ -62,9 +62,9 @@ public class MatchFinderTest {
 
         assertEquals(1, matchingX.size());
         assertEquals(3, matchingX.get(0).size());
-        assertEquals("HAPPY", matchingX.get(0).get(0).getEmoticonType());
-        assertEquals("HAPPY", matchingX.get(0).get(1).getEmoticonType());
-        assertEquals("HAPPY", matchingX.get(0).get(2).getEmoticonType());
+        assertEquals("HAPPY", matchingX.get(0).get(0).getEmoType());
+        assertEquals("HAPPY", matchingX.get(0).get(1).getEmoType());
+        assertEquals("HAPPY", matchingX.get(0).get(2).getEmoType());
     }
 
     @Test
@@ -77,10 +77,10 @@ public class MatchFinderTest {
 
         assertEquals(1, matchingY.size());
         assertEquals(4, matchingY.get(0).size());
-        assertEquals("SURPRISED", matchingY.get(0).get(0).getEmoticonType());
-        assertEquals("SURPRISED", matchingY.get(0).get(1).getEmoticonType());
-        assertEquals("SURPRISED", matchingY.get(0).get(2).getEmoticonType());
-        assertEquals("SURPRISED", matchingY.get(0).get(3).getEmoticonType());
+        assertEquals("SURPRISED", matchingY.get(0).get(0).getEmoType());
+        assertEquals("SURPRISED", matchingY.get(0).get(1).getEmoType());
+        assertEquals("SURPRISED", matchingY.get(0).get(2).getEmoType());
+        assertEquals("SURPRISED", matchingY.get(0).get(3).getEmoType());
     }
 
     @Test

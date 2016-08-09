@@ -35,7 +35,7 @@ public class EmoticonFactoryTest {
         int y = 3;
         int offScreenStartPositionY = 10;
         AbstractEmoticonCreator emoCreator = emoCreatorFactory.getEmoticonCreator(level);
-        Emoticon emo = emoCreator.createRandomEmoticon(x, y, offScreenStartPositionY);
+        Emoticon emo = emoCreator.createRandomEmo(x, y, offScreenStartPositionY);
         assertThat(emo, instanceOf(Emoticon.class));
     }*/
 }

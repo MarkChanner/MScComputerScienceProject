@@ -3,13 +3,10 @@ package com.example.mark.msccomputerscienceproject.view;
 import com.example.mark.msccomputerscienceproject.R;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.support.v4.content.ContextCompat;
-import android.util.TypedValue;
+import android.graphics.*;
 import android.widget.TextView;
+import android.util.TypedValue;
 
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project

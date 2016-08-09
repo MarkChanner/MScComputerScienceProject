@@ -106,7 +106,7 @@ public class GameControllerImpl extends Activity implements GameController {
         int screenX = (int) event.getX();
         int screenY = (int) event.getY();
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (!isGameEnded()) {
+            if (!gameOver()) {
                 gameModel.handleSelection(screenX / emoWidth, screenY / emoHeight);
             } else {
                 gameEnded = false;
@@ -117,8 +117,8 @@ public class GameControllerImpl extends Activity implements GameController {
 
     @Override
     public void updateModel() {
-        gameModel.updateEmoticonSwapCoordinates();
-        gameModel.updateEmoticonDropCoordinates();
+        gameModel.updateEmoSwapCoordinates();
+        gameModel.updateEmoDropCoordinates();
     }
 
     @Override
@@ -147,7 +147,7 @@ public class GameControllerImpl extends Activity implements GameController {
     }
 
     @Override
-    public boolean isGameEnded() {
+    public boolean gameOver() {
         return gameEnded;
     }
 }

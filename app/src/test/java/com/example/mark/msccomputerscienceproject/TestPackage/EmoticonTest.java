@@ -20,6 +20,6 @@ public class EmoticonTest {
     @Test
     public void testReturnEmoticonType() throws Exception {
         Emoticon emo = new EmoticonImpl(3, 4, 20, 20, bitmap, "HAPPY", 10);
-        assertEquals("HAPPY", emo.getEmoticonType());
+        assertEquals("HAPPY", emo.getEmoType());
     }
 }

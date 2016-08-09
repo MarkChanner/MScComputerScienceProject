@@ -24,7 +24,7 @@ public interface GameController {
 
     void playSound(ArrayList<LinkedList<Emoticon>> matchingX, ArrayList<LinkedList<Emoticon>> matchingY);
 
-    boolean isGameEnded();
+    boolean gameOver();
 
     void setGameEnded(boolean gameEnded);
 

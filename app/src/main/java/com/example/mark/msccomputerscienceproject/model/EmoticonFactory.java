@@ -5,8 +5,8 @@ package com.example.mark.msccomputerscienceproject.model;
  */
 public interface EmoticonFactory {
 
-    Emoticon getRandomEmoticon(int x, int y, int offScreenStartPositionY);
+    Emoticon getRandomEmo(int x, int y, int offScreenStartPositionY);
 
-    Emoticon createEmptyEmoticon(int x, int y);
+    Emoticon createEmptyEmo(int x, int y);
 
 }
