@@ -3,7 +3,7 @@ package com.example.mark.msccomputerscienceproject.model;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public class GameBoardImpl implements GameBoard {
+public class MixedEmotionsBoard implements GameBoard {
 
     public static final int X_MAX = GameModel.X_MAX;
     public static final int Y_MAX = GameModel.Y_MAX;
@@ -15,7 +15,7 @@ public class GameBoardImpl implements GameBoard {
     private int emoWidth;
     private int emoHeight;
 
-    public GameBoardImpl(BitmapCreator bitmapCreator, int emoWidth, int emoHeight, int level) {
+    public MixedEmotionsBoard(BitmapCreator bitmapCreator, int emoWidth, int emoHeight, int level) {
         this.bitmapCreator = bitmapCreator;
         this.emoWidth = emoWidth;
         this.emoHeight = emoHeight;
