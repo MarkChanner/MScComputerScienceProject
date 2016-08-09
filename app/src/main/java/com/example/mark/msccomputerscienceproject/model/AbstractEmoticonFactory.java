@@ -5,14 +5,21 @@ package com.example.mark.msccomputerscienceproject.model;
  */
 public abstract class AbstractEmoticonFactory {
 
+    public static final int LEVEL_ONE = 1;
+    public static final int LEVEL_TWO = 2;
     protected int emoWidth;
     protected int emoHeight;
     protected BitmapCreator bitmapCreator;
+
 
     public AbstractEmoticonFactory(BitmapCreator bitmapCreator, int emoWidth, int emoHeight) {
         this.bitmapCreator = bitmapCreator;
         this.emoWidth = emoWidth;
         this.emoHeight = emoHeight;
+    }
+
+    public static AbstractEmoticonFactory getInstance(BitmapCreator bitmapCreator, int emoWidth, int emoHeight) {
+        return new EmoticonFactoryLevel01(bitmapCreator, emoWidth, emoHeight);
     }
 
     // Factory method defers instantiation of emoticon to subclass
@@ -25,5 +32,4 @@ public abstract class AbstractEmoticonFactory {
     public GamePiece createEmptyEmo(int x, int y) {
         return new EmptyEmoticon(x, y, emoWidth, emoHeight, bitmapCreator.getEmptyBitmap());
     }
-
 }

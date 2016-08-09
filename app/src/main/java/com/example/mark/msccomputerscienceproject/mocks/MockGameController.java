@@ -31,7 +31,7 @@ public class MockGameController extends Activity implements GameController {
 
     private MusicPlayer music;
     private SoundManager soundManager;
-    private GameModel gameModel;
+    private Model gameModel;
     private ScoreBoardView scoreBoardView;
     private GameBoardView gameBoardView;
     private int emoWidth;
@@ -69,7 +69,7 @@ public class MockGameController extends Activity implements GameController {
         //EmoticonCreatorFactory emoCreatorFactory = new EmoticonCreatorFactory(bitmapCreator, emoWidth, emoHeight);
         int level = 1;
         GameBoard gameBoard = new GameBoardImpl(bitmapCreator, emoWidth, emoHeight, level);
-        this.gameModel = new GameModelImpl(this, gameBoard);
+        this.gameModel = new GameModel(this, gameBoard);
         this.gameBoardView = new GameBoardView(this, gameBoard, gameBoardViewSizeX, gameBoardViewSizeY, emoWidth, emoHeight);
         this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, scoreBoardViewSizeY);
 

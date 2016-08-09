@@ -20,7 +20,7 @@ public interface GameBoard {
 
     GamePiece getGamePiece(int x, int y);
 
-    void setGamePiece(int x, int y, GamePiece emo);
+    void setGamePiece(int x, int y, GamePiece emoticon);
 
     void setToDrop(int x, int y);
 

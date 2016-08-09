@@ -9,8 +9,8 @@ import java.util.LinkedList;
 public class MatchFinder {
 
     private static final String TAG = "MatchFinder";
-    public static final int X_MAX = GameModelImpl.X_MAX;
-    public static final int Y_MAX = GameModelImpl.Y_MAX;
+    public static final int X_MAX = GameModel.X_MAX;
+    public static final int Y_MAX = GameModel.Y_MAX;
     public static final int ROW_START = 0;
     public static final int COLUMN_TOP = 0;
     public static final int COLUMN_BOTTOM = (Y_MAX - 1);

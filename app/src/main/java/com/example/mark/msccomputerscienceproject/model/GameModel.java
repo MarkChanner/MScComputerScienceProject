@@ -1,7 +1,6 @@
 package com.example.mark.msccomputerscienceproject.model;
 
 import com.example.mark.msccomputerscienceproject.controller.GameController;
-import com.example.mark.msccomputerscienceproject.controller.GameControllerImpl;
 
 import android.util.Log;
 
@@ -12,12 +11,12 @@ import java.util.List;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public class GameModelImpl implements GameModel {
+public class GameModel implements Model {
 
-    private static final String TAG = "GameModelImpl";
+    private static final String TAG = "GameModel";
 
-    public static final int X_MAX = GameControllerImpl.X_MAX;
-    public static final int Y_MAX = GameControllerImpl.Y_MAX;
+    public static final int X_MAX = 8;
+    public static final int Y_MAX = 7;
     public static final int X = 0;
     public static final int Y = 1;
     public static final int ROW_START = 0;
@@ -40,7 +39,7 @@ public class GameModelImpl implements GameModel {
     private int level;
     private int currentLevelScore = 0;
 
-    public GameModelImpl(GameController controller, GameBoard gameBoard) {
+    public GameModel(GameController controller, GameBoard gameBoard) {
         this.controller = controller;
         this.gameBoard = gameBoard;
         initializeGame();
@@ -53,6 +52,13 @@ public class GameModelImpl implements GameModel {
         gameBoard.populate();
     }
 
+    public static int getxMax() {
+        return X_MAX;
+    }
+
+    public static int getyMax() {
+        return Y_MAX;
+    }
 
     @Override
     public void updateEmoSwapCoordinates() {
@@ -228,7 +234,7 @@ public class GameModelImpl implements GameModel {
             matchingY = matchFinder.findHorizontalMatches(gameBoard);
         } while (matchesFound(matchingX, matchingY));
 
-        if (currentLevelScore >= 500) {
+        if (currentLevelScore >= 90) {
             loadNextLevel();
         } else if (!matchFinder.anotherMatchPossible(gameBoard)) {
             Log.d(TAG, "NO MATCHES AVAILABLE - END GAME CONDITION ENTERED");
