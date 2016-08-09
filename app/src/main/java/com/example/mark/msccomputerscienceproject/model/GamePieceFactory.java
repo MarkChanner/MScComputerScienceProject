@@ -3,7 +3,7 @@ package com.example.mark.msccomputerscienceproject.model;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public abstract class AbstractEmoticonFactory {
+public abstract class GamePieceFactory {
 
     public static final int LEVEL_ONE = 1;
     public static final int LEVEL_TWO = 2;
@@ -12,13 +12,13 @@ public abstract class AbstractEmoticonFactory {
     protected BitmapCreator bitmapCreator;
 
 
-    public AbstractEmoticonFactory(BitmapCreator bitmapCreator, int emoWidth, int emoHeight) {
+    public GamePieceFactory(BitmapCreator bitmapCreator, int emoWidth, int emoHeight) {
         this.bitmapCreator = bitmapCreator;
         this.emoWidth = emoWidth;
         this.emoHeight = emoHeight;
     }
 
-    public static AbstractEmoticonFactory getInstance(BitmapCreator bitmapCreator, int emoWidth, int emoHeight) {
+    public static GamePieceFactory getInstance(BitmapCreator bitmapCreator, int emoWidth, int emoHeight) {
         return new EmoticonFactoryLevel01(bitmapCreator, emoWidth, emoHeight);
     }
 
