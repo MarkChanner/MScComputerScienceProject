@@ -19,7 +19,7 @@ public class EmoticonFactoryLevel02 extends AbstractEmoticonFactory {
      * @return EmoticonImpl
      */
     @Override
-    protected AbstractEmoticon createRandomEmo(int x, int y, int offScreenStartPositionY) {
+    protected GamePiece createRandomEmo(int x, int y, int offScreenStartPositionY) {
         Random random = new Random();
         String emoID = null;
         Bitmap bitmap = null;
@@ -47,6 +47,6 @@ public class EmoticonFactoryLevel02 extends AbstractEmoticonFactory {
             default:
                 break;
         }
-        return new EmoticonImpl(x, y, emoWidth, emoHeight, bitmap, emoID, offScreenStartPositionY);
+        return new Emoticon(x, y, emoWidth, emoHeight, bitmap, emoID, offScreenStartPositionY);
     }
 }
