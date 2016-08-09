@@ -15,7 +15,7 @@ import android.view.*;
  */
 public class GameBoardView extends SurfaceView implements Runnable {
 
-    public static final String TAG = "GameBoardView";
+    //public static final String TAG = "GameBoardView";
     public static final int X_MAX = GameControllerImpl.X_MAX;
     public static final int Y_MAX = GameControllerImpl.Y_MAX;
     public static final int ZERO = 0;
@@ -28,8 +28,8 @@ public class GameBoardView extends SurfaceView implements Runnable {
 
     private final Rect selectionRect = new Rect();
     private final Rect matchRect = new Rect();
-    private Paint gameBoardColour;
-    private Paint lineColour;
+    private Paint backgroundColour;
+    private Paint drawingLine;
     private Paint borderColour;
     private Paint selectionFill;
 
@@ -37,10 +37,6 @@ public class GameBoardView extends SurfaceView implements Runnable {
 
     private Thread gameViewThread = null;
     volatile boolean running = false;
-
-    public GameBoardView(Context controller) {
-        super(controller);
-    }
 
     public GameBoardView(Context context, GameBoard board, int viewSizeX, int viewSizeY, int emoWidth, int emoHeight) {
         super(context);
@@ -53,17 +49,21 @@ public class GameBoardView extends SurfaceView implements Runnable {
         createBackgroundBitmap(viewSizeX, viewSizeY);
     }
 
+    public GameBoardView(Context controller) {
+        super(controller);
+    }
+
     private void setPaint(Context context) {
-        gameBoardColour = new Paint();
-        gameBoardColour.setColor(ContextCompat.getColor(context, R.color.gameboard));
+        backgroundColour = new Paint();
+        backgroundColour.setColor(ContextCompat.getColor(context, R.color.gameboard));
 
         selectionFill = new Paint();
         selectionFill.setColor(ContextCompat.getColor(context, R.color.highlightbackground));
 
-        lineColour = new Paint();
-        lineColour.setColor(Color.BLACK);
-        lineColour.setStyle(Paint.Style.STROKE);
-        lineColour.setStrokeWidth(2f);
+        drawingLine = new Paint();
+        drawingLine.setColor(Color.BLACK);
+        drawingLine.setStyle(Paint.Style.STROKE);
+        drawingLine.setStrokeWidth(2f);
 
         borderColour = new Paint();
         borderColour.setColor(ContextCompat.getColor(context, R.color.border));
@@ -84,18 +84,18 @@ public class GameBoardView extends SurfaceView implements Runnable {
     }
 
     private void drawBackgroundColour(Canvas gridCanvas, int viewSizeX, int viewSizeY) {
-        gridCanvas.drawRect(ZERO, ZERO, viewSizeX, viewSizeY, gameBoardColour);
+        gridCanvas.drawRect(ZERO, ZERO, viewSizeX, viewSizeY, backgroundColour);
     }
 
     private void drawHorizontal(Canvas gridCanvas, int viewSizeX) {
         for (int i = 0; i < Y_MAX; i++) {
-            gridCanvas.drawLine(ZERO, i * emoHeight, viewSizeX, i * emoHeight, lineColour);
+            gridCanvas.drawLine(ZERO, i * emoHeight, viewSizeX, i * emoHeight, drawingLine);
         }
     }
 
     private void drawVertical(Canvas gridCanvas, int viewSizeY) {
         for (int i = 0; i < X_MAX; i++) {
-            gridCanvas.drawLine(i * emoWidth, ZERO, i * emoWidth, viewSizeY, lineColour);
+            gridCanvas.drawLine(i * emoWidth, ZERO, i * emoWidth, viewSizeY, drawingLine);
         }
     }
 
@@ -150,7 +150,6 @@ public class GameBoardView extends SurfaceView implements Runnable {
             highlightAnySelections(canvas);
             highlightAnyMatches(canvas);
         }
-
     }
 
     private void drawBackground(Canvas canvas) {
@@ -159,7 +158,7 @@ public class GameBoardView extends SurfaceView implements Runnable {
 
     private void highlightAnySelections(Canvas canvas) {
         canvas.drawRect(selectionRect, selectionFill);
-        canvas.drawRect(selectionRect, lineColour);
+        canvas.drawRect(selectionRect, drawingLine);
     }
 
     private void highlightAnyMatches(Canvas canvas) {
@@ -172,7 +171,7 @@ public class GameBoardView extends SurfaceView implements Runnable {
                     int highlightY = emo.getViewPositionY();
                     matchRect.set(highlightX, highlightY, (highlightX + emoWidth), (highlightY + emoHeight));
                     canvas.drawRect(matchRect, selectionFill);
-                    canvas.drawRect(matchRect, lineColour);
+                    canvas.drawRect(matchRect, drawingLine);
                 }
                 canvas.drawBitmap(emo.getBitmap(), 5 + emo.getViewPositionX(), emo.getViewPositionY(), null);
             }
@@ -180,13 +179,13 @@ public class GameBoardView extends SurfaceView implements Runnable {
     }
 
     private void displayGameOverMessage(Canvas canvas) {
-        canvas.drawRect(ZERO, ZERO, getWidth(), getHeight(), gameBoardColour);
-        lineColour.setTextSize(80);
-        lineColour.setStyle(Paint.Style.FILL);
-        lineColour.setTextAlign(Paint.Align.CENTER);
-        canvas.drawText("Game Over", (emoWidth * 4), 100, lineColour);
-        canvas.drawText("Tap to Play Again!", (emoWidth * 4), 300, lineColour);
-        lineColour.setStyle(Paint.Style.STROKE);
+        canvas.drawRect(ZERO, ZERO, getWidth(), getHeight(), backgroundColour);
+        drawingLine.setTextSize(80);
+        drawingLine.setStyle(Paint.Style.FILL);
+        drawingLine.setTextAlign(Paint.Align.CENTER);
+        canvas.drawText("Game Over", (emoWidth * 4), 100, drawingLine);
+        canvas.drawText("Tap to Play Again!", (emoWidth * 4), 300, drawingLine);
+        drawingLine.setStyle(Paint.Style.STROKE);
     }
 
     @Override
