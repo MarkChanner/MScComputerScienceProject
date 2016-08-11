@@ -1,147 +1,49 @@
 package com.example.mark.msccomputerscienceproject.mocks;
 
-import com.example.mark.msccomputerscienceproject.controller.GameController;
-import com.example.mark.msccomputerscienceproject.model.*;
-import com.example.mark.msccomputerscienceproject.view.*;
-import com.example.mark.msccomputerscienceproject.sound.*;
-import com.example.mark.msccomputerscienceproject.R;
+/*import com.example.mark.msccomputerscienceproject.model.AbstractEmoticonCreator;
+import com.example.mark.msccomputerscienceproject.model.AbstractGameBoard;
+import com.example.mark.msccomputerscienceproject.model.Emoticon;
 
-import android.app.Activity;
-import android.graphics.Point;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Display;
-import android.view.MotionEvent;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.LinearLayout;
+public class MockGridPopulator01 extends AbstractGameBoard {
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 
-/**
- * @author Mark Channer for Birkbeck MSc Computer Science project
- */
-public class MockGameController extends Activity implements GameController {
-
-    private final static String TAG = "GameControllerImpl";
-    public static final int X_MAX = 8;
-    public static final int Y_MAX = 7;
-
-    private MusicPlayer music;
-    private SoundManager soundManager;
-    private Model gameModel;
-    private ScoreBoardView scoreBoardView;
-    private GameBoardView gameBoardView;
-    private int emoWidth;
-    private int emoHeight;
-    volatile boolean gameEnded = false;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        setContentView(R.layout.activity_main);
-        LinearLayout screenLayout = (LinearLayout) findViewById(R.id.gameLayout);
-
-        Point size = new Point();
-        Display display = getWindowManager().getDefaultDisplay();
-        display.getSize(size);
-
-        this.music = new MusicPlayer(this);
-        this.soundManager = new SoundManager();
-        this.soundManager.loadSound(this);
-
-        int screenSizeX = (size.x - ((screenLayout.getPaddingLeft() * 2) + screenLayout.getPaddingRight()));
-        int gameBoardViewSizeX = (int) (screenSizeX * 0.9);
-        int gameBoardViewSizeY = (size.y - (screenLayout.getPaddingTop() + screenLayout.getPaddingBottom()));
-        int scoreBoardViewSizeX = (int) (screenSizeX * 0.1);
-        int scoreBoardViewSizeY = (gameBoardViewSizeY / 3);
-        this.emoWidth = gameBoardViewSizeX / X_MAX;
-        this.emoHeight = gameBoardViewSizeY / Y_MAX;
-
-        // Instantiates Model and View objects
-        BitmapCreator bitmapCreator = BitmapCreator.getInstance();
-        bitmapCreator.prepareScaledBitmaps(this, emoWidth, emoHeight);
-        //EmoticonCreatorFactory emoCreatorFactory = new EmoticonCreatorFactory(bitmapCreator, emoWidth, emoHeight);
-        int level = 1;
-        GameBoard gameBoard = new MixedEmotionsBoard(bitmapCreator, emoWidth, emoHeight, level);
-        this.gameModel = new GameModel(this, gameBoard);
-        this.gameBoardView = new GameBoardView(this, gameBoard, gameBoardViewSizeX, gameBoardViewSizeY, emoWidth, emoHeight);
-        this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, scoreBoardViewSizeY);
-
-        LinearLayout.LayoutParams boardParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(gameBoardViewSizeX, gameBoardViewSizeY));
-        boardParams.setMargins(screenLayout.getPaddingLeft(), 0, gameBoardViewSizeX, 0);
-        LinearLayout.LayoutParams scoreParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(scoreBoardViewSizeX, scoreBoardViewSizeY));
-
-        screenLayout.addView(scoreBoardView, scoreParams);
-        screenLayout.addView(gameBoardView, boardParams);
+    public MockGridPopulator01(AbstractEmoticonCreator emoCreator) {
+        super(emoCreator);
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "in onResume()");
-        gameBoardView.resume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "in onPause()");
-        gameBoardView.pause();
-    }
-
-    @Override
-    public void handle(MotionEvent event) {
-        int screenX = (int) event.getX();
-        int screenY = (int) event.getY();
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (!gameOver()) {
-                gameModel.handleSelection(screenX / emoWidth, screenY / emoHeight);
-            } else {
-                gameEnded = false;
-                gameModel.resetBoard();
+    public void populateBoard(Emoticon[][] emoticons) {
+        for (int x = ROW_START; x < X_MAX; x++) {
+            for (int y = COLUMN_TOP; y < Y_MAX; y++) {
+                emoticons[x][y] = getMockEmoticon(x, y);
             }
         }
+        generateEmoticonAtSetLocation(emoticons);
     }
 
-    @Override
-    public void updateModel() {
-        gameModel.updateEmoSwapCoordinates();
-        gameModel.updateEmoDropCoordinates();
+    private void generateEmoticonAtSetLocation(Emoticon[][] emoticons) {
+        // Populates board so that a horizontal match of Happy
+        // emoticons and a vertical match of Surprised emoticons
+        // can occur when Emoticons at (0,3) and (0,4) are selected
+        emoticons[0][1] = emoCreator.createSpecificMockEmoticon(0, 1, "HAPPY");
+        emoticons[0][2] = emoCreator.createSpecificMockEmoticon(0, 2, "HAPPY");
+        emoticons[0][3] = emoCreator.createSpecificMockEmoticon(0, 3, "SURPRISED");
+        emoticons[0][4] = emoCreator.createSpecificMockEmoticon(0, 4, "HAPPY");
+        emoticons[1][4] = emoCreator.createSpecificMockEmoticon(1, 4, "SURPRISED");
+        emoticons[2][4] = emoCreator.createSpecificMockEmoticon(2, 4, "SURPRISED");
+
+        // Populates board so that a horizontal match of Angry
+        // emoticons and a vertical match of Sad emoticons
+        // can occur when Emoticons at (3,3) and (4,3) are selected
+        emoticons[3][3] = emoCreator.createSpecificMockEmoticon(3, 3, "SAD");
+        emoticons[4][3] = emoCreator.createSpecificMockEmoticon(4, 3, "ANGRY");
+        emoticons[5][3] = emoCreator.createSpecificMockEmoticon(5, 3, "SAD");
+        emoticons[6][3] = emoCreator.createSpecificMockEmoticon(6, 3, "SAD");
+        emoticons[4][4] = emoCreator.createSpecificMockEmoticon(4, 4, "SAD");
+        emoticons[4][5] = emoCreator.createSpecificMockEmoticon(4, 5, "SAD");
     }
 
-    @Override
-    public void updateScoreBoardView(int points) {
-        scoreBoardView.incrementScore(points);
+    public Emoticon getMockEmoticon(int x, int y) {
+        return emoCreator.createMockEmoticon(x, y);
     }
-
-    @Override
-    public void controlGameBoardView(int second) {
-        gameBoardView.control(second);
-    }
-
-    @Override
-    public void playSound(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
-        // do nothing
-    }
-
-    @Override
-    public void playSound(String sound) {
-        // do nothing
-    }
-
-    @Override
-    public void setGameEnded(boolean gameEnded) {
-        this.gameEnded = gameEnded;
-    }
-
-    @Override
-    public boolean gameOver() {
-        return gameEnded;
-    }
-}
+}*/

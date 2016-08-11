@@ -4,6 +4,7 @@ import com.example.mark.msccomputerscienceproject.controller.*;
 import com.example.mark.msccomputerscienceproject.model.GameBoard;
 import com.example.mark.msccomputerscienceproject.R;
 import com.example.mark.msccomputerscienceproject.model.GamePiece;
+import com.example.mark.msccomputerscienceproject.model.MixedEmotionsBoard;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
@@ -38,13 +39,13 @@ public class GameBoardView extends SurfaceView implements Runnable {
     private Thread gameViewThread = null;
     volatile boolean running = false;
 
-    public GameBoardView(Context context, GameBoard board, int viewSizeX, int viewSizeY, int emoWidth, int emoHeight) {
+    public GameBoardView(Context context, int viewSizeX, int viewSizeY, int emoWidth, int emoHeight) {
         super(context);
         this.surfaceHolder = getHolder();
         this.controller = (GameController) context;
-        this.board = board;
         this.emoWidth = emoWidth;
         this.emoHeight = emoHeight;
+        this.board = MixedEmotionsBoard.getInstance();
         setPaint(context);
         createBackgroundBitmap(viewSizeX, viewSizeY);
     }

@@ -205,7 +205,7 @@ public abstract class GamePiece {
     public String getEmoType() {
         return emoticonType;
     }
-    
+
     public void setPixelMovement(int pixelMovement) {
         this.pixelMovement = pixelMovement;
     }

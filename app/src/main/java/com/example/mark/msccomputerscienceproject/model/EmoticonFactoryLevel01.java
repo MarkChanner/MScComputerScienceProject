@@ -9,17 +9,20 @@ import java.util.Random;
  */
 public class EmoticonFactoryLevel01 extends GamePieceFactory {
 
-    public EmoticonFactoryLevel01(BitmapCreator bitmapCreator, int emoWidth, int emoHeight) {
-        super(bitmapCreator, emoWidth, emoHeight);
+    public EmoticonFactoryLevel01(int emoWidth, int emoHeight) {
+        super(emoWidth, emoHeight);
     }
 
     /**
-     * Returns one of five emoticons that are chosen at random
+     * Factory method overridden from abstract method in superclass
      *
-     * @return Emoticon
+     * @param x                       the x coordinate of the required GamePiece
+     * @param y                       the y coordinate of the required GamePiece
+     * @param offScreenStartPositionY the y coordinate for GamePiece to drop from
+     * @return GamePiece
      */
     @Override
-    protected GamePiece createRandomEmo(int x, int y, int offScreenStartPositionY) {
+    protected GamePiece getRandomGamePiece(int x, int y, int offScreenStartPositionY) {
         Random random = new Random();
         String emoID = null;
         Bitmap bitmap = null;
@@ -49,5 +52,4 @@ public class EmoticonFactoryLevel01 extends GamePieceFactory {
         }
         return new Emoticon(x, y, emoWidth, emoHeight, bitmap, emoID, offScreenStartPositionY);
     }
-
 }

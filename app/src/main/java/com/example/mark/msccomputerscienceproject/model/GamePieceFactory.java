@@ -5,31 +5,41 @@ package com.example.mark.msccomputerscienceproject.model;
  */
 public abstract class GamePieceFactory {
 
-    public static final int LEVEL_ONE = 1;
-    public static final int LEVEL_TWO = 2;
+    protected BitmapCreator bitmapCreator;
     protected int emoWidth;
     protected int emoHeight;
-    protected BitmapCreator bitmapCreator;
 
-
-    public GamePieceFactory(BitmapCreator bitmapCreator, int emoWidth, int emoHeight) {
-        this.bitmapCreator = bitmapCreator;
+    public GamePieceFactory(int emoWidth, int emoHeight) {
+        this.bitmapCreator = BitmapCreator.getInstance();
         this.emoWidth = emoWidth;
         this.emoHeight = emoHeight;
     }
 
-    public static GamePieceFactory getInstance(BitmapCreator bitmapCreator, int emoWidth, int emoHeight) {
-        return new EmoticonFactoryLevel01(bitmapCreator, emoWidth, emoHeight);
+    /**
+     * A factory method which defers instantiation of GamePiece to a subclass
+     *
+     * @param x                       the x coordinate of the required GamePiece
+     * @param y                       the y coordinate of the required GamePiece
+     * @param offScreenStartPositionY the y coordinate for GamePiece to drop from
+     * @return GamePiece
+     */
+    protected abstract GamePiece getRandomGamePiece(int x, int y, int offScreenStartPositionY);
+
+    /**
+     * Returns a random GamePiece object
+     *
+     * @return GamePiece
+     */
+    public GamePiece createRandomGamePiece(int x, int y, int offScreenStartPositionY) {
+        return getRandomGamePiece(x, y, offScreenStartPositionY);
     }
 
-    // Factory method defers instantiation of emoticon to subclass
-    protected abstract GamePiece createRandomEmo(int x, int y, int offScreenStartPositionY);
-
-    public GamePiece getRandomEmo(int x, int y, int offScreenStartPositionY) {
-        return createRandomEmo(x, y, offScreenStartPositionY);
-    }
-
-    public GamePiece createEmptyEmo(int x, int y) {
-        return new EmptyEmoticon(x, y, emoWidth, emoHeight, bitmapCreator.getEmptyBitmap());
+    /**
+     * Returns a GamePiece without an ID or drop down position
+     *
+     * @return GamePiece
+     */
+    public GamePiece createBlankTile(int x, int y) {
+        return new BlankTile(x, y, emoWidth, emoHeight, bitmapCreator.getEmptyBitmap());
     }
 }

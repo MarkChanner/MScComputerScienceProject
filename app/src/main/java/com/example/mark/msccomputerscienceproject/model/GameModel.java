@@ -11,10 +11,11 @@ import java.util.List;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public class GameModel implements Model {
+public final class GameModel implements Model {
 
     private static final String TAG = "GameModel";
-
+    public static final int LEVEL_ONE = 1;
+    public static final int LEVEL_TWO = 2;
     public static final int X_MAX = 8;
     public static final int Y_MAX = 7;
     public static final int X = 0;
@@ -33,31 +34,37 @@ public class GameModel implements Model {
     private final Object dropLock = new Object();
 
     private GameController controller;
-    private GameBoard gameBoard;
+    private GameBoard board;
+    private BoardPopulatorImpl populator;
+    private GamePieceFactory emoFactory;
     private Selections selections;
     private MatchFinder matchFinder;
+    int emoWidth;
+    int emoHeight;
     private int level;
     private int currentLevelScore = 0;
 
-    public GameModel(GameController controller, GameBoard gameBoard) {
+    public GameModel(GameController controller, int emoWidth, int emoHeight, int level) {
         this.controller = controller;
-        this.gameBoard = gameBoard;
-        initializeGame();
+        this.emoWidth = emoWidth;
+        this.emoHeight = emoHeight;
+        this.level = level;
+        setEmoFactory(level);
+        this.board = MixedEmotionsBoard.getInstance();
+        this.populator = new BoardPopulatorImpl();
+        this.selections = new SelectionsImpl();
+        this.matchFinder = new MatchFinderImpl();
+        populator.populateBoard(board, emoFactory);
     }
 
-    private void initializeGame() {
-        level = 1;
-        selections = new SelectionsImpl();
-        matchFinder = new MatchFinder();
-        gameBoard.populate();
-    }
-
-    public static int getxMax() {
-        return X_MAX;
-    }
-
-    public static int getyMax() {
-        return Y_MAX;
+    private void setEmoFactory(int level) {
+        if (level == LEVEL_ONE) {
+            emoFactory = new EmoticonFactoryLevel01(emoWidth, emoHeight);
+        } else if (level == LEVEL_TWO) {
+            emoFactory = new EmoticonFactoryLevel02(emoWidth, emoHeight);
+        } else {
+            emoFactory = new EmoticonFactoryLevel02(emoWidth, emoHeight);
+        }
     }
 
     @Override
@@ -65,9 +72,9 @@ public class GameModel implements Model {
         boolean emoticonsSwapping = false;
         for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
             for (int x = ROW_START; x < X_MAX; x++) {
-                if (gameBoard.getGamePiece(x, y).isSwapping()) {
+                if (board.getGamePiece(x, y).isSwapping()) {
                     emoticonsSwapping = true;
-                    gameBoard.getGamePiece(x, y).updateSwapping();
+                    board.getGamePiece(x, y).updateSwapping();
                 }
             }
         }
@@ -86,9 +93,9 @@ public class GameModel implements Model {
         boolean emoticonsDropping = false;
         for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
             for (int x = ROW_START; x < X_MAX; x++) {
-                if (gameBoard.getGamePiece(x, y).isDropping()) {
+                if (board.getGamePiece(x, y).isDropping()) {
                     emoticonsDropping = true;
-                    gameBoard.getGamePiece(x, y).updateDropping();
+                    board.getGamePiece(x, y).updateDropping();
                 }
             }
         }
@@ -105,8 +112,8 @@ public class GameModel implements Model {
     @Override
     public void handleSelection(int x, int y) {
         Log.d(TAG, "handleSelection(int, int)");
-        if (!gameBoard.getGamePiece(x, y).isDropping()) {
-            gameBoard.getGamePiece(x, y).setIsSelected(true);
+        if (!board.getGamePiece(x, y).isDropping()) {
+            board.getGamePiece(x, y).setIsSelected(true);
             if (!selections.selection01Made()) {
                 selections.setSelection01(x, y);
             } else {
@@ -122,7 +129,7 @@ public class GameModel implements Model {
                 processSelections(selections.getSelection01(), selections.getSelection02());
             } else {
                 unHighlightSelections();
-                gameBoard.getGamePiece(x, y).setIsSelected(true);
+                board.getGamePiece(x, y).setIsSelected(true);
                 selections.secondSelectionBecomesFirstSelection();
             }
         } else {
@@ -135,8 +142,8 @@ public class GameModel implements Model {
         unHighlightSelections();
         swapSelections(sel1, sel2);
 
-        ArrayList<LinkedList<GamePiece>> matchingX = matchFinder.findVerticalMatches(gameBoard);
-        ArrayList<LinkedList<GamePiece>> matchingY = matchFinder.findHorizontalMatches(gameBoard);
+        ArrayList<LinkedList<GamePiece>> matchingX = matchFinder.findVerticalMatches(board);
+        ArrayList<LinkedList<GamePiece>> matchingY = matchFinder.findHorizontalMatches(board);
 
         if (matchesFound(matchingX, matchingY)) {
             modifyBoard(matchingX, matchingY);
@@ -149,22 +156,22 @@ public class GameModel implements Model {
 
     private void swapSelections(int[] sel1, int[] sel2) {
         Log.d(TAG, "swapSelections(int[] int[])");
-        int emo01X = gameBoard.getGamePiece(sel1[X], sel1[Y]).getArrayX();
-        int emo01Y = gameBoard.getGamePiece(sel1[X], sel1[Y]).getArrayY();
-        int emo02X = gameBoard.getGamePiece(sel2[X], sel2[Y]).getArrayX();
-        int emo02Y = gameBoard.getGamePiece(sel2[X], sel2[Y]).getArrayY();
-        GamePiece newEmo2 = gameBoard.getGamePiece(sel1[X], sel1[Y]);
+        int emo01X = board.getGamePiece(sel1[X], sel1[Y]).getArrayX();
+        int emo01Y = board.getGamePiece(sel1[X], sel1[Y]).getArrayY();
+        int emo02X = board.getGamePiece(sel2[X], sel2[Y]).getArrayX();
+        int emo02Y = board.getGamePiece(sel2[X], sel2[Y]).getArrayY();
+        GamePiece newEmo2 = board.getGamePiece(sel1[X], sel1[Y]);
 
-        gameBoard.setGamePiece(sel1[X], sel1[Y], gameBoard.getGamePiece(sel2[X], sel2[Y]));
-        gameBoard.getGamePiece(sel1[X], sel1[Y]).setArrayX(emo01X);
-        gameBoard.getGamePiece(sel1[X], sel1[Y]).setArrayY(emo01Y);
+        board.setGamePiece(sel1[X], sel1[Y], board.getGamePiece(sel2[X], sel2[Y]));
+        board.getGamePiece(sel1[X], sel1[Y]).setArrayX(emo01X);
+        board.getGamePiece(sel1[X], sel1[Y]).setArrayY(emo01Y);
 
-        gameBoard.setGamePiece(sel2[X], sel2[Y], newEmo2);
-        gameBoard.getGamePiece(sel2[X], sel2[Y]).setArrayX(emo02X);
-        gameBoard.getGamePiece(sel2[X], sel2[Y]).setArrayY(emo02Y);
+        board.setGamePiece(sel2[X], sel2[Y], newEmo2);
+        board.getGamePiece(sel2[X], sel2[Y]).setArrayX(emo02X);
+        board.getGamePiece(sel2[X], sel2[Y]).setArrayY(emo02Y);
 
-        GamePiece emo1 = gameBoard.getGamePiece(sel1[X], sel1[Y]);
-        GamePiece emo2 = gameBoard.getGamePiece(sel2[X], sel2[Y]);
+        GamePiece emo1 = board.getGamePiece(sel1[X], sel1[Y]);
+        GamePiece emo2 = board.getGamePiece(sel2[X], sel2[Y]);
         setEmoAnimation(emo1, emo2);
     }
 
@@ -210,7 +217,7 @@ public class GameModel implements Model {
     private void unHighlightSelections() {
         for (int x = ROW_START; x < X_MAX; x++) {
             for (int y = COLUMN_TOP; y < Y_MAX; y++) {
-                gameBoard.getGamePiece(x, y).setIsSelected(false);
+                board.getGamePiece(x, y).setIsSelected(false);
             }
         }
     }
@@ -230,13 +237,13 @@ public class GameModel implements Model {
             remove(matchingX);
             remove(matchingY);
             dropEmoticons();
-            matchingX = matchFinder.findVerticalMatches(gameBoard);
-            matchingY = matchFinder.findHorizontalMatches(gameBoard);
+            matchingX = matchFinder.findVerticalMatches(board);
+            matchingY = matchFinder.findHorizontalMatches(board);
         } while (matchesFound(matchingX, matchingY));
 
         if (currentLevelScore >= 90) {
             loadNextLevel();
-        } else if (!matchFinder.anotherMatchPossible(gameBoard)) {
+        } else if (!matchFinder.anotherMatchPossible(board)) {
             Log.d(TAG, "NO MATCHES AVAILABLE - END GAME CONDITION ENTERED");
             finishRound();
         }
@@ -248,18 +255,18 @@ public class GameModel implements Model {
         setToDrop();
         dropEmoticons();
         currentLevelScore = 0;
-        if (this.level < MAX_GAME_LEVELS) {
+        if (level < MAX_GAME_LEVELS) {
             level++;
-            gameBoard.setEmoFactory(level);
+            setEmoFactory(level);
         }
-        gameBoard.populate();
+        populator.populateBoard(board, emoFactory);
     }
 
     @Override
     public void setToDrop() {
         for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
             for (int x = ROW_START; x < X_MAX; x++) {
-                gameBoard.setToDrop(x, y);
+                board.setToDrop(x, y);
             }
         }
     }
@@ -282,8 +289,8 @@ public class GameModel implements Model {
             for (GamePiece emo : removeList) {
                 int x = emo.getArrayX();
                 int y = emo.getArrayY();
-                if (!gameBoard.getGamePiece(x, y).getEmoType().equals(EMPTY)) {
-                    gameBoard.setBlankGamePiece(x, y);
+                if (!board.getGamePiece(x, y).getEmoType().equals(EMPTY)) {
+                    board.setGamePiece(x, y, emoFactory.createBlankTile(x, y));
                 }
             }
         }
@@ -297,19 +304,19 @@ public class GameModel implements Model {
         for (int x = ROW_START; x < X_MAX; x++) {
             offScreenStartPosition = -1;
             for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
-                if (gameBoard.getGamePiece(x, y).getEmoType().equals(EMPTY)) {
+                if (board.getGamePiece(x, y).getEmoType().equals(EMPTY)) {
                     runnerY = y;
-                    while ((runnerY >= COLUMN_TOP) && (gameBoard.getGamePiece(x, runnerY).getEmoType().equals(EMPTY))) {
+                    while ((runnerY >= COLUMN_TOP) && (board.getGamePiece(x, runnerY).getEmoType().equals(EMPTY))) {
                         runnerY--;
                     }
                     if (runnerY >= COLUMN_TOP) {
-                        int tempY = gameBoard.getGamePiece(x, y).getArrayY();
-                        gameBoard.setGamePiece(x, y, gameBoard.getGamePiece(x, runnerY));
-                        gameBoard.getGamePiece(x, y).setArrayY(tempY);
-                        gameBoard.getGamePiece(x, y).setDropping(true);
-                        gameBoard.setBlankGamePiece(x, runnerY);
+                        int tempY = board.getGamePiece(x, y).getArrayY();
+                        board.setGamePiece(x, y, board.getGamePiece(x, runnerY));
+                        board.getGamePiece(x, y).setArrayY(tempY);
+                        board.getGamePiece(x, y).setDropping(true);
+                        board.setGamePiece(x, runnerY, emoFactory.createBlankTile(x, runnerY));
                     } else {
-                        gameBoard.setRandomGamePiece(x, y, offScreenStartPosition);
+                        board.setGamePiece(x, y, emoFactory.getRandomGamePiece(x, y, offScreenStartPosition));
                         offScreenStartPosition--;
                     }
                 }
@@ -335,7 +342,10 @@ public class GameModel implements Model {
     @Override
     public void resetBoard() {
         selections.resetUserSelections();
-        gameBoard.resetBoard();
+        level = 1;
+        setEmoFactory(level);
+        board.resetBoard();
+        populator.populateBoard(board, emoFactory);
     }
 
     @Override

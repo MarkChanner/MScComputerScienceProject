@@ -26,14 +26,14 @@ public class MatchFinderTest {
 
     private Emoticon[][] emoticons;
     private Bitmap bitmap = BitmapCreator.getInstance().getEmptyBitmap();
-    private MatchFinder matchFinder;
+    private MatchFinderImpl matchFinder;
     private ArrayList<LinkedList<Emoticon>> matchingX;
     private ArrayList<LinkedList<Emoticon>> matchingY;
 
     @Before
     public void setUp() throws Exception {
         emoticons = new AbstractEmoticon[X_MAX][Y_MAX];
-        matchFinder = new MatchFinder();
+        matchFinder = new MatchFinderImpl();
         int counter = 0;
         for (int x = ROW_START; x < X_MAX; x++) {
             for (int y = COLUMN_TOP; y < Y_MAX; y++) {
