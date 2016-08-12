@@ -23,10 +23,10 @@ public final class GameModel implements Model {
     public static final int ROW_START = 0;
     public static final int COLUMN_TOP = 0;
     public static final int COLUMN_BOTTOM = (Y_MAX - 1);
-    public static final String EMPTY = "EMPTY";
-    public static final String INVALID_MOVE = "INVALID_MOVE";
     public static final int ONE_SECOND = 1000;
     public static final int MAX_GAME_LEVELS = 2;
+    public static final String EMPTY = "EMPTY";
+    public static final String INVALID_MOVE = "INVALID_MOVE";
 
     private volatile boolean animatingSwap = false;
     private volatile boolean animatingDrop = false;
@@ -34,27 +34,27 @@ public final class GameModel implements Model {
     private final Object dropLock = new Object();
 
     private GameController controller;
+    private int emoWidth;
+    private int emoHeight;
+    private int level;
+    private int currentLevelScore;
     private GameBoard board;
     private BoardPopulatorImpl populator;
     private GamePieceFactory emoFactory;
     private Selections selections;
     private MatchFinder matchFinder;
-    int emoWidth;
-    int emoHeight;
-    private int level;
-    private int currentLevelScore;
 
     public GameModel(GameController controller, int emoWidth, int emoHeight, int level) {
+        initializeGameModel(controller, emoWidth, emoHeight, level);
+    }
+
+    private void initializeGameModel(GameController controller, int emoWidth, int emoHeight, int level) {
         this.controller = controller;
         this.emoWidth = emoWidth;
         this.emoHeight = emoHeight;
         this.level = level;
-        initializeGameModel();
-    }
-
-    private void initializeGameModel() {
-        this.currentLevelScore = 0;
         setEmoFactory(level);
+        this.currentLevelScore = 0;
         this.board = MixedEmotionsBoard.getInstance();
         this.selections = new SelectionsImpl();
         this.matchFinder = new MatchFinderImpl();
@@ -68,7 +68,7 @@ public final class GameModel implements Model {
         } else if (level == LEVEL_TWO) {
             emoFactory = new EmoticonFactoryLevel02(emoWidth, emoHeight);
         } else {
-            emoFactory = new EmoticonFactoryLevel02(emoWidth, emoHeight);
+            throw new IndexOutOfBoundsException("level out of bounds in setEmoFactory(int)");
         }
     }
 
@@ -232,6 +232,13 @@ public final class GameModel implements Model {
         return (!(matchingX.isEmpty() && matchingY.isEmpty()));
     }
 
+    /**
+     * This method handles the bulk of the requirements for handling a match on the board. It
+     * does this within a loop until the manipulated board no longer contains matches.
+     *
+     * @param matchingX An ArrayList containing a LinkedList of matching vertical GamePieces
+     * @param matchingY An ArrayList containing a LinkedList of matching horizontal GamePieces
+     */
     private void modifyBoard(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
         Log.d(TAG, "modifyBoard method");
         do {
@@ -344,6 +351,16 @@ public final class GameModel implements Model {
         }
     }
 
+    private void finishRound() {
+        unHighlightSelections();
+        setToDrop();
+        dropEmoticons();
+        controller.setGameEnded(true);
+    }
+
+    /**
+     * Called from GameController
+     */
     @Override
     public void resetGame() {
         selections.resetUserSelections();
@@ -351,13 +368,5 @@ public final class GameModel implements Model {
         setEmoFactory(level);
         board.resetBoard();
         populator.populateBoard(board, emoFactory);
-    }
-
-    @Override
-    public void finishRound() {
-        unHighlightSelections();
-        setToDrop();
-        dropEmoticons();
-        controller.setGameEnded(true);
     }
 }

@@ -15,8 +15,6 @@ public interface Model {
 
     void dropEmoticons();
 
-    void finishRound();
-
     void resetGame();
 
 }
