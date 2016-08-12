@@ -3,7 +3,6 @@ package com.example.mark.msccomputerscienceproject.model;
 import com.example.mark.msccomputerscienceproject.controller.GameController;
 
 import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
