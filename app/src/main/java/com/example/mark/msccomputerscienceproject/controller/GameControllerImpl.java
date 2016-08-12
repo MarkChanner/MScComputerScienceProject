@@ -109,7 +109,7 @@ public class GameControllerImpl extends Activity implements GameController {
                 gameModel.handleSelection(screenX / emoWidth, screenY / emoHeight);
             } else {
                 gameEnded = false;
-                gameModel.resetBoard();
+                gameModel.resetGame();
             }
         }
     }

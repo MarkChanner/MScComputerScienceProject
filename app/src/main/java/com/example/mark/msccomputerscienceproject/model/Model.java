@@ -17,6 +17,6 @@ public interface Model {
 
     void finishRound();
 
-    void resetBoard();
+    void resetGame();
 
 }

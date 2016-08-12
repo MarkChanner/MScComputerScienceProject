@@ -345,7 +345,7 @@ public final class GameModel implements Model {
     }
 
     @Override
-    public void resetBoard() {
+    public void resetGame() {
         selections.resetUserSelections();
         level = 1;
         setEmoFactory(level);
