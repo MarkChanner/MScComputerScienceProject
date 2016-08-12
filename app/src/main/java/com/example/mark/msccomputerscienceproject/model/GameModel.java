@@ -42,18 +42,23 @@ public final class GameModel implements Model {
     int emoWidth;
     int emoHeight;
     private int level;
-    private int currentLevelScore = 0;
+    private int currentLevelScore;
 
     public GameModel(GameController controller, int emoWidth, int emoHeight, int level) {
         this.controller = controller;
         this.emoWidth = emoWidth;
         this.emoHeight = emoHeight;
         this.level = level;
+        initializeGameModel();
+    }
+
+    private void initializeGameModel() {
+        this.currentLevelScore = 0;
         setEmoFactory(level);
         this.board = MixedEmotionsBoard.getInstance();
-        this.populator = new BoardPopulatorImpl();
         this.selections = new SelectionsImpl();
         this.matchFinder = new MatchFinderImpl();
+        this.populator = new BoardPopulatorImpl();
         populator.populateBoard(board, emoFactory);
     }
 
