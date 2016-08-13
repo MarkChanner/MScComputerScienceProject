@@ -1,6 +1,8 @@
 package com.example.mark.msccomputerscienceproject.model;
 
 /**
+ * final class as not to be subclassed
+ *
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
 public final class LevelManagerImpl implements LevelManager {
@@ -15,17 +17,12 @@ public final class LevelManagerImpl implements LevelManager {
     public LevelManagerImpl(int emoWidth, int emoHeight, int level) {
         this.emoWidth = emoWidth;
         this.emoHeight = emoHeight;
+        this.level = level;
         setGameLevel(level);
     }
 
     @Override
-    public int getGameLevel() {
-        return level;
-    }
-
-    @Override
     public void setGameLevel(int level) {
-        this.level = level;
         if (level == LEVEL_ONE) {
             emoFactory = new EmoticonFactoryLevel01(emoWidth, emoHeight);
         } else if (level == LEVEL_TWO) {
@@ -36,8 +33,15 @@ public final class LevelManagerImpl implements LevelManager {
     }
 
     @Override
+    public int getGameLevel() {
+        return level;
+    }
+
+    @Override
     public void incrementLevel() {
         level++;
+        setGameLevel(level);
+
     }
 
     @Override
