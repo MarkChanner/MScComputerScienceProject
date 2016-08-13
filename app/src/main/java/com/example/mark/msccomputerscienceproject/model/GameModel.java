@@ -3,6 +3,7 @@ package com.example.mark.msccomputerscienceproject.model;
 import com.example.mark.msccomputerscienceproject.controller.GameController;
 
 import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,8 +14,7 @@ import java.util.List;
 public final class GameModel implements Model {
 
     private static final String TAG = "GameModel";
-    public static final int LEVEL_ONE = 1;
-    public static final int LEVEL_TWO = 2;
+    public static final int MAX_GAME_LEVELS = 2;
     public static final int X_MAX = 8;
     public static final int Y_MAX = 7;
     public static final int X = 0;
@@ -23,7 +23,6 @@ public final class GameModel implements Model {
     public static final int COLUMN_TOP = 0;
     public static final int COLUMN_BOTTOM = (Y_MAX - 1);
     public static final int ONE_SECOND = 1000;
-    public static final int MAX_GAME_LEVELS = 2;
     public static final String EMPTY = "EMPTY";
     public static final String INVALID_MOVE = "INVALID_MOVE";
 
@@ -31,15 +30,12 @@ public final class GameModel implements Model {
     private volatile boolean animatingDrop = false;
     private final Object swapLock = new Object();
     private final Object dropLock = new Object();
+    private int currentLevelScore;
 
     private GameController controller;
-    private int emoWidth;
-    private int emoHeight;
-    private int level;
-    private int currentLevelScore;
     private GameBoard board;
-    private BoardPopulatorImpl populator;
-    private GamePieceFactory emoFactory;
+    private LevelManager levelManager;
+    private BoardPopulatorImpl boardPopulator;
     private Selections selections;
     private MatchFinder matchFinder;
 
@@ -49,26 +45,13 @@ public final class GameModel implements Model {
 
     private void initializeGameModel(GameController controller, int emoWidth, int emoHeight, int level) {
         this.controller = controller;
-        this.emoWidth = emoWidth;
-        this.emoHeight = emoHeight;
-        this.level = level;
-        setEmoFactory(level);
         this.currentLevelScore = 0;
+        this.levelManager = new LevelManagerImpl(emoWidth, emoHeight, level);
         this.board = MixedEmotionsBoard.getInstance();
         this.selections = new SelectionsImpl();
         this.matchFinder = new MatchFinderImpl();
-        this.populator = new BoardPopulatorImpl();
-        populator.populateBoard(board, emoFactory);
-    }
-
-    private void setEmoFactory(int level) {
-        if (level == LEVEL_ONE) {
-            emoFactory = new EmoticonFactoryLevel01(emoWidth, emoHeight);
-        } else if (level == LEVEL_TWO) {
-            emoFactory = new EmoticonFactoryLevel02(emoWidth, emoHeight);
-        } else {
-            throw new IndexOutOfBoundsException("level out of bounds in setEmoFactory(int)");
-        }
+        this.boardPopulator = new BoardPopulatorImpl();
+        boardPopulator.populate(board, levelManager.getGamePieceFactory());
     }
 
     @Override
@@ -122,6 +105,7 @@ public final class GameModel implements Model {
                 selections.setSelection01(x, y);
             } else {
                 selections.setSelection02(x, y);
+                unHighlightSelections();
                 checkValidSelections(x, y);
             }
         }
@@ -132,18 +116,15 @@ public final class GameModel implements Model {
             if (selections.adjacentSelections()) {
                 processSelections(selections.getSelection01(), selections.getSelection02());
             } else {
-                unHighlightSelections();
                 board.getGamePiece(x, y).setIsSelected(true);
                 selections.secondSelectionBecomesFirstSelection();
             }
         } else {
-            unHighlightSelections();
             selections.resetUserSelections();
         }
     }
 
     private void processSelections(int[] sel1, int[] sel2) {
-        unHighlightSelections();
         swapSelections(sel1, sel2);
 
         ArrayList<LinkedList<GamePiece>> matchingX = matchFinder.findVerticalMatches(board);
@@ -266,11 +247,10 @@ public final class GameModel implements Model {
         setToDrop();
         dropEmoticons();
         currentLevelScore = 0;
-        if (level < MAX_GAME_LEVELS) {
-            level++;
-            setEmoFactory(level);
+        if (levelManager.getGameLevel() < MAX_GAME_LEVELS) {
+            levelManager.incrementLevel();
         }
-        populator.populateBoard(board, emoFactory);
+        boardPopulator.populate(board, levelManager.getGamePieceFactory());
     }
 
     @Override
@@ -301,7 +281,7 @@ public final class GameModel implements Model {
                 int x = emo.getArrayX();
                 int y = emo.getArrayY();
                 if (!board.getGamePiece(x, y).getEmoType().equals(EMPTY)) {
-                    board.setGamePiece(x, y, emoFactory.createBlankTile(x, y));
+                    board.setGamePiece(x, y, levelManager.getGamePieceFactory().createBlankTile(x, y));
                 }
             }
         }
@@ -325,9 +305,9 @@ public final class GameModel implements Model {
                         board.setGamePiece(x, y, board.getGamePiece(x, runnerY));
                         board.getGamePiece(x, y).setArrayY(tempY);
                         board.getGamePiece(x, y).setDropping(true);
-                        board.setGamePiece(x, runnerY, emoFactory.createBlankTile(x, runnerY));
+                        board.setGamePiece(x, runnerY, levelManager.getGamePieceFactory().createBlankTile(x, runnerY));
                     } else {
-                        board.setGamePiece(x, y, emoFactory.getRandomGamePiece(x, y, offScreenStartPosition));
+                        board.setGamePiece(x, y, levelManager.getGamePieceFactory().getRandomGamePiece(x, y, offScreenStartPosition));
                         offScreenStartPosition--;
                     }
                 }
@@ -363,9 +343,8 @@ public final class GameModel implements Model {
     @Override
     public void resetGame() {
         selections.resetUserSelections();
-        level = 1;
-        setEmoFactory(level);
+        levelManager.setGameLevel(1);
         board.resetBoard();
-        populator.populateBoard(board, emoFactory);
+        boardPopulator.populate(board, levelManager.getGamePieceFactory());
     }
 }

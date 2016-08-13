@@ -5,6 +5,6 @@ package com.example.mark.msccomputerscienceproject.model;
  */
 public interface BoardPopulator {
 
-    void populateBoard(GameBoard board, GamePieceFactory emoFactory);
+    void populate(GameBoard board, GamePieceFactory emoFactory);
 
 }

@@ -8,7 +8,7 @@ public class BoardPopulatorImpl implements BoardPopulator {
     public static final int ROW_START = 0;
     public static final int COLUMN_TOP = 0;
 
-    public void populateBoard(GameBoard board, GamePieceFactory emoFactory) {
+    public void populate(GameBoard board, GamePieceFactory emoFactory) {
         GamePiece emoticon;
         int xMax = board.getWidth();
         int yMax = board.getHeight();

@@ -12,7 +12,7 @@ public class MockGridPopulator01 extends AbstractGameBoard {
     }
 
     @Override
-    public void populateBoard(Emoticon[][] emoticons) {
+    public void populate(Emoticon[][] emoticons) {
         for (int x = ROW_START; x < X_MAX; x++) {
             for (int y = COLUMN_TOP; y < Y_MAX; y++) {
                 emoticons[x][y] = getMockEmoticon(x, y);
