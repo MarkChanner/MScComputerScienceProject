@@ -3,20 +3,20 @@ package com.example.mark.msccomputerscienceproject.model;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public class MixedEmotionsBoard implements GameBoard {
+public class GameBoardImpl implements GameBoard {
 
     private final int boardWidth = 8;
     private final int boardHeight = 7;
     private GamePiece[][] emoticons = new GamePiece[boardWidth][boardHeight];
 
-    private static MixedEmotionsBoard instance;
+    private static GameBoard instance;
 
-    private MixedEmotionsBoard() {
+    private GameBoardImpl() {
     }
 
-    public static synchronized MixedEmotionsBoard getInstance() {
+    public static synchronized GameBoard getInstance() {
         if (instance == null) {
-            instance = new MixedEmotionsBoard();
+            instance = new GameBoardImpl();
         }
         return instance;
     }
