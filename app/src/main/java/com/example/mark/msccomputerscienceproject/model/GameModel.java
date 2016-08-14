@@ -234,14 +234,6 @@ public final class GameModel implements Model {
         swapSelections(sel1, sel2);
     }
 
-    /*private void unHighlightSelections() {
-        for (int x = ROW_START; x < X_MAX; x++) {
-            for (int y = COLUMN_TOP; y < Y_MAX; y++) {
-                board.getGamePiece(x, y).setIsSelected(false);
-            }
-        }
-    }*/
-
     private boolean matchesFound(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
         Log.d(TAG, "matchesFound method");
         return (!(matchingX.isEmpty() && matchingY.isEmpty()));
