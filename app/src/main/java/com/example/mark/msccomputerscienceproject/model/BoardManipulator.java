@@ -10,19 +10,19 @@ public interface BoardManipulator {
 
     void populateBoard(GamePieceFactory gamePieceFactory);
 
-    void swapSelections(Selections selections);
+    void swap(Selections selections);
 
     void swapBack(Selections selections);
 
     void unHighlightSelections();
 
-    void dropEmoticons(GamePieceFactory gamePieceFactory);
+    void dropGamePieces(GamePieceFactory gamePieceFactory);
 
-    void updateEmoSwapCoordinates();
+    void updateGamePieceSwapCoordinates();
 
-    void updateEmoDropCoordinates();
+    void updateGamePieceDropCoordinates();
 
     void setToDrop();
 
-    void replaceMatches(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY, GamePieceFactory gamePieceFactory);
+    void replaceGamePieces(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY, GamePieceFactory factory);
 }

@@ -20,7 +20,7 @@ public abstract class GamePieceFactory {
      *
      * @param x                       the x coordinate of the required GamePiece
      * @param y                       the y coordinate of the required GamePiece
-     * @param offScreenStartPositionY the y coordinate for GamePiece to drop from
+     * @param offScreenStartPositionY the y coordinate for GamePiece to dropGamePieces from
      * @return GamePiece
      */
     protected abstract GamePiece getRandomGamePiece(int x, int y, int offScreenStartPositionY);
@@ -35,7 +35,7 @@ public abstract class GamePieceFactory {
     }
 
     /**
-     * Returns a GamePiece without an ID or drop down position
+     * Returns a GamePiece without an ID or dropGamePieces down position
      *
      * @return GamePiece
      */

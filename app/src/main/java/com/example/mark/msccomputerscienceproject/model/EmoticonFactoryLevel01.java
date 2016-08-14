@@ -18,7 +18,7 @@ public class EmoticonFactoryLevel01 extends GamePieceFactory {
      *
      * @param x                       the x coordinate of the required GamePiece
      * @param y                       the y coordinate of the required GamePiece
-     * @param offScreenStartPositionY the y coordinate for GamePiece to drop from
+     * @param offScreenStartPositionY the y coordinate for GamePiece to dropGamePieces from
      * @return GamePiece
      */
     @Override

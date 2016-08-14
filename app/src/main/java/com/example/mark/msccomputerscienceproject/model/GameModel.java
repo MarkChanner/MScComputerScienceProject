@@ -25,7 +25,7 @@ public final class GameModel implements Model {
     private Selections selections;
     private MatchFinder matchHandler;
     private GameBoard board;
-    private BoardManipulator boardManipulator;
+    private BoardManipulator boardController;
 
     public GameModel(GameController controller, int emoWidth, int emoHeight, int level) {
         initializeGameModel(controller, emoWidth, emoHeight, level);
@@ -38,14 +38,14 @@ public final class GameModel implements Model {
         this.selections = new SelectionsImpl();
         this.matchHandler = new MatchFinderImpl();
         this.board = MixedEmotionsBoard.getInstance();
-        this.boardManipulator = new BoardManipulatorImpl(board);
-        boardManipulator.populateBoard(levelManager.getGamePieceFactory());
+        this.boardController = new BoardManipulatorImpl(board);
+        boardController.populateBoard(levelManager.getGamePieceFactory());
     }
 
     @Override
     public void updateLogic() {
-        boardManipulator.updateEmoSwapCoordinates();
-        boardManipulator.updateEmoDropCoordinates();
+        boardController.updateGamePieceSwapCoordinates();
+        boardController.updateGamePieceDropCoordinates();
     }
 
     @Override
@@ -63,14 +63,14 @@ public final class GameModel implements Model {
 
     private void handleSecondSelection(int x, int y) {
         selections.setSelection02(x, y);
-        boardManipulator.unHighlightSelections();
+        boardController.unHighlightSelections();
         if (selections.sameSelectionMadeTwice()) {
             selections.resetUserSelections();
         } else if (selections.areNotAdjacent()) {
             board.getGamePiece(x, y).setIsSelected(true);
             selections.secondSelectionBecomesFirstSelection();
         } else {
-            boardManipulator.swapSelections(selections);
+            boardController.swap(selections);
             checkForMatches(selections);
             selections.resetUserSelections();
         }
@@ -83,7 +83,7 @@ public final class GameModel implements Model {
             modifyBoard(matchingX, matchingY);
         } else {
             controller.playSound(INVALID_MOVE);
-            boardManipulator.swapBack(selections);
+            boardController.swapBack(selections);
         }
         //selections.resetUserSelections();
     }
@@ -106,8 +106,8 @@ public final class GameModel implements Model {
             matchHandler.highlightMatches(matchingX, matchingY);
             controller.playSound(matchingX, matchingY);
             controller.controlGameBoardView(ONE_SECOND);
-            boardManipulator.replaceMatches(matchingX, matchingY, gamePieceFactory);
-            boardManipulator.dropEmoticons(gamePieceFactory);
+            boardController.replaceGamePieces(matchingX, matchingY, gamePieceFactory);
+            boardController.dropGamePieces(gamePieceFactory);
             matchingX = matchHandler.findVerticalMatches(board);
             matchingY = matchHandler.findHorizontalMatches(board);
         } while (matchesFound(matchingX, matchingY));
@@ -130,20 +130,20 @@ public final class GameModel implements Model {
 
     private void loadNextLevel() {
         Log.d(TAG, "loadNextLevel()");
-        boardManipulator.unHighlightSelections();
-        boardManipulator.setToDrop();
-        boardManipulator.dropEmoticons(levelManager.getGamePieceFactory());
+        boardController.unHighlightSelections();
+        boardController.setToDrop();
+        boardController.dropGamePieces(levelManager.getGamePieceFactory());
         currentLevelScore = 0;
         if (levelManager.getGameLevel() < MAX_GAME_LEVELS) {
             levelManager.incrementLevel();
         }
-        boardManipulator.populateBoard(levelManager.getGamePieceFactory());
+        boardController.populateBoard(levelManager.getGamePieceFactory());
     }
 
     private void finishRound() {
-        boardManipulator.unHighlightSelections();
-        boardManipulator.setToDrop();
-        boardManipulator.dropEmoticons(levelManager.getGamePieceFactory());
+        boardController.unHighlightSelections();
+        boardController.setToDrop();
+        boardController.dropGamePieces(levelManager.getGamePieceFactory());
         controller.setGameEnded(true);
     }
 
@@ -155,6 +155,6 @@ public final class GameModel implements Model {
         selections.resetUserSelections();
         levelManager.setGameLevel(1);
         board.resetBoard();
-        boardManipulator.populateBoard(levelManager.getGamePieceFactory());
+        boardController.populateBoard(levelManager.getGamePieceFactory());
     }
 }

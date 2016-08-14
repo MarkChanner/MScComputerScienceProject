@@ -69,7 +69,7 @@ public class BoardManipulatorImpl implements BoardManipulator {
     }
 
     @Override
-    public void swapSelections(Selections selections) {
+    public void swap(Selections selections) {
         int[] sel1 = selections.getSelection01();
         int[] sel2 = selections.getSelection02();
 
@@ -93,7 +93,7 @@ public class BoardManipulatorImpl implements BoardManipulator {
     }
 
     public void swapBack(Selections selections) {
-        swapSelections(selections);
+        swap(selections);
     }
 
     private void setEmoAnimation(GamePiece emo1, GamePiece emo2) {
@@ -131,7 +131,7 @@ public class BoardManipulatorImpl implements BoardManipulator {
     }
 
     @Override
-    public void dropEmoticons(GamePieceFactory gamePieceFactory) {
+    public void dropGamePieces(GamePieceFactory gamePieceFactory) {
         int offScreenStartPosition;
         int runnerY;
         for (int x = ROW_START; x < X_MAX; x++) {
@@ -172,7 +172,7 @@ public class BoardManipulatorImpl implements BoardManipulator {
     }
 
     @Override
-    public void updateEmoSwapCoordinates() {
+    public void updateGamePieceSwapCoordinates() {
         boolean emoticonsSwapping = false;
         for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
             for (int x = ROW_START; x < X_MAX; x++) {
@@ -193,7 +193,7 @@ public class BoardManipulatorImpl implements BoardManipulator {
     }
 
     @Override
-    public void updateEmoDropCoordinates() {
+    public void updateGamePieceDropCoordinates() {
         boolean emoticonsDropping = false;
         for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
             for (int x = ROW_START; x < X_MAX; x++) {
@@ -223,9 +223,9 @@ public class BoardManipulatorImpl implements BoardManipulator {
     }
 
     @Override
-    public void replaceMatches(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY, GamePieceFactory gamePieceFactory) {
-        replace(matchingX, gamePieceFactory);
-        replace(matchingY, gamePieceFactory);
+    public void replaceGamePieces(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY, GamePieceFactory factory) {
+        replace(matchingX, factory);
+        replace(matchingY, factory);
     }
 
     private void replace(ArrayList<LinkedList<GamePiece>> matches, GamePieceFactory gamePieceFactory) {
