@@ -30,28 +30,28 @@ public final class GameModel implements Model {
     private volatile boolean animatingDrop = false;
     private final Object swapLock = new Object();
     private final Object dropLock = new Object();
-    private int currentLevelScore;
 
+    private int currentLevelScore;
     private GameController controller;
-    private GameBoard board;
     private LevelManager levelManager;
-    private BoardPopulatorImpl boardPopulator;
     private Selections selections;
     private MatchFinder matchFinder;
+    private GameBoard board;
+    private BoardManipulator boardManipulator;
 
     public GameModel(GameController controller, int emoWidth, int emoHeight, int level) {
         initializeGameModel(controller, emoWidth, emoHeight, level);
     }
 
     private void initializeGameModel(GameController controller, int emoWidth, int emoHeight, int level) {
-        this.controller = controller;
         this.currentLevelScore = 0;
+        this.controller = controller;
         this.levelManager = new LevelManagerImpl(emoWidth, emoHeight, level);
-        this.board = MixedEmotionsBoard.getInstance();
         this.selections = new SelectionsImpl();
         this.matchFinder = new MatchFinderImpl();
-        this.boardPopulator = new BoardPopulatorImpl();
-        boardPopulator.populate(board, levelManager.getGamePieceFactory());
+        this.board = MixedEmotionsBoard.getInstance();
+        this.boardManipulator = new BoardManipulatorImpl(board);
+        boardManipulator.populateBoard(levelManager.getGamePieceFactory());
     }
 
     @Override
@@ -250,7 +250,7 @@ public final class GameModel implements Model {
         if (levelManager.getGameLevel() < MAX_GAME_LEVELS) {
             levelManager.incrementLevel();
         }
-        boardPopulator.populate(board, levelManager.getGamePieceFactory());
+        boardManipulator.populateBoard(levelManager.getGamePieceFactory());
     }
 
     @Override
@@ -335,6 +335,7 @@ public final class GameModel implements Model {
         setToDrop();
         dropEmoticons();
         controller.setGameEnded(true);
+
     }
 
     /**
@@ -345,6 +346,6 @@ public final class GameModel implements Model {
         selections.resetUserSelections();
         levelManager.setGameLevel(1);
         board.resetBoard();
-        boardPopulator.populate(board, levelManager.getGamePieceFactory());
+        boardManipulator.populateBoard(levelManager.getGamePieceFactory());
     }
 }

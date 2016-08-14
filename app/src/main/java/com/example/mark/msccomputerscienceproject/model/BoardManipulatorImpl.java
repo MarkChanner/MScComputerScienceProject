@@ -3,12 +3,28 @@ package com.example.mark.msccomputerscienceproject.model;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public class BoardPopulatorImpl implements BoardPopulator {
+public class BoardManipulatorImpl implements BoardManipulator {
 
+    public static final int X = 0;
+    public static final int Y = 1;
+    public static final int X_MAX = 8;
+    public static final int Y_MAX = 7;
     public static final int ROW_START = 0;
     public static final int COLUMN_TOP = 0;
+    public static final int COLUMN_BOTTOM = (Y_MAX - 1);
+    public static final String EMPTY = "EMPTY";
 
-    /*public void populateBoard(GameBoard board, GamePieceFactory emoFactory) {
+    private volatile boolean animatingSwap = false;
+    private volatile boolean animatingDrop = false;
+    private final Object swapLock = new Object();
+    private final Object dropLock = new Object();
+    private GameBoard board;
+
+    public BoardManipulatorImpl(GameBoard board) {
+        this.board = board;
+    }
+
+    public void populateBoard(GamePieceFactory emoFactory) {
         GamePiece emoticon;
         int xMax = board.getWidth();
         int yMax = board.getHeight();
@@ -37,5 +53,5 @@ public class BoardPopulatorImpl implements BoardPopulator {
             return true;
         }
         return false;
-    }*/
+    }
 }

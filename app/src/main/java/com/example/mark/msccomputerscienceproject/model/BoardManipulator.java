@@ -3,8 +3,7 @@ package com.example.mark.msccomputerscienceproject.model;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public interface BoardPopulator {
+public interface BoardManipulator {
 
-    //void populateBoard(GameBoard board, GamePieceFactory emoFactory);
-
+    void populateBoard(GamePieceFactory gamePieceFactory);
 }
