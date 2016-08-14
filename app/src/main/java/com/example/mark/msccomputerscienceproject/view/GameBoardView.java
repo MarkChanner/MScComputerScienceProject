@@ -4,7 +4,7 @@ import com.example.mark.msccomputerscienceproject.controller.*;
 import com.example.mark.msccomputerscienceproject.model.GameBoard;
 import com.example.mark.msccomputerscienceproject.R;
 import com.example.mark.msccomputerscienceproject.model.GamePiece;
-import com.example.mark.msccomputerscienceproject.model.MixedEmotionsBoard;
+import com.example.mark.msccomputerscienceproject.model.GameBoardImpl;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
@@ -45,7 +45,7 @@ public class GameBoardView extends SurfaceView implements Runnable {
         this.controller = (GameController) context;
         this.emoWidth = emoWidth;
         this.emoHeight = emoHeight;
-        this.board = MixedEmotionsBoard.getInstance();
+        this.board = GameBoardImpl.getInstance();
         setPaint(context);
         createBackgroundBitmap(viewSizeX, viewSizeY);
     }
