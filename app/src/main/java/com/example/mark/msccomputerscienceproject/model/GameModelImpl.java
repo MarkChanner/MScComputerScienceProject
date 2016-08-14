@@ -37,7 +37,7 @@ public final class GameModelImpl implements GameModel {
         this.levelManager = new LevelManagerImpl(emoWidth, emoHeight, level);
         this.selections = new SelectionsImpl();
         this.matchHandler = new MatchFinderImpl();
-        this.board = MixedEmotionsBoard.getInstance();
+        this.board = GameBoardImpl.getInstance();
         this.boardController = new BoardManipulatorImpl(board);
         boardController.populateBoard(levelManager.getGamePieceFactory());
     }
