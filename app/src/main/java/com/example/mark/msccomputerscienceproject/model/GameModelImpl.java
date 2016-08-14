@@ -10,7 +10,7 @@ import java.util.LinkedList;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public final class GameModel implements Model {
+public final class GameModelImpl implements GameModel {
 
     private static final String TAG = "GameModel";
     public static final int MAX_GAME_LEVELS = 2;
@@ -27,7 +27,7 @@ public final class GameModel implements Model {
     private GameBoard board;
     private BoardManipulator boardController;
 
-    public GameModel(GameController controller, int emoWidth, int emoHeight, int level) {
+    public GameModelImpl(GameController controller, int emoWidth, int emoHeight, int level) {
         initializeGameModel(controller, emoWidth, emoHeight, level);
     }
 
