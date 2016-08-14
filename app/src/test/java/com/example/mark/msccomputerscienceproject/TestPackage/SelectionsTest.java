@@ -52,22 +52,22 @@ public class SelectionsTest {
     public void testSameSelectionMadeTwice() throws Exception {
         selections.setSelection01(3, 3);
         selections.setSelection02(2, 3);
-        assertEquals(false, selections.sameSelectionMadeTwice());
+        assertEquals(false, selections.sameSelectionTwice());
         selections.resetUserSelections();
         selections.setSelection01(5, 5);
         selections.setSelection02(5, 5);
-        assertEquals(true, selections.sameSelectionMadeTwice());
+        assertEquals(true, selections.sameSelectionTwice());
     }
 
     @Test
     public void testAdjacentSelections() throws Exception {
         selections.setSelection01(4, 3);
         selections.setSelection02(6, 3);
-        assertEquals(false, selections.adjacentSelections());
+        assertEquals(false, selections.areAdjacent());
         selections.resetUserSelections();
         selections.setSelection01(4, 3);
         selections.setSelection02(5, 3);
-        assertEquals(true, selections.adjacentSelections());
+        assertEquals(true, selections.areAdjacent());
     }
 
     @Test

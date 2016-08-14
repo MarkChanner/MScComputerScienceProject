@@ -62,14 +62,14 @@ public class SelectionsImpl implements Selections {
     }
 
     @Override
-    public boolean sameSelectionMadeTwice() {
-        //Log.d(TAG, "in sameSelectionMadeTwice()");
+    public boolean sameSelectionTwice() {
+        //Log.d(TAG, "in sameSelectionTwice()");
         return (selection01[X] == selection02[X] && selection01[Y] == selection02[Y]);
     }
 
     @Override
-    public boolean adjacentSelections() {
-        //Log.d(TAG, "in adjacentSelections");
+    public boolean areAdjacent() {
+        //Log.d(TAG, "in areAdjacent");
         if ((selection01[X] == selection02[X]) &&
                 (selection01[Y] == (selection02[Y] + 1) || selection01[Y] == (selection02[Y] - 1))) {
             return true;

@@ -17,9 +17,9 @@ public interface Selections {
 
     void setSelection02(int x, int y);
 
-    boolean sameSelectionMadeTwice();
+    boolean sameSelectionTwice();
 
-    boolean adjacentSelections();
+    boolean areAdjacent();
 
     void secondSelectionBecomesFirstSelection();
 
