@@ -6,4 +6,6 @@ package com.example.mark.msccomputerscienceproject.model;
 public interface BoardManipulator {
 
     void populateBoard(GamePieceFactory gamePieceFactory);
+
+    void unHighlightSelections();
 }

@@ -96,7 +96,7 @@ public final class GameModel implements Model {
         }
     }
 
-    @Override
+    /*@Override
     public void handleSelection(int x, int y) {
         Log.d(TAG, "handleSelection(int, int)");
         if (!board.getGamePiece(x, y).isDropping()) {
@@ -109,11 +109,46 @@ public final class GameModel implements Model {
                 checkValidSelections(x, y);
             }
         }
+    }*/
+
+    @Override
+    public void handleSelection(int x, int y) {
+        Log.d(TAG, "handleSelection(int, int)");
+        if (!board.getGamePiece(x, y).isDropping()) {
+            board.getGamePiece(x, y).setIsSelected(true);
+            if (!selections.selection01Made()) {
+                selections.setSelection01(x, y);
+            } else {
+                selections.setSelection02(x, y);
+                boardManipulator.unHighlightSelections();
+                if (!selections.sameSelectionTwice()) {
+                    if (selections.areAdjacent()) {
+                        swapSelections(selections.getSelection01(), selections.getSelection02());
+                        ArrayList<LinkedList<GamePiece>> matchingX = matchFinder.findVerticalMatches(board);
+                        ArrayList<LinkedList<GamePiece>> matchingY = matchFinder.findHorizontalMatches(board);
+                        if (matchesFound(matchingX, matchingY)) {
+                            modifyBoard(matchingX, matchingY);
+                        } else {
+                            controller.playSound(INVALID_MOVE);
+                            swapBack(selections.getSelection01(), selections.getSelection02());
+                        }
+                        selections.resetUserSelections();
+                    } else {
+                        board.getGamePiece(x, y).setIsSelected(true);
+                        selections.secondSelectionBecomesFirstSelection();
+                    }
+                } else {
+                    selections.resetUserSelections();
+                }
+            }
+        }
     }
 
+    /* This code pulled out into handleSelection(int x, int y)
+
     private void checkValidSelections(int x, int y) {
-        if (!selections.sameSelectionMadeTwice()) {
-            if (selections.adjacentSelections()) {
+        if (!selections.sameSelectionTwice()) {
+            if (selections.areAdjacent()) {
                 processSelections(selections.getSelection01(), selections.getSelection02());
             } else {
                 board.getGamePiece(x, y).setIsSelected(true);
@@ -137,7 +172,7 @@ public final class GameModel implements Model {
             swapBack(sel1, sel2);
         }
         selections.resetUserSelections();
-    }
+    }*/
 
     private void swapSelections(int[] sel1, int[] sel2) {
         Log.d(TAG, "swapSelections(int[] int[])");
@@ -199,13 +234,13 @@ public final class GameModel implements Model {
         swapSelections(sel1, sel2);
     }
 
-    private void unHighlightSelections() {
+    /*private void unHighlightSelections() {
         for (int x = ROW_START; x < X_MAX; x++) {
             for (int y = COLUMN_TOP; y < Y_MAX; y++) {
                 board.getGamePiece(x, y).setIsSelected(false);
             }
         }
-    }
+    }*/
 
     private boolean matchesFound(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
         Log.d(TAG, "matchesFound method");
@@ -243,7 +278,7 @@ public final class GameModel implements Model {
 
     private void loadNextLevel() {
         Log.d(TAG, "loadNextLevel()");
-        unHighlightSelections();
+        boardManipulator.unHighlightSelections();
         setToDrop();
         dropEmoticons();
         currentLevelScore = 0;
@@ -331,7 +366,7 @@ public final class GameModel implements Model {
     }
 
     private void finishRound() {
-        unHighlightSelections();
+        boardManipulator.unHighlightSelections();
         setToDrop();
         dropEmoticons();
         controller.setGameEnded(true);

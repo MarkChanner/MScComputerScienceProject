@@ -54,4 +54,13 @@ public class BoardManipulatorImpl implements BoardManipulator {
         }
         return false;
     }
+
+    @Override
+    public void unHighlightSelections() {
+        for (int x = ROW_START; x < X_MAX; x++) {
+            for (int y = COLUMN_TOP; y < Y_MAX; y++) {
+                board.getGamePiece(x, y).setIsSelected(false);
+            }
+        }
+    }
 }
