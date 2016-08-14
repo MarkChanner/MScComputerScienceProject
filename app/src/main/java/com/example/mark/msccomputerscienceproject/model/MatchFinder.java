@@ -8,6 +8,10 @@ import java.util.LinkedList;
  */
 public interface MatchFinder {
 
+    int getMatchPoints(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY);
+
+    void highlightMatches(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY);
+
     ArrayList<LinkedList<GamePiece>> findVerticalMatches(GameBoard gameBoard);
 
     ArrayList<LinkedList<GamePiece>> findHorizontalMatches(GameBoard gameBoard);

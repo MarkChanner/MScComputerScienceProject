@@ -5,15 +5,9 @@ package com.example.mark.msccomputerscienceproject.model;
  */
 public interface Model {
 
-    void updateEmoSwapCoordinates();
-
-    void updateEmoDropCoordinates();
+    void updateLogic();
 
     void handleSelection(int x, int y);
-
-    void setToDrop();
-
-    void dropEmoticons();
 
     void resetGame();
 

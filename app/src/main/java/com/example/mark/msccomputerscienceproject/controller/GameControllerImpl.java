@@ -116,8 +116,7 @@ public class GameControllerImpl extends Activity implements GameController {
 
     @Override
     public void updateModel() {
-        gameModel.updateEmoSwapCoordinates();
-        gameModel.updateEmoDropCoordinates();
+        gameModel.updateLogic();
     }
 
     @Override

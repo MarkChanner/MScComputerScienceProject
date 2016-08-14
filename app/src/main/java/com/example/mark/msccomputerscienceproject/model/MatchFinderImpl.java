@@ -2,6 +2,7 @@ package com.example.mark.msccomputerscienceproject.model;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
@@ -15,6 +16,37 @@ public class MatchFinderImpl implements MatchFinder {
     public static final int COLUMN_TOP = 0;
     public static final int COLUMN_BOTTOM = (Y_MAX - 1);
     public static final String EMPTY = "EMPTY";
+
+
+    @Override
+    public int getMatchPoints(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
+        int points = 0;
+        points += matchPoints(matchingX);
+        points += matchPoints(matchingY);
+        return points;
+    }
+
+    private int matchPoints(ArrayList<LinkedList<GamePiece>> matches) {
+        int points = 0;
+        for (List<GamePiece> removeList : matches) {
+            points += (removeList.size() * 10);
+        }
+        return points;
+    }
+
+    @Override
+    public void highlightMatches(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
+        highlight(matchingX);
+        highlight(matchingY);
+    }
+
+    private void highlight(ArrayList<LinkedList<GamePiece>> matches) {
+        for (List<GamePiece> removeList : matches) {
+            for (GamePiece emo : removeList) {
+                emo.setIsPartOfMatch(true);
+            }
+        }
+    }
 
     @Override
     public ArrayList<LinkedList<GamePiece>> findVerticalMatches(GameBoard gameBoard) {
@@ -63,7 +95,6 @@ public class MatchFinderImpl implements MatchFinder {
             }
         }
         return bigList;
-
     }
 
     private void examineList(LinkedList<GamePiece> consecutiveEmotions, ArrayList<LinkedList<GamePiece>> bigList) {
