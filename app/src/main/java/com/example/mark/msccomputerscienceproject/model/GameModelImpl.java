@@ -79,7 +79,7 @@ public final class GameModelImpl implements GameModel {
     private void checkForMatches(Selections selections) {
         ArrayList<LinkedList<GamePiece>> matchingX = matchHandler.findVerticalMatches(board);
         ArrayList<LinkedList<GamePiece>> matchingY = matchHandler.findHorizontalMatches(board);
-        if (moreMatchesFound(matchingX, matchingY)) {
+        if (matchesFound(matchingX, matchingY)) {
             modifyBoard(matchingX, matchingY);
         } else {
             controller.playSound(INVALID_MOVE);
@@ -95,15 +95,14 @@ public final class GameModelImpl implements GameModel {
      * @param matchingX An ArrayList containing a LinkedList of matching vertical GamePieces
      * @param matchingY An ArrayList containing a LinkedList of matching horizontal GamePieces
      */
-
     private void modifyBoard(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
         Log.d(TAG, "modifyBoard method");
         GamePieceFactory gamePieceFactory = levelManager.getGamePieceFactory();
         int points;
         do {
             points = matchHandler.getMatchPoints(matchingX, matchingY);
-            controller.updateScoreBoardView(points);
             currentLevelScore += points;
+            controller.updateScoreBoardView(points);
             matchHandler.highlightMatches(matchingX, matchingY);
             controller.playSound(matchingX, matchingY);
             controller.controlGameBoardView(ONE_SECOND);
@@ -111,11 +110,11 @@ public final class GameModelImpl implements GameModel {
             boardController.dropGamePieces(gamePieceFactory);
             matchingX = matchHandler.findVerticalMatches(board);
             matchingY = matchHandler.findHorizontalMatches(board);
-        } while (moreMatchesFound(matchingX, matchingY));
+        } while (matchesFound(matchingX, matchingY));
         checkForLevelUp();
     }
 
-    private boolean moreMatchesFound(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
+    private boolean matchesFound(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
         return (!(matchingX.isEmpty() && matchingY.isEmpty()));
     }
 
