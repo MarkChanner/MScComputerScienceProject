@@ -79,7 +79,7 @@ public final class GameModelImpl implements GameModel {
     private void checkForMatches(Selections selections) {
         ArrayList<LinkedList<GamePiece>> matchingX = matchHandler.findVerticalMatches(board);
         ArrayList<LinkedList<GamePiece>> matchingY = matchHandler.findHorizontalMatches(board);
-        if (matchesFound(matchingX, matchingY)) {
+        if (moreMatchesFound(matchingX, matchingY)) {
             modifyBoard(matchingX, matchingY);
         } else {
             controller.playSound(INVALID_MOVE);
@@ -111,11 +111,11 @@ public final class GameModelImpl implements GameModel {
             boardController.dropGamePieces(gamePieceFactory);
             matchingX = matchHandler.findVerticalMatches(board);
             matchingY = matchHandler.findHorizontalMatches(board);
-        } while (matchesFound(matchingX, matchingY));
+        } while (moreMatchesFound(matchingX, matchingY));
         checkForLevelUp();
     }
 
-    private boolean matchesFound(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
+    private boolean moreMatchesFound(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
         return (!(matchingX.isEmpty() && matchingY.isEmpty()));
     }
 
