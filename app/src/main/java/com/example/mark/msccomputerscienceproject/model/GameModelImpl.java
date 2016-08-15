@@ -52,9 +52,9 @@ public final class GameModelImpl implements GameModel {
     public void handleSelection(int x, int y) {
         Log.d(TAG, "handleSelection(int, int)");
         if (!board.getGamePiece(x, y).isDropping()) {
-            board.getGamePiece(x, y).setIsSelected(true);
             if (!selections.selection01Made()) {
                 selections.setSelection01(x, y);
+                board.getGamePiece(x, y).setIsSelected(true);
             } else {
                 handleSecondSelection(x, y);
             }
@@ -67,8 +67,8 @@ public final class GameModelImpl implements GameModel {
         if (selections.sameSelectionMadeTwice()) {
             selections.resetUserSelections();
         } else if (selections.areNotAdjacent()) {
-            board.getGamePiece(x, y).setIsSelected(true);
             selections.secondSelectionBecomesFirstSelection();
+            board.getGamePiece(x, y).setIsSelected(true);
         } else {
             boardController.swap(selections);
             checkForMatches(selections);
@@ -80,7 +80,7 @@ public final class GameModelImpl implements GameModel {
         ArrayList<LinkedList<GamePiece>> matchingX = matchHandler.findVerticalMatches(board);
         ArrayList<LinkedList<GamePiece>> matchingY = matchHandler.findHorizontalMatches(board);
         if (matchesFound(matchingX, matchingY)) {
-            modifyBoard(matchingX, matchingY);
+            handleMatches(matchingX, matchingY);
         } else {
             controller.playSound(INVALID_MOVE);
             boardController.swapBack(selections);
@@ -94,8 +94,8 @@ public final class GameModelImpl implements GameModel {
      * @param matchingX An ArrayList containing a LinkedList of matching vertical GamePieces
      * @param matchingY An ArrayList containing a LinkedList of matching horizontal GamePieces
      */
-    private void modifyBoard(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
-        Log.d(TAG, "modifyBoard method");
+    private void handleMatches(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
+        Log.d(TAG, "handleMatches method");
         GamePieceFactory gamePieceFactory = levelManager.getGamePieceFactory();
         int points;
         do {
