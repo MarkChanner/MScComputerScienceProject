@@ -85,7 +85,6 @@ public final class GameModelImpl implements GameModel {
             controller.playSound(INVALID_MOVE);
             boardController.swapBack(selections);
         }
-        //selections.resetUserSelections();
     }
 
     /**
