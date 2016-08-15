@@ -16,6 +16,6 @@ public interface MatchFinder {
 
     ArrayList<LinkedList<GamePiece>> findHorizontalMatches(GameBoard gameBoard);
 
-    boolean anotherMatchPossible(GameBoard gameBoard);
+    boolean noFurtherMatchesPossible(GameBoard gameBoard);
 
 }

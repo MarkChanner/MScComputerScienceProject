@@ -85,11 +85,11 @@ public class MatchFinderTest {
 
     @Test
     public void testAnotherVerticalMatchPossible() throws Exception {
-        assertFalse(matchFinder.anotherMatchPossible(emoticons));
+        assertFalse(matchFinder.noFurtherMatchesPossible(emoticons));
         emoticons[2][1] = new MockEmoticon(2, 1, 20, 20, bitmap, "HAPPY");
         emoticons[2][2] = new MockEmoticon(2, 2, 20, 20, bitmap, "HAPPY");
         emoticons[2][4] = new MockEmoticon(2, 4, 20, 20, bitmap, "HAPPY");
-        assertTrue(matchFinder.anotherMatchPossible(emoticons));
+        assertTrue(matchFinder.noFurtherMatchesPossible(emoticons));
     }
 
     @Test
@@ -97,6 +97,6 @@ public class MatchFinderTest {
         emoticons[3][3] = new MockEmoticon(3, 3, 20, 20, bitmap, "SURPRISED");
         emoticons[5][3] = new MockEmoticon(5, 3, 20, 20, bitmap, "SURPRISED");
         emoticons[6][3] = new MockEmoticon(6, 3, 20, 20, bitmap, "SURPRISED");
-        assertTrue(matchFinder.anotherMatchPossible(emoticons));
+        assertTrue(matchFinder.noFurtherMatchesPossible(emoticons));
     }*/
 }

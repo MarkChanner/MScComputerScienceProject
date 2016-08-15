@@ -95,6 +95,7 @@ public final class GameModelImpl implements GameModel {
      * @param matchingX An ArrayList containing a LinkedList of matching vertical GamePieces
      * @param matchingY An ArrayList containing a LinkedList of matching horizontal GamePieces
      */
+
     private void modifyBoard(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
         Log.d(TAG, "modifyBoard method");
         GamePieceFactory gamePieceFactory = levelManager.getGamePieceFactory();
@@ -115,15 +116,14 @@ public final class GameModelImpl implements GameModel {
     }
 
     private boolean matchesFound(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
-        Log.d(TAG, "matchesFound method");
         return (!(matchingX.isEmpty() && matchingY.isEmpty()));
     }
 
     private void checkForLevelUp() {
         if (currentLevelScore >= 90) {
             loadNextLevel();
-        } else if (!matchHandler.anotherMatchPossible(board)) {
-            Log.d(TAG, "NO MATCHES AVAILABLE - END GAME CONDITION ENTERED");
+        } else if (matchHandler.noFurtherMatchesPossible(board)) {
+            Log.d(TAG, "checkForLevelUp() entered condition to call finishRound()");
             finishRound();
         }
     }

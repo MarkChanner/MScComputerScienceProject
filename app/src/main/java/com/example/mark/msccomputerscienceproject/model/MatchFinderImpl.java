@@ -118,9 +118,9 @@ public class MatchFinderImpl implements MatchFinder {
     }
 
     @Override
-    public boolean anotherMatchPossible(GameBoard gameBoard) {
-        //Log.d(TAG, "anotherMatchPossible(Emoticon[][])");
-        return (verticalMatchPossible(gameBoard) || horizontalMatchPossible(gameBoard));
+    public boolean noFurtherMatchesPossible(GameBoard gameBoard) {
+        //Log.d(TAG, "noFurtherMatchesPossible(Emoticon[][])");
+        return !(verticalMatchPossible(gameBoard) || horizontalMatchPossible(gameBoard));
     }
 
     private boolean verticalMatchPossible(GameBoard gameBoard) {
