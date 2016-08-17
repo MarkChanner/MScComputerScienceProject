@@ -13,6 +13,7 @@ public class MatchFinderImpl implements MatchFinder {
     public static final int X_MAX = GameModelImpl.X_MAX;
     public static final int Y_MAX = GameModelImpl.Y_MAX;
     public static final int ROW_START = 0;
+	public static final int ROW_END = (X_MAX - 1);
     public static final int COLUMN_TOP = 0;
     public static final int COLUMN_BOTTOM = (Y_MAX - 1);
     public static final String EMPTY = "EMPTY";
@@ -88,7 +89,7 @@ public class MatchFinderImpl implements MatchFinder {
                     consecutiveEmoticons = new LinkedList<>();
                 }
                 consecutiveEmoticons.add(emo);
-                if (x == (X_MAX - 1)) {
+                if (x == ROW_END) {
                     examineList(consecutiveEmoticons, bigList);
                     consecutiveEmoticons = new LinkedList<>();
                 }
