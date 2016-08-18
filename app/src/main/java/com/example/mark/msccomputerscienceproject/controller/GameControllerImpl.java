@@ -26,7 +26,7 @@ public final class GameControllerImpl extends Activity implements GameController
 
     private final static String TAG = "GameControllerImpl";
     public static final int ROWS = 4;
-    public static final int COLUMNS = 5;
+    public static final int COLUMNS = 4;
 
     private MusicPlayer music;
     private SoundManager soundManager;

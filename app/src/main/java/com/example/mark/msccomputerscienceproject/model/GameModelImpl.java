@@ -15,7 +15,7 @@ public final class GameModelImpl implements GameModel {
     private static final String TAG = "GameModel";
     private static final String INVALID_MOVE = "INVALID_MOVE";
     private static final int ONE_SECOND = 1000;
-    private static final int SCORE_TARGET_PER_LEVEL = 300;
+    private static final int SCORE_TARGET_PER_LEVEL = 500;
     private static final int GAME_LEVELS = 2;
     private int currentLevelScore;
     private GameController controller;
