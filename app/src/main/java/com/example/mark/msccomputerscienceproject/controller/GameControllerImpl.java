@@ -25,8 +25,8 @@ import java.util.LinkedList;
 public final class GameControllerImpl extends Activity implements GameController {
 
     private final static String TAG = "GameControllerImpl";
-    public static final int X_MAX = 6;
-    public static final int Y_MAX = 5;
+    public static final int ROWS = 5;
+    public static final int COLUMNS = 6;
 
     private MusicPlayer music;
     private SoundManager soundManager;
@@ -58,8 +58,8 @@ public final class GameControllerImpl extends Activity implements GameController
         int gameBoardViewSizeY = (size.y - (screenLayout.getPaddingTop() + screenLayout.getPaddingBottom()));
         int scoreBoardViewSizeX = (int) (screenSizeX * 0.1);
         int scoreBoardViewSizeY = (gameBoardViewSizeY / 3);
-        this.emoWidth = gameBoardViewSizeX / X_MAX;
-        this.emoHeight = gameBoardViewSizeY / Y_MAX;
+        this.emoWidth = gameBoardViewSizeX / COLUMNS;
+        this.emoHeight = gameBoardViewSizeY / ROWS;
 
         // Instantiates Model and View objects
         BitmapCreator bitmapCreator = BitmapCreator.getInstance();

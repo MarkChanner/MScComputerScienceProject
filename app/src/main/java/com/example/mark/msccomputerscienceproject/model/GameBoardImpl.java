@@ -7,9 +7,10 @@ import com.example.mark.msccomputerscienceproject.controller.GameControllerImpl;
  */
 public final class GameBoardImpl implements GameBoard {
 
-    private final int boardWidth = GameControllerImpl.X_MAX;
-    private final int boardHeight = GameControllerImpl.Y_MAX;
-    private GamePiece[][] emoticons = new GamePiece[boardWidth][boardHeight];
+    private static final int ROWS = GameControllerImpl.ROWS;
+    private static final int COLUMNS = GameControllerImpl.COLUMNS;
+    private static final int frames = 32;
+    private GamePiece[][] emoticons = new GamePiece[COLUMNS][ROWS];
 
     private static GameBoard instance;
 
@@ -32,13 +33,13 @@ public final class GameBoardImpl implements GameBoard {
     }
 
     public void setToDrop(int x, int y) {
-        emoticons[x][y].setArrayY(boardHeight);
-        emoticons[x][y].setPixelMovement(32);
+        emoticons[x][y].setArrayY(ROWS);
+        emoticons[x][y].setPixelMovement(frames);
         emoticons[x][y].setDropping(true);
     }
 
     public void resetBoard() {
-        emoticons = new GamePiece[boardWidth][boardHeight];
+        emoticons = new GamePiece[COLUMNS][ROWS];
     }
 
 }

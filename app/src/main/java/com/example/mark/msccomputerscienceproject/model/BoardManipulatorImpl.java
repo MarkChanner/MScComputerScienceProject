@@ -11,14 +11,14 @@ import java.util.List;
  */
 public class BoardManipulatorImpl implements BoardManipulator {
 
-    public static final int X_MAX = GameControllerImpl.X_MAX;
-    public static final int Y_MAX = GameControllerImpl.Y_MAX;
-
-    private static final int X = 0;
-    private static final int Y = 1;
+    private static final String TAG = "BoardManipulatorImpl";
+    private static final int ROWS = GameControllerImpl.ROWS;
+    private static final int COLUMNS = GameControllerImpl.COLUMNS;
     private static final int ROW_START = 0;
     private static final int COLUMN_TOP = 0;
-    private static final int COLUMN_BOTTOM = (Y_MAX - 1);
+    private static final int COLUMN_BOTTOM = (ROWS - 1);
+    private static final int X = 0;
+    private static final int Y = 1;
     private static final String EMPTY = "EMPTY";
 
     private volatile boolean animatingSwap = false;
@@ -33,14 +33,14 @@ public class BoardManipulatorImpl implements BoardManipulator {
 
     public void populateBoard(GamePieceFactory emoFactory) {
         GamePiece emoticon;
-        for (int x = ROW_START; x < X_MAX; x++) {
+        for (int x = ROW_START; x < COLUMNS; x++) {
 
-            int dropGap = Y_MAX * 2;
+            int dropGap = ROWS * 2;
 
-            for (int y = COLUMN_TOP; y < Y_MAX; y++) {
+            for (int y = COLUMN_TOP; y < ROWS; y++) {
 
                 do {
-                    emoticon = emoFactory.getRandomGamePiece(x, y, ((y - Y_MAX) - dropGap));
+                    emoticon = emoFactory.getRandomGamePiece(x, y, ((y - ROWS) - dropGap));
                 } while (emoticonCausesMatch(board, x, y, emoticon.getEmoType()));
 
                 dropGap--;
@@ -62,8 +62,8 @@ public class BoardManipulatorImpl implements BoardManipulator {
 
     @Override
     public void unHighlightSelections() {
-        for (int x = ROW_START; x < X_MAX; x++) {
-            for (int y = COLUMN_TOP; y < Y_MAX; y++) {
+        for (int x = ROW_START; x < COLUMNS; x++) {
+            for (int y = COLUMN_TOP; y < ROWS; y++) {
                 board.getGamePiece(x, y).setIsSelected(false);
             }
         }
@@ -135,7 +135,7 @@ public class BoardManipulatorImpl implements BoardManipulator {
     public void dropGamePieces(GamePieceFactory gamePieceFactory) {
         int offScreenStartPosition;
         int runnerY;
-        for (int x = ROW_START; x < X_MAX; x++) {
+        for (int x = ROW_START; x < COLUMNS; x++) {
             offScreenStartPosition = -1;
             for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
                 if (board.getGamePiece(x, y).getEmoType().equals(EMPTY)) {
@@ -176,7 +176,7 @@ public class BoardManipulatorImpl implements BoardManipulator {
     public void updateGamePieceSwapCoordinates() {
         boolean emoticonsSwapping = false;
         for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
-            for (int x = ROW_START; x < X_MAX; x++) {
+            for (int x = ROW_START; x < COLUMNS; x++) {
                 if (board.getGamePiece(x, y).isSwapping()) {
                     emoticonsSwapping = true;
                     board.getGamePiece(x, y).updateSwapping();
@@ -197,7 +197,7 @@ public class BoardManipulatorImpl implements BoardManipulator {
     public void updateGamePieceDropCoordinates() {
         boolean emoticonsDropping = false;
         for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
-            for (int x = ROW_START; x < X_MAX; x++) {
+            for (int x = ROW_START; x < COLUMNS; x++) {
                 if (board.getGamePiece(x, y).isDropping()) {
                     emoticonsDropping = true;
                     board.getGamePiece(x, y).updateDropping();
@@ -217,7 +217,7 @@ public class BoardManipulatorImpl implements BoardManipulator {
     @Override
     public void setToDrop() {
         for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
-            for (int x = ROW_START; x < X_MAX; x++) {
+            for (int x = ROW_START; x < COLUMNS; x++) {
                 board.setToDrop(x, y);
             }
         }

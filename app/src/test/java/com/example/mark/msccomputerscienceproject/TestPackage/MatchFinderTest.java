@@ -19,8 +19,8 @@ import static org.junit.Assert.assertEquals;
  */
 public class MatchFinderTest {
 
-    /*public static final int X_MAX = GameModel.X_MAX;
-    public static final int Y_MAX = GameModel.Y_MAX;
+    /*public static final int COLUMNS = GameModel.COLUMNS;
+    public static final int ROWS = GameModel.ROWS;
     public static final int ROW_START = 0;
     public static final int COLUMN_TOP = 0;
 
@@ -32,11 +32,11 @@ public class MatchFinderTest {
 
     @Before
     public void setUp() throws Exception {
-        emoticons = new AbstractEmoticon[X_MAX][Y_MAX];
+        emoticons = new AbstractEmoticon[COLUMNS][ROWS];
         matchFinder = new MatchFinderImpl();
         int counter = 0;
-        for (int x = ROW_START; x < X_MAX; x++) {
-            for (int y = COLUMN_TOP; y < Y_MAX; y++) {
+        for (int x = ROW_START; x < COLUMNS; x++) {
+            for (int y = COLUMN_TOP; y < ROWS; y++) {
                 if (emoticons[x][y] == null) {
                     emoticons[x][y] = new MockEmoticon(x, y, 20, 20, bitmap, "" + counter);
                     counter++;

@@ -17,8 +17,8 @@ import android.view.*;
 public final class GameBoardView extends SurfaceView implements Runnable {
 
     //public static final String TAG = "GameBoardView";
-    private static final int X_MAX = GameControllerImpl.X_MAX;
-    private static final int Y_MAX = GameControllerImpl.Y_MAX;
+    private static final int COLUMNS = GameControllerImpl.COLUMNS;
+    private static final int ROWS = GameControllerImpl.ROWS;
     private static final int ZERO = 0;
 
     private SurfaceHolder surfaceHolder;
@@ -89,13 +89,13 @@ public final class GameBoardView extends SurfaceView implements Runnable {
     }
 
     private void drawHorizontal(Canvas gridCanvas, int viewSizeX) {
-        for (int i = 0; i < Y_MAX; i++) {
+        for (int i = 0; i < ROWS; i++) {
             gridCanvas.drawLine(ZERO, i * emoHeight, viewSizeX, i * emoHeight, drawingLine);
         }
     }
 
     private void drawVertical(Canvas gridCanvas, int viewSizeY) {
-        for (int i = 0; i < X_MAX; i++) {
+        for (int i = 0; i < COLUMNS; i++) {
             gridCanvas.drawLine(i * emoWidth, ZERO, i * emoWidth, viewSizeY, drawingLine);
         }
     }
@@ -163,8 +163,8 @@ public final class GameBoardView extends SurfaceView implements Runnable {
     }
 
     private void highlightAnyMatches(Canvas canvas) {
-        for (int y = Y_MAX - 1; y >= 0; y--) {
-            for (int x = 0; x < X_MAX; x++) {
+        for (int y = ROWS - 1; y >= 0; y--) {
+            for (int x = 0; x < COLUMNS; x++) {
                 GamePiece emo = board.getGamePiece(x, y);
 
                 if (emo.isPartOfMatch() || emo.isSelected()) {
