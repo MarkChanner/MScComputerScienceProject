@@ -1,12 +1,14 @@
 package com.example.mark.msccomputerscienceproject.model;
 
+import com.example.mark.msccomputerscienceproject.controller.GameControllerImpl;
+
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public class GameBoardImpl implements GameBoard {
+public final class GameBoardImpl implements GameBoard {
 
-    private final int boardWidth = 8;
-    private final int boardHeight = 7;
+    private final int boardWidth = GameControllerImpl.X_MAX;
+    private final int boardHeight = GameControllerImpl.Y_MAX;
     private GamePiece[][] emoticons = new GamePiece[boardWidth][boardHeight];
 
     private static GameBoard instance;
@@ -19,14 +21,6 @@ public class GameBoardImpl implements GameBoard {
             instance = new GameBoardImpl();
         }
         return instance;
-    }
-
-    public int getWidth() {
-        return boardWidth;
-    }
-
-    public int getHeight() {
-        return boardHeight;
     }
 
     public GamePiece getGamePiece(int x, int y) {

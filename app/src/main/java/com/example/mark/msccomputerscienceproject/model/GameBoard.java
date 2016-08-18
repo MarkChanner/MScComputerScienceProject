@@ -5,10 +5,6 @@ package com.example.mark.msccomputerscienceproject.model;
  */
 public interface GameBoard {
 
-    int getWidth();
-
-    int getHeight();
-
     GamePiece getGamePiece(int x, int y);
 
     void setGamePiece(int x, int y, GamePiece gamePiece);

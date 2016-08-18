@@ -16,7 +16,7 @@ import java.util.LinkedList;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public class SoundManager {
+public final class SoundManager {
 
     private static final String TAG = "SoundManager";
 

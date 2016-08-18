@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public class MusicPlayer {
+public final class MusicPlayer {
 
     private final static String TAG = "MusicPlayer";
     private MediaPlayer mediaPlayer;
