@@ -6,7 +6,7 @@ import java.util.LinkedList;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public interface MatchFinder {
+public interface MatchHandler {
 
     int getMatchPoints(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY);
 

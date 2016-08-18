@@ -21,7 +21,7 @@ public final class GameModelImpl implements GameModel {
     private GameController controller;
     private LevelManager levelManager;
     private Selections selections;
-    private MatchFinder matchHandler;
+    private MatchHandler matchHandler;
     private GameBoard board;
     private BoardManipulator boardController;
 
@@ -34,7 +34,7 @@ public final class GameModelImpl implements GameModel {
         this.controller = controller;
         this.levelManager = new LevelManagerImpl(emoWidth, emoHeight, level);
         this.selections = new SelectionsImpl();
-        this.matchHandler = new MatchFinderImpl();
+        this.matchHandler = new MatchHandlerImpl();
         this.board = GameBoardImpl.getInstance();
         this.boardController = new BoardManipulatorImpl(board);
         boardController.populateBoard(levelManager.getGamePieceFactory());

@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public abstract class GamePiece implements Mockable {
+public abstract class GamePiece {
 
     public static final int DIVISOR = 2;
     private int arrayX;

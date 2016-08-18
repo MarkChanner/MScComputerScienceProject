@@ -9,9 +9,9 @@ import java.util.ArrayList;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public final class MatchFinderImpl implements MatchFinder {
+public final class MatchHandlerImpl implements MatchHandler {
 
-    private static final String TAG = "MatchFinderImpl";
+    private static final String TAG = "MatchHandlerImpl";
     private static final int ROWS = GameControllerImpl.ROWS;
     private static final int COLUMNS = GameControllerImpl.COLUMNS;
     private static final int ROW_START = 0;
