@@ -25,8 +25,8 @@ import java.util.LinkedList;
 public final class GameControllerImpl extends Activity implements GameController {
 
     private final static String TAG = "GameControllerImpl";
-    public static final int ROWS = 4;
-    public static final int COLUMNS = 4;
+    public static final int ROWS = 7;
+    public static final int COLUMNS = 8;
 
     private MusicPlayer music;
     private SoundManager soundManager;
