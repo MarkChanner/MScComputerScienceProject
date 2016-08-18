@@ -24,21 +24,24 @@ public final class GameBoardImpl implements GameBoard {
         return instance;
     }
 
-    public GamePiece getGamePiece(int x, int y) {
+    @Override
+    public GamePiece getGamePiece(int x, int y) throws ArrayIndexOutOfBoundsException {
         if (x >= COLUMNS || y >= ROWS) {
             throw new ArrayIndexOutOfBoundsException("getGamePiece argument larger than board");
         }
         return emoticons[x][y];
     }
 
-    public void setGamePiece(int x, int y, GamePiece gamePiece) {
+    @Override
+    public void setGamePiece(int x, int y, GamePiece gamePiece) throws ArrayIndexOutOfBoundsException {
         if (x >= COLUMNS || y >= ROWS) {
             throw new ArrayIndexOutOfBoundsException("setGamePiece argument larger than board");
         }
         this.emoticons[x][y] = gamePiece;
     }
 
-    public void setToDrop(int x, int y) {
+    @Override
+    public void setToDrop(int x, int y) throws ArrayIndexOutOfBoundsException{
         if (x >= COLUMNS || y >= ROWS) {
             throw new ArrayIndexOutOfBoundsException("setToDrop argument larger than board");
         }

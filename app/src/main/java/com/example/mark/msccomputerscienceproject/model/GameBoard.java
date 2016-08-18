@@ -5,11 +5,11 @@ package com.example.mark.msccomputerscienceproject.model;
  */
 public interface GameBoard {
 
-    GamePiece getGamePiece(int x, int y);
+    GamePiece getGamePiece(int x, int y) throws ArrayIndexOutOfBoundsException;
 
-    void setGamePiece(int x, int y, GamePiece gamePiece);
+    void setGamePiece(int x, int y, GamePiece gamePiece) throws ArrayIndexOutOfBoundsException;
 
-    void setToDrop(int x, int y);
+    void setToDrop(int x, int y) throws ArrayIndexOutOfBoundsException;
 
     void resetBoard();
 
