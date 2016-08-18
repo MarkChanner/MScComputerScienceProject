@@ -17,18 +17,17 @@ import android.view.*;
 public final class GameBoardView extends SurfaceView implements Runnable {
 
     //public static final String TAG = "GameBoardView";
-    private static final int COLUMNS = GameControllerImpl.COLUMNS;
     private static final int ROWS = GameControllerImpl.ROWS;
+    private static final int COLUMNS = GameControllerImpl.COLUMNS;
     private static final int ZERO = 0;
+    private final Rect selectionRect = new Rect();
+    private final Rect matchRect = new Rect();
 
     private SurfaceHolder surfaceHolder;
     private GameController controller;
     private GameBoard board;
     private int emoWidth;
     private int emoHeight;
-
-    private final Rect selectionRect = new Rect();
-    private final Rect matchRect = new Rect();
     private Paint backgroundColour;
     private Paint drawingLine;
     private Paint borderColour;

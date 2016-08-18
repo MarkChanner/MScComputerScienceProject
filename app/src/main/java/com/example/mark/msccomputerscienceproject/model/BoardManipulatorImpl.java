@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public class BoardManipulatorImpl implements BoardManipulator {
+public final class BoardManipulatorImpl implements BoardManipulator {
 
     private static final String TAG = "BoardManipulatorImpl";
     private static final int ROWS = GameControllerImpl.ROWS;

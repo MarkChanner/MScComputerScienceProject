@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public class MatchFinderImpl implements MatchFinder {
+public final class MatchFinderImpl implements MatchFinder {
 
     private static final String TAG = "MatchFinderImpl";
     private static final int ROWS = GameControllerImpl.ROWS;
