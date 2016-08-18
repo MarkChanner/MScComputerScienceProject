@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -31,10 +32,12 @@ public class MatchHandlerTest {
     private final int offScreenStartPositionY = -10;
 
     private GameBoard board;
-    private Bitmap bitmap = BitmapCreator.getInstance().getEmptyBitmap();
     private MatchHandlerImpl matchHandler;
     private ArrayList<LinkedList<GamePiece>> matchingX;
     private ArrayList<LinkedList<GamePiece>> matchingY;
+
+    @Mock
+    Bitmap bitmap;
 
     @Before
     public void setUp() throws Exception {
