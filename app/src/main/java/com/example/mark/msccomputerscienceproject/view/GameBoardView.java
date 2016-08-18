@@ -16,12 +16,12 @@ import android.view.*;
  */
 public final class GameBoardView extends SurfaceView implements Runnable {
 
-    //public static final String TAG = "GameBoardView";
     private static final int ROWS = GameControllerImpl.ROWS;
     private static final int COLUMNS = GameControllerImpl.COLUMNS;
     private static final int ZERO = 0;
     private final Rect selectionRect = new Rect();
     private final Rect matchRect = new Rect();
+    private int viewSizeX;
 
     private SurfaceHolder surfaceHolder;
     private GameController controller;
@@ -40,6 +40,7 @@ public final class GameBoardView extends SurfaceView implements Runnable {
 
     public GameBoardView(Context context, int viewSizeX, int viewSizeY, int emoWidth, int emoHeight) {
         super(context);
+        this.viewSizeX = viewSizeX;
         this.surfaceHolder = getHolder();
         this.controller = (GameController) context;
         this.emoWidth = emoWidth;
@@ -183,8 +184,8 @@ public final class GameBoardView extends SurfaceView implements Runnable {
         drawingLine.setTextSize(80);
         drawingLine.setStyle(Paint.Style.FILL);
         drawingLine.setTextAlign(Paint.Align.CENTER);
-        canvas.drawText("Game Over", (emoWidth * 4), 100, drawingLine);
-        canvas.drawText("Tap to Play Again!", (emoWidth * 4), 300, drawingLine);
+        canvas.drawText("NO MORE MATCHES!", viewSizeX / 2, 100, drawingLine);
+        canvas.drawText("TOUCH THE SCREEN", viewSizeX / 2, 300, drawingLine);
         drawingLine.setStyle(Paint.Style.STROKE);
     }
 
