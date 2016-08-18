@@ -1,7 +1,6 @@
 package com.example.mark.msccomputerscienceproject.TestPackage;
 
 import com.example.mark.msccomputerscienceproject.controller.GameControllerImpl;
-import com.example.mark.msccomputerscienceproject.mocks.MockEmoticon;
 import com.example.mark.msccomputerscienceproject.model.*;
 
 import android.graphics.Bitmap;
@@ -21,186 +20,58 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-/*public class MatchHandlerImpl implements MatchHandler {
-
-    private static final String TAG = "MatchHandlerImpl";
-    private static final int ROWS = GameControllerImpl.ROWS;
-    private static final int COLUMNS = GameControllerImpl.COLUMNS;
-    private static final int ROW_START = 0;
-    private static final int ROW_END = (COLUMNS - 1);
-    private static final int COLUMN_TOP = 0;
-    private static final int COLUMN_BOTTOM = (ROWS - 1);
-    private static final String EMPTY = "EMPTY";
-
-
-    @Override
-    public int getMatchPoints(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
-        int points = 0;
-        points += matchPoints(matchingX);
-        points += matchPoints(matchingY);
-        return points;
-    }
-
-    private int matchPoints(ArrayList<LinkedList<GamePiece>> matches) {
-        int points = 0;
-        for (List<GamePiece> removeList : matches) {
-            points += (removeList.size() * 10);
-        }
-        return points;
-    }
-
-    @Override
-    public void highlightMatches(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
-        highlight(matchingX);
-        highlight(matchingY);
-    }
-
-    private void highlight(ArrayList<LinkedList<GamePiece>> matches) {
-        for (List<GamePiece> removeList : matches) {
-            for (GamePiece emo : removeList) {
-                emo.setIsPartOfMatch(true);
-            }
-        }
-    }
-
-    @Override
-    public ArrayList<LinkedList<GamePiece>> findVerticalMatches(GameBoard gameBoard) {
-        LinkedList<GamePiece> consecutiveEmoticons = new LinkedList<>();
-        ArrayList<LinkedList<GamePiece>> bigList = new ArrayList<>();
-        GamePiece emo;
-        for (int x = ROW_START; x < COLUMNS; x++) {
-            consecutiveEmoticons.add(gameBoard.getGamePiece(x, COLUMN_BOTTOM));
-
-
-            for (int y = (COLUMN_BOTTOM - 1); y >= COLUMN_TOP; y--) {
-                emo = gameBoard.getGamePiece(x, y);
-                if (!emo.getEmoType().equals(consecutiveEmoticons.getLast().getEmoType())) {
-                    examineList(consecutiveEmoticons, bigList);
-                    consecutiveEmoticons = new LinkedList<>();
-                }
-                consecutiveEmoticons.add(emo);
-                if (y == COLUMN_TOP) {
-                    examineList(consecutiveEmoticons, bigList);
-                    consecutiveEmoticons = new LinkedList<>();
-                }
-            }
-        }
-        return bigList;
-    }
-
-    @Override
-    public ArrayList<LinkedList<GamePiece>> findHorizontalMatches(GameBoard gameBoard) {
-        LinkedList<GamePiece> consecutiveEmoticons = new LinkedList<>();
-        ArrayList<LinkedList<GamePiece>> bigList = new ArrayList<>();
-        GamePiece emo;
-        for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
-            consecutiveEmoticons.add(gameBoard.getGamePiece(ROW_START, y));
-
-            for (int x = (ROW_START + 1); x < COLUMNS; x++) {
-                emo = gameBoard.getGamePiece(x, y);
-                if (!(emo.getEmoType().equals(consecutiveEmoticons.getLast().getEmoType()))) {
-                    examineList(consecutiveEmoticons, bigList);
-                    consecutiveEmoticons = new LinkedList<>();
-                }
-                consecutiveEmoticons.add(emo);
-                if (x == ROW_END) {
-                    examineList(consecutiveEmoticons, bigList);
-                    consecutiveEmoticons = new LinkedList<>();
-                }
-            }
-        }
-        return bigList;
-    }
-
-    private void examineList(LinkedList<GamePiece> consecutiveEmotions, ArrayList<LinkedList<GamePiece>> bigList) {
-        if ((consecutiveEmotions.size() >= 3) && (allSameType(consecutiveEmotions))) {
-            bigList.add(consecutiveEmotions);
-        }
-    }
-
-    private boolean allSameType(LinkedList<GamePiece> consecutiveEmoticons) {
-        String previousEmo = consecutiveEmoticons.getFirst().getEmoType();
-        String nextEmo;
-        for (int i = 1; i < consecutiveEmoticons.size(); i++) {
-            nextEmo = consecutiveEmoticons.get(i).getEmoType();
-            if (nextEmo.equals(EMPTY) || (!(nextEmo.equals(previousEmo)))) {
-                return false;
-            } else {
-                previousEmo = nextEmo;
-            }
-        }
-        return true;
-    }*/
-
-
 public class MatchHandlerTest {
 
     private static final int ROWS = GameControllerImpl.ROWS;
     private static final int COLUMNS = GameControllerImpl.COLUMNS;
     private static final int ROW_START = 0;
-    private static final int ROW_END = (COLUMNS - 1);
     private static final int COLUMN_TOP = 0;
-    private static final int COLUMN_BOTTOM = (ROWS - 1);
-    private static final String EMPTY = "EMPTY";
+    private final int emoWidth = 20;
+    private final int emoHeight = 20;
+    private final int offScreenStartPositionY = -10;
 
     private GameBoard board;
     private Bitmap bitmap = BitmapCreator.getInstance().getEmptyBitmap();
-    private MatchHandlerImpl matchFinder;
-    private ArrayList<LinkedList<Emoticon>> matchingX;
-    private ArrayList<LinkedList<Emoticon>> matchingY;
+    private MatchHandlerImpl matchHandler;
+    private ArrayList<LinkedList<GamePiece>> matchingX;
+    private ArrayList<LinkedList<GamePiece>> matchingY;
 
     @Before
     public void setUp() throws Exception {
         this.board = GameBoardImpl.getInstance();
-        this.matchFinder = new MatchHandlerImpl();
+        this.matchHandler = new MatchHandlerImpl();
         GamePiece emo;
-        int emoWidth = 20;
-        int emoHeight = 20;
-        int emoID = 0;
-        int offScreenStartPositionY = -10;
+        int emoType = 0;
         for (int x = ROW_START; x < COLUMNS; x++) {
             for (int y = COLUMN_TOP; y < ROWS; y++) {
-
-                emo = new Emoticon(x, y, emoWidth, emoHeight, bitmap, "" + emoID, offScreenStartPositionY);
+                emo = new Emoticon(x, y, emoWidth, emoHeight, bitmap, "" + emoType, offScreenStartPositionY);
                 board.setGamePiece(x, y, emo);
+                emoType++;
             }
-            emoID++;
         }
     }
-}
-
-    /* FROM BOARD MANIPULATOR CLASS
-        public void populateBoard(GamePieceFactory emoFactory) {
-        GamePiece emoticon;
-        for (int x = ROW_START; x < COLUMNS; x++) {
-
-            for (int y = COLUMN_TOP; y < ROWS; y++) {
-
-                if ( {
-                    emoticon = emoFactory.getRandomGamePiece(x, y, ((y - ROWS) - dropGap));
-                } while (emoticonCausesMatch(board, x, y, emoticon.getEmoType()));
-
-                dropGap--;
-                board.setGamePiece(x, y, emoticon);
-            }
-        }
-    }*/
 
     @After
     public void tearDown() throws Exception {
-        emoticons = null;
-        matchFinder = null;
+        board.resetBoard();
+        matchHandler = null;
         matchingX = null;
         matchingY = null;
     }
 
     @Test
     public void testFindVerticalMatches() throws Exception {
-        emoticons[2][1] = new MockEmoticon(2, 1, 20, 20, bitmap, "HAPPY");
-        emoticons[2][2] = new MockEmoticon(2, 2, 20, 20, bitmap, "HAPPY");
-        emoticons[2][3] = new MockEmoticon(2, 3, 20, 20, bitmap, "HAPPY");
-        matchingX = matchFinder.findVerticalMatches(emoticons);
+        final String HAPPY = "HAPPY";
+        GamePiece emo01 = new Emoticon(2, 1, emoWidth, emoHeight, bitmap, HAPPY, offScreenStartPositionY);
+        board.setGamePiece(2, 1, emo01);
 
+        GamePiece emo02 = new Emoticon(2, 2, emoWidth, emoHeight, bitmap, HAPPY, offScreenStartPositionY);
+        board.setGamePiece(2, 2, emo02);
+
+        GamePiece emo03 = new Emoticon(2, 3, emoWidth, emoHeight, bitmap, HAPPY, offScreenStartPositionY);
+        board.setGamePiece(2, 3, emo03);
+
+        matchingX = matchHandler.findVerticalMatches(board);
         assertEquals(1, matchingX.size());
         assertEquals(3, matchingX.get(0).size());
         assertEquals("HAPPY", matchingX.get(0).get(0).getEmoType());
@@ -210,12 +81,21 @@ public class MatchHandlerTest {
 
     @Test
     public void testFindHorizontalMatches() throws Exception {
-        emoticons[3][3] = new MockEmoticon(3, 3, 20, 20, bitmap, "SURPRISED");
-        emoticons[4][3] = new MockEmoticon(4, 3, 20, 20, bitmap, "SURPRISED");
-        emoticons[5][3] = new MockEmoticon(5, 3, 20, 20, bitmap, "SURPRISED");
-        emoticons[6][3] = new MockEmoticon(6, 3, 20, 20, bitmap, "SURPRISED");
-        matchingY = matchFinder.findHorizontalMatches(emoticons);
+        final String SURPRISED = "SURPRISED";
 
+        GamePiece emo01 = new Emoticon(3, 3, emoWidth, emoHeight, bitmap, SURPRISED, offScreenStartPositionY);
+        board.setGamePiece(3, 3, emo01);
+
+        GamePiece emo02 = new Emoticon(4, 3, emoWidth, emoHeight, bitmap, SURPRISED, offScreenStartPositionY);
+        board.setGamePiece(4, 3, emo02);
+
+        GamePiece emo03 = new Emoticon(5, 3, emoWidth, emoHeight, bitmap, SURPRISED, offScreenStartPositionY);
+        board.setGamePiece(5, 3, emo03);
+
+        GamePiece emo04 = new Emoticon(6, 3, emoWidth, emoHeight, bitmap, SURPRISED, offScreenStartPositionY);
+        board.setGamePiece(6, 3, emo04);
+
+        matchingY = matchHandler.findHorizontalMatches(board);
         assertEquals(1, matchingY.size());
         assertEquals(4, matchingY.get(0).size());
         assertEquals("SURPRISED", matchingY.get(0).get(0).getEmoType());
@@ -226,18 +106,35 @@ public class MatchHandlerTest {
 
     @Test
     public void testAnotherVerticalMatchPossible() throws Exception {
-        assertFalse(matchFinder.noFurtherMatchesPossible(emoticons));
-        emoticons[2][1] = new MockEmoticon(2, 1, 20, 20, bitmap, "HAPPY");
-        emoticons[2][2] = new MockEmoticon(2, 2, 20, 20, bitmap, "HAPPY");
-        emoticons[2][4] = new MockEmoticon(2, 4, 20, 20, bitmap, "HAPPY");
-        assertTrue(matchFinder.noFurtherMatchesPossible(emoticons));
+        final String HAPPY = "HAPPY";
+        assertTrue(matchHandler.noFurtherMatchesPossible(board));
+
+        GamePiece emo01 = new Emoticon(2, 1, emoWidth, emoHeight, bitmap, HAPPY, offScreenStartPositionY);
+        board.setGamePiece(2, 1, emo01);
+
+        GamePiece emo02 = new Emoticon(2, 2, emoWidth, emoHeight, bitmap, HAPPY, offScreenStartPositionY);
+        board.setGamePiece(2, 2, emo02);
+
+        GamePiece emo03 = new Emoticon(2, 4, emoWidth, emoHeight, bitmap, HAPPY, offScreenStartPositionY);
+        board.setGamePiece(2, 4, emo03);
+
+        assertFalse(matchHandler.noFurtherMatchesPossible(board));
     }
 
     @Test
     public void testAnotherHorizontalMatchPossible() throws Exception {
-        emoticons[3][3] = new MockEmoticon(3, 3, 20, 20, bitmap, "SURPRISED");
-        emoticons[5][3] = new MockEmoticon(5, 3, 20, 20, bitmap, "SURPRISED");
-        emoticons[6][3] = new MockEmoticon(6, 3, 20, 20, bitmap, "SURPRISED");
-        assertTrue(matchFinder.noFurtherMatchesPossible(emoticons));
+        final String SURPRISED = "SURPRISED";
+        assertTrue(matchHandler.noFurtherMatchesPossible(board));
+
+        GamePiece emo01 = new Emoticon(3, 3, emoWidth, emoHeight, bitmap, SURPRISED, offScreenStartPositionY);
+        board.setGamePiece(3, 3, emo01);
+
+        GamePiece emo02 = new Emoticon(5, 3, emoWidth, emoHeight, bitmap, SURPRISED, offScreenStartPositionY);
+        board.setGamePiece(5, 3, emo02);
+
+        GamePiece emo03 = new Emoticon(6, 3, emoWidth, emoHeight, bitmap, SURPRISED, offScreenStartPositionY);
+        board.setGamePiece(6, 3, emo03);
+
+        assertFalse(matchHandler.noFurtherMatchesPossible(board));
     }
 }
