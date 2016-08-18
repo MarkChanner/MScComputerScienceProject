@@ -2,7 +2,7 @@ package com.example.mark.msccomputerscienceproject.model;
 
 import android.util.Log;
 
-public class SelectionsImpl implements Selections {
+public final class SelectionsImpl implements Selections {
 
     /**
      * @author Mark Channer for Birkbeck MSc Computer Science project

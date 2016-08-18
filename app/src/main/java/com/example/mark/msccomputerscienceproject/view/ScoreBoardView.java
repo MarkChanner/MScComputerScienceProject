@@ -11,9 +11,9 @@ import android.util.TypedValue;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public class ScoreBoardView extends TextView {
+public final class ScoreBoardView extends TextView {
 
-    public static final int ZERO = 0;
+    private static final int ZERO = 0;
     private Bitmap scoreBitmap;
     private Paint paint;
     private int scorePositionX;

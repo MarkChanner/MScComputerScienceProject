@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public class EmoticonFactoryLevel02 extends GamePieceFactory {
+public final class EmoticonFactoryLevel02 extends GamePieceFactory {
 
     public EmoticonFactoryLevel02(int emoWidth, int emoHeight) {
         super(emoWidth, emoHeight);

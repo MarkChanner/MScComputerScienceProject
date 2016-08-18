@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
  */
 public class BlankTile extends GamePiece {
 
-    public static final String EMOTION_TYPE = "EMPTY";
+    private static final String EMOTION_TYPE = "EMPTY";
 
     public BlankTile(int x, int y, int emoWidth, int emoHeight, Bitmap emptyBitmap) {
         super(x, y, emoWidth, emoHeight, emptyBitmap, EMOTION_TYPE, y);

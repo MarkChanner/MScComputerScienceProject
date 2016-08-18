@@ -14,12 +14,12 @@ import android.view.*;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public class GameBoardView extends SurfaceView implements Runnable {
+public final class GameBoardView extends SurfaceView implements Runnable {
 
     //public static final String TAG = "GameBoardView";
-    public static final int X_MAX = GameControllerImpl.X_MAX;
-    public static final int Y_MAX = GameControllerImpl.Y_MAX;
-    public static final int ZERO = 0;
+    private static final int X_MAX = GameControllerImpl.X_MAX;
+    private static final int Y_MAX = GameControllerImpl.Y_MAX;
+    private static final int ZERO = 0;
 
     private SurfaceHolder surfaceHolder;
     private GameController controller;

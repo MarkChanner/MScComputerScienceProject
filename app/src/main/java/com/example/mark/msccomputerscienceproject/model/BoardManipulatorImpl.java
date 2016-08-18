@@ -1,5 +1,7 @@
 package com.example.mark.msccomputerscienceproject.model;
 
+import com.example.mark.msccomputerscienceproject.controller.GameControllerImpl;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,14 +11,15 @@ import java.util.List;
  */
 public class BoardManipulatorImpl implements BoardManipulator {
 
-    public static final int X = 0;
-    public static final int Y = 1;
-    public static final int X_MAX = 8;
-    public static final int Y_MAX = 7;
-    public static final int ROW_START = 0;
-    public static final int COLUMN_TOP = 0;
-    public static final int COLUMN_BOTTOM = (Y_MAX - 1);
-    public static final String EMPTY = "EMPTY";
+    public static final int X_MAX = GameControllerImpl.X_MAX;
+    public static final int Y_MAX = GameControllerImpl.Y_MAX;
+
+    private static final int X = 0;
+    private static final int Y = 1;
+    private static final int ROW_START = 0;
+    private static final int COLUMN_TOP = 0;
+    private static final int COLUMN_BOTTOM = (Y_MAX - 1);
+    private static final String EMPTY = "EMPTY";
 
     private volatile boolean animatingSwap = false;
     private volatile boolean animatingDrop = false;
@@ -30,16 +33,14 @@ public class BoardManipulatorImpl implements BoardManipulator {
 
     public void populateBoard(GamePieceFactory emoFactory) {
         GamePiece emoticon;
-        int xMax = board.getWidth();
-        int yMax = board.getHeight();
-        for (int x = ROW_START; x < xMax; x++) {
+        for (int x = ROW_START; x < X_MAX; x++) {
 
-            int dropGap = yMax * 2;
+            int dropGap = Y_MAX * 2;
 
-            for (int y = COLUMN_TOP; y < yMax; y++) {
+            for (int y = COLUMN_TOP; y < Y_MAX; y++) {
 
                 do {
-                    emoticon = emoFactory.getRandomGamePiece(x, y, ((y - yMax) - dropGap));
+                    emoticon = emoFactory.getRandomGamePiece(x, y, ((y - Y_MAX) - dropGap));
                 } while (emoticonCausesMatch(board, x, y, emoticon.getEmoType()));
 
                 dropGap--;

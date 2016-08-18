@@ -22,11 +22,11 @@ import java.util.LinkedList;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public class GameControllerImpl extends Activity implements GameController {
+public final class GameControllerImpl extends Activity implements GameController {
 
     private final static String TAG = "GameControllerImpl";
-    public static final int X_MAX = 8;
-    public static final int Y_MAX = 7;
+    public static final int X_MAX = 6;
+    public static final int Y_MAX = 5;
 
     private MusicPlayer music;
     private SoundManager soundManager;

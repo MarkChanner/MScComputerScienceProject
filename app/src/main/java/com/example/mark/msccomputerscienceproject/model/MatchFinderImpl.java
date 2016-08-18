@@ -1,8 +1,10 @@
 package com.example.mark.msccomputerscienceproject.model;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
+import com.example.mark.msccomputerscienceproject.controller.GameControllerImpl;
+
 import java.util.List;
+import java.util.LinkedList;
+import java.util.ArrayList;
 
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
@@ -10,13 +12,13 @@ import java.util.List;
 public class MatchFinderImpl implements MatchFinder {
 
     private static final String TAG = "MatchFinderImpl";
-    public static final int X_MAX = GameModelImpl.X_MAX;
-    public static final int Y_MAX = GameModelImpl.Y_MAX;
-    public static final int ROW_START = 0;
-	public static final int ROW_END = (X_MAX - 1);
-    public static final int COLUMN_TOP = 0;
-    public static final int COLUMN_BOTTOM = (Y_MAX - 1);
-    public static final String EMPTY = "EMPTY";
+    private static final int X_MAX = GameControllerImpl.X_MAX;
+    private static final int Y_MAX = GameControllerImpl.Y_MAX;
+    private static final int ROW_START = 0;
+    private static final int ROW_END = (X_MAX - 1);
+    private static final int COLUMN_TOP = 0;
+    private static final int COLUMN_BOTTOM = (Y_MAX - 1);
+    private static final String EMPTY = "EMPTY";
 
 
     @Override

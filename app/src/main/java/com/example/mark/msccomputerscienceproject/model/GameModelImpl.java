@@ -13,12 +13,11 @@ import java.util.LinkedList;
 public final class GameModelImpl implements GameModel {
 
     private static final String TAG = "GameModel";
-    public static final int MAX_GAME_LEVELS = 2;
-    public static final int X_MAX = 8;
-    public static final int Y_MAX = 7;
-    public static final int ONE_SECOND = 1000;
-    public static final String INVALID_MOVE = "INVALID_MOVE";
+    private static final String INVALID_MOVE = "INVALID_MOVE";
+    private static final int ONE_SECOND = 1000;
 
+    private static final int SCORE_TARGET_PER_LEVEL = 300;
+    private static final int GAME_LEVELS = 2;
     private int currentLevelScore;
     private GameController controller;
     private LevelManager levelManager;
@@ -118,7 +117,7 @@ public final class GameModelImpl implements GameModel {
     }
 
     private void checkForLevelUp() {
-        if (currentLevelScore >= 90) {
+        if (currentLevelScore >= SCORE_TARGET_PER_LEVEL) {
             loadNextLevel();
         } else if (matchHandler.noFurtherMatchesPossible(board)) {
             Log.d(TAG, "checkForLevelUp() entered condition to call finishRound()");
@@ -132,7 +131,7 @@ public final class GameModelImpl implements GameModel {
         boardController.setToDrop();
         boardController.dropGamePieces(levelManager.getGamePieceFactory());
         currentLevelScore = 0;
-        if (levelManager.getGameLevel() < MAX_GAME_LEVELS) {
+        if (levelManager.getGameLevel() < GAME_LEVELS) {
             levelManager.incrementLevel();
         }
         boardController.populateBoard(levelManager.getGamePieceFactory());
