@@ -20,7 +20,11 @@ public class EmoticonTest {
 
     @Test
     public void testReturnEmoticonType() throws Exception {
-        GamePiece emo = new Emoticon(3, 4, 20, 20, bitmap, "HAPPY", 10);
+        final int emoWidth = 20;
+        final int emoHeight = 20;
+        final String HAPPY = "HAPPY";
+        final int offScreenStartPositionY = -10;
+        GamePiece emo = new Emoticon(3, 4, emoWidth, emoHeight, bitmap, HAPPY, offScreenStartPositionY);
         assertEquals("HAPPY", emo.getEmoType());
     }
 }
