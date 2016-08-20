@@ -12,7 +12,7 @@ public final class LevelManagerImpl implements LevelManager {
     private int emoWidth;
     private int emoHeight;
     private int level;
-    private GamePieceFactory emoFactory;
+    private GamePieceFactory factory;
 
     public LevelManagerImpl(int emoWidth, int emoHeight, int level) {
         this.emoWidth = emoWidth;
@@ -24,9 +24,9 @@ public final class LevelManagerImpl implements LevelManager {
     @Override
     public void setGameLevel(int level) {
         if (level == LEVEL_ONE) {
-            emoFactory = new EmoticonFactoryLevel01(emoWidth, emoHeight);
+            factory = new EmoticonFactoryLevel01(emoWidth, emoHeight);
         } else if (level == LEVEL_TWO) {
-            emoFactory = new EmoticonFactoryLevel02(emoWidth, emoHeight);
+            factory = new EmoticonFactoryLevel02(emoWidth, emoHeight);
         } else {
             throw new IndexOutOfBoundsException("level out of bounds in setEmoFactory(int)");
         }
@@ -46,6 +46,6 @@ public final class LevelManagerImpl implements LevelManager {
 
     @Override
     public GamePieceFactory getGamePieceFactory() {
-        return emoFactory;
+        return factory;
     }
 }
