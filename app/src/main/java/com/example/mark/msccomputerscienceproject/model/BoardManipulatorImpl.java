@@ -31,7 +31,7 @@ public final class BoardManipulatorImpl implements BoardManipulator {
         this.board = board;
     }
 
-    public void populateBoard(GamePieceFactory emoFactory) {
+    public void populateBoard(GamePieceFactory factory) {
         GamePiece emoticon;
         for (int x = ROW_START; x < COLUMNS; x++) {
 
@@ -40,7 +40,7 @@ public final class BoardManipulatorImpl implements BoardManipulator {
             for (int y = COLUMN_TOP; y < ROWS; y++) {
 
                 do {
-                    emoticon = emoFactory.getRandomGamePiece(x, y, ((y - ROWS) - dropGap));
+                    emoticon = factory.getRandomGamePiece(x, y, ((y - ROWS) - dropGap));
                 } while (emoticonCausesMatch(board, x, y, emoticon.getEmoType()));
 
                 dropGap--;
@@ -132,7 +132,7 @@ public final class BoardManipulatorImpl implements BoardManipulator {
     }
 
     @Override
-    public void dropGamePieces(GamePieceFactory gamePieceFactory) {
+    public void dropGamePieces(GamePieceFactory factory) {
         int offScreenStartPosition;
         int runnerY;
         for (int x = ROW_START; x < COLUMNS; x++) {
@@ -148,9 +148,9 @@ public final class BoardManipulatorImpl implements BoardManipulator {
                         board.setGamePiece(x, y, board.getGamePiece(x, runnerY));
                         board.getGamePiece(x, y).setArrayY(tempY);
                         board.getGamePiece(x, y).setDropping(true);
-                        board.setGamePiece(x, runnerY, gamePieceFactory.createBlankTile(x, runnerY));
+                        board.setGamePiece(x, runnerY, factory.createBlankTile(x, runnerY));
                     } else {
-                        board.setGamePiece(x, y, gamePieceFactory.getRandomGamePiece(x, y, offScreenStartPosition));
+                        board.setGamePiece(x, y, factory.getRandomGamePiece(x, y, offScreenStartPosition));
                         offScreenStartPosition--;
                     }
                 }
@@ -229,13 +229,13 @@ public final class BoardManipulatorImpl implements BoardManipulator {
         replace(matchingY, factory);
     }
 
-    private void replace(ArrayList<LinkedList<GamePiece>> matches, GamePieceFactory gamePieceFactory) {
+    private void replace(ArrayList<LinkedList<GamePiece>> matches, GamePieceFactory factory) {
         for (List<GamePiece> removeList : matches) {
             for (GamePiece emo : removeList) {
                 int x = emo.getArrayX();
                 int y = emo.getArrayY();
                 if (!board.getGamePiece(x, y).getEmoType().equals(EMPTY)) {
-                    board.setGamePiece(x, y, gamePieceFactory.createBlankTile(x, y));
+                    board.setGamePiece(x, y, factory.createBlankTile(x, y));
                 }
             }
         }
