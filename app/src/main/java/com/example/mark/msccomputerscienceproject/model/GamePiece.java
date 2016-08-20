@@ -10,10 +10,10 @@ public abstract class GamePiece {
     public static final int DIVISOR = 2;
     private int arrayX;
     private int arrayY;
-    private int emoWidth;
-    private int emoHeight;
+    private int pieceWidth;
+    private int pieceHeight;
     private Bitmap bitmap;
-    private String emoticonType;
+    private String type;
     private int screenPositionX;
     private int screenPositionY;
     private int pixelMovement;
@@ -26,16 +26,16 @@ public abstract class GamePiece {
     volatile boolean isPartOfMatch;
     volatile boolean isSelected;
 
-    public GamePiece(int arrayX, int arrayY, int emoWidth, int emoHeight, Bitmap bitmap, String emoType, int offScreenStartPositionY) {
+    public GamePiece(int arrayX, int arrayY, int pieceWidth, int pieceHeight, Bitmap bitmap, String type, int offScreenStartPositionY) {
         this.arrayX = arrayX;
         this.arrayY = arrayY;
-        this.emoWidth = emoWidth;
-        this.emoHeight = emoHeight;
+        this.pieceWidth = pieceWidth;
+        this.pieceHeight = pieceHeight;
         this.bitmap = bitmap;
-        this.emoticonType = emoType;
-        screenPositionX = (arrayX * emoWidth);
-        screenPositionY = (offScreenStartPositionY * emoHeight);
-        pixelMovement = (emoHeight / 8);
+        this.type = type;
+        screenPositionX = (arrayX * pieceWidth);
+        screenPositionY = (offScreenStartPositionY * pieceHeight);
+        pixelMovement = (pieceHeight / 8);
         dropping = true;
     }
 
@@ -99,7 +99,7 @@ public abstract class GamePiece {
 
 
     public void dropEmoticon() {
-        int newPosition = (arrayY * emoHeight);
+        int newPosition = (arrayY * pieceHeight);
         int pixelRate = pixelMovement;
         while (screenPositionY + pixelRate > newPosition) {
             pixelRate /= DIVISOR;
@@ -115,7 +115,7 @@ public abstract class GamePiece {
     }
 
     public void swapUp() {
-        int newPosition = emoHeight * arrayY;
+        int newPosition = pieceHeight * arrayY;
         int pixelRate = pixelMovement;
         while (screenPositionY - pixelRate < newPosition) {
             pixelRate /= DIVISOR;
@@ -131,7 +131,7 @@ public abstract class GamePiece {
     }
 
     public void swapDown() {
-        int newPosition = emoHeight * arrayY;
+        int newPosition = pieceHeight * arrayY;
         int pixelRate = pixelMovement;
         while (screenPositionY + pixelRate > newPosition) {
             pixelRate /= DIVISOR;
@@ -147,7 +147,7 @@ public abstract class GamePiece {
     }
 
     public void swapRight() {
-        int newPosition = emoWidth * arrayX;
+        int newPosition = pieceWidth * arrayX;
         int pixelRate = pixelMovement;
         while (screenPositionX + pixelRate > newPosition) {
             pixelRate /= DIVISOR;
@@ -163,7 +163,7 @@ public abstract class GamePiece {
     }
 
     public void swapLeft() {
-        int newPosition = emoWidth * arrayX;
+        int newPosition = pieceWidth * arrayX;
         int pixelRate = pixelMovement;
         while (screenPositionX - pixelRate < newPosition) {
             pixelRate /= DIVISOR;
@@ -203,7 +203,7 @@ public abstract class GamePiece {
     }
 
     public String getEmoType() {
-        return emoticonType;
+        return type;
     }
 
     public void setPixelMovement(int pixelMovement) {
