@@ -12,7 +12,7 @@ import java.util.LinkedList;
  */
 public interface GameController {
 
-    void handle(MotionEvent event);
+    void handleSelection(MotionEvent event);
 
     void updateModel();
 

@@ -100,8 +100,8 @@ public final class GameControllerImpl extends Activity implements GameController
     }
 
     @Override
-    public void handle(MotionEvent event) {
-        Log.d(TAG, "handle(MotionEvent)");
+    public void handleSelection(MotionEvent event) {
+        Log.d(TAG, "handleSelection(MotionEvent)");
         int screenX = (int) event.getX();
         int screenY = (int) event.getY();
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
