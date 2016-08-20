@@ -12,10 +12,10 @@ public interface MatchHandler {
 
     void highlightMatches(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY);
 
-    ArrayList<LinkedList<GamePiece>> findVerticalMatches(GameBoard gameBoard);
+    ArrayList<LinkedList<GamePiece>> findVerticalMatches(GameBoard board);
 
-    ArrayList<LinkedList<GamePiece>> findHorizontalMatches(GameBoard gameBoard);
+    ArrayList<LinkedList<GamePiece>> findHorizontalMatches(GameBoard board);
 
-    boolean noFurtherMatchesPossible(GameBoard gameBoard);
+    boolean noFurtherMatchesPossible(GameBoard board);
 
 }
