@@ -8,7 +8,7 @@ import java.util.LinkedList;
  */
 public interface BoardManipulator {
 
-    void populateBoard(GamePieceFactory gamePieceFactory);
+    void populateBoard(GamePieceFactory factory);
 
     void swap(Selections selections);
 
@@ -16,7 +16,7 @@ public interface BoardManipulator {
 
     void unHighlightSelections();
 
-    void dropGamePieces(GamePieceFactory gamePieceFactory);
+    void dropGamePieces(GamePieceFactory factory);
 
     void updateGamePieceSwapCoordinates();
 

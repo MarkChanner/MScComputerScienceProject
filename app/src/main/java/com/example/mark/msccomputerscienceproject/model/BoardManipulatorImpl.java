@@ -41,7 +41,7 @@ public final class BoardManipulatorImpl implements BoardManipulator {
 
                 do {
                     emoticon = factory.getRandomGamePiece(x, y, ((y - ROWS) - dropGap));
-                } while (emoticonCausesMatch(board, x, y, emoticon.getEmoType()));
+                } while (gamePieceTypeCausesMatch(x, y, emoticon.getEmoType()));
 
                 dropGap--;
                 board.setGamePiece(x, y, emoticon);
@@ -49,7 +49,7 @@ public final class BoardManipulatorImpl implements BoardManipulator {
         }
     }
 
-    private boolean emoticonCausesMatch(GameBoard board, int x, int y, String emoType) {
+    private boolean gamePieceTypeCausesMatch(int x, int y, String emoType) {
         if (y >= 2 && emoType.equals(board.getGamePiece(x, y - 1).getEmoType()) &&
                 emoType.equals(board.getGamePiece(x, y - 2).getEmoType()))
             return true;
