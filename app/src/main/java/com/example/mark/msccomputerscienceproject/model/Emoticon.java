@@ -7,8 +7,8 @@ import android.graphics.Bitmap;
  */
 public class Emoticon extends GamePiece {
 
-    public Emoticon(int arrayX, int arrayY, int emoWidth, int emoHeight, Bitmap bitmap, String emoType, int offScreenStartPositionY) {
-        super(arrayX, arrayY, emoWidth, emoHeight, bitmap, emoType, offScreenStartPositionY);
+    public Emoticon(int arrayX, int arrayY, int pieceWidth, int pieceHeight, Bitmap bitmap, String type, int offScreenStartPositionY) {
+        super(arrayX, arrayY, pieceWidth, pieceHeight, bitmap, type, offScreenStartPositionY);
     }
 }
 
