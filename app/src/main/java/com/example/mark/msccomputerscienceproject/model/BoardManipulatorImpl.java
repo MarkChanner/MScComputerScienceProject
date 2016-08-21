@@ -1,6 +1,6 @@
 package com.example.mark.msccomputerscienceproject.model;
 
-import com.example.mark.msccomputerscienceproject.controller.GameControllerImpl;
+import com.example.mark.msccomputerscienceproject.controller.GameActivityImpl;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -12,8 +12,8 @@ import java.util.List;
 public final class BoardManipulatorImpl implements BoardManipulator {
 
     private static final String TAG = "BoardManipulatorImpl";
-    private static final int ROWS = GameControllerImpl.ROWS;
-    private static final int COLUMNS = GameControllerImpl.COLUMNS;
+    private static final int ROWS = GameActivityImpl.ROWS;
+    private static final int COLUMNS = GameActivityImpl.COLUMNS;
     private static final int ROW_START = 0;
     private static final int COLUMN_TOP = 0;
     private static final int COLUMN_BOTTOM = (ROWS - 1);

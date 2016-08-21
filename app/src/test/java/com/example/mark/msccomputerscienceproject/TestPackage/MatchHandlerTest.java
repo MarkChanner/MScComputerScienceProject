@@ -1,6 +1,6 @@
 package com.example.mark.msccomputerscienceproject.TestPackage;
 
-import com.example.mark.msccomputerscienceproject.controller.GameControllerImpl;
+import com.example.mark.msccomputerscienceproject.controller.GameActivityImpl;
 import com.example.mark.msccomputerscienceproject.model.*;
 
 import android.graphics.Bitmap;
@@ -23,8 +23,8 @@ import static org.junit.Assert.assertEquals;
  */
 public class MatchHandlerTest {
 
-    private static final int ROWS = GameControllerImpl.ROWS;
-    private static final int COLUMNS = GameControllerImpl.COLUMNS;
+    private static final int ROWS = GameActivityImpl.ROWS;
+    private static final int COLUMNS = GameActivityImpl.COLUMNS;
     private static final int ROW_START = 0;
     private static final int COLUMN_TOP = 0;
     private final int emoWidth = 20;

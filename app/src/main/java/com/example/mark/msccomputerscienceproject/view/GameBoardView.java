@@ -16,15 +16,15 @@ import android.view.*;
  */
 public final class GameBoardView extends SurfaceView implements Runnable {
 
-    private static final int ROWS = GameControllerImpl.ROWS;
-    private static final int COLUMNS = GameControllerImpl.COLUMNS;
+    private static final int ROWS = GameActivityImpl.ROWS;
+    private static final int COLUMNS = GameActivityImpl.COLUMNS;
     private static final int ZERO = 0;
     private final Rect selectionRect = new Rect();
     private final Rect matchRect = new Rect();
     private int viewSizeX;
 
     private SurfaceHolder surfaceHolder;
-    private GameController controller;
+    private GameActivity controller;
     private GameBoard board;
     private int emoWidth;
     private int emoHeight;
@@ -42,7 +42,7 @@ public final class GameBoardView extends SurfaceView implements Runnable {
         super(context);
         this.viewSizeX = viewSizeX;
         this.surfaceHolder = getHolder();
-        this.controller = (GameController) context;
+        this.controller = (GameActivity) context;
         this.emoWidth = emoWidth;
         this.emoHeight = emoHeight;
         this.board = GameBoardImpl.getInstance();

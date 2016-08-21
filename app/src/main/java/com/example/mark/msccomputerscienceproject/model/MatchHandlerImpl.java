@@ -1,6 +1,6 @@
 package com.example.mark.msccomputerscienceproject.model;
 
-import com.example.mark.msccomputerscienceproject.controller.GameControllerImpl;
+import com.example.mark.msccomputerscienceproject.controller.GameActivityImpl;
 
 import java.util.List;
 import java.util.LinkedList;
@@ -12,8 +12,8 @@ import java.util.ArrayList;
 public final class MatchHandlerImpl implements MatchHandler {
 
     private static final String TAG = "MatchHandlerImpl";
-    private static final int ROWS = GameControllerImpl.ROWS;
-    private static final int COLUMNS = GameControllerImpl.COLUMNS;
+    private static final int ROWS = GameActivityImpl.ROWS;
+    private static final int COLUMNS = GameActivityImpl.COLUMNS;
     private static final int ROW_START = 0;
     private static final int ROW_END = (COLUMNS - 1);
     private static final int COLUMN_TOP = 0;

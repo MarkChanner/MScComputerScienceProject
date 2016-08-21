@@ -1,14 +1,14 @@
 package com.example.mark.msccomputerscienceproject.model;
 
-import com.example.mark.msccomputerscienceproject.controller.GameControllerImpl;
+import com.example.mark.msccomputerscienceproject.controller.GameActivityImpl;
 
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
 public final class GameBoardImpl implements GameBoard {
 
-    private static final int ROWS = GameControllerImpl.ROWS;
-    private static final int COLUMNS = GameControllerImpl.COLUMNS;
+    private static final int ROWS = GameActivityImpl.ROWS;
+    private static final int COLUMNS = GameActivityImpl.COLUMNS;
     private static final int frames = 32;
     private GamePiece[][] emoticons = new GamePiece[COLUMNS][ROWS];
 
