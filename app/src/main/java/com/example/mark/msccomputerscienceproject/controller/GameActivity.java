@@ -10,7 +10,7 @@ import java.util.LinkedList;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public interface GameController {
+public interface GameActivity {
 
     void handleSelection(MotionEvent event);
 

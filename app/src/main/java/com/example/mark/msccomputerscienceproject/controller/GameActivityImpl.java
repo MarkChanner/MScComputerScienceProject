@@ -22,7 +22,7 @@ import java.util.LinkedList;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public final class GameControllerImpl extends Activity implements GameController {
+public final class GameActivityImpl extends Activity implements GameActivity {
 
     private final static String TAG = "GameControllerImpl";
     public static final int ROWS = 7;

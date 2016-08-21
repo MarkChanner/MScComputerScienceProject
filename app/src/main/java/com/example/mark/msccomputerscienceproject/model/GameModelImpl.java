@@ -1,6 +1,6 @@
 package com.example.mark.msccomputerscienceproject.model;
 
-import com.example.mark.msccomputerscienceproject.controller.GameController;
+import com.example.mark.msccomputerscienceproject.controller.GameActivity;
 
 import android.util.Log;
 
@@ -18,18 +18,18 @@ public final class GameModelImpl implements GameModel {
     private static final int SCORE_TARGET_PER_LEVEL = 500;
     private static final int GAME_LEVELS = 2;
     private int currentLevelScore;
-    private GameController controller;
+    private GameActivity controller;
     private LevelManager levelManager;
     private Selections selections;
     private MatchHandler matchHandler;
     private GameBoard board;
     private BoardManipulator boardController;
 
-    public GameModelImpl(GameController controller, int emoWidth, int emoHeight, int level) {
+    public GameModelImpl(GameActivity controller, int emoWidth, int emoHeight, int level) {
         initializeGameModel(controller, emoWidth, emoHeight, level);
     }
 
-    private void initializeGameModel(GameController controller, int emoWidth, int emoHeight, int level) {
+    private void initializeGameModel(GameActivity controller, int emoWidth, int emoHeight, int level) {
         this.currentLevelScore = 0;
         this.controller = controller;
         this.levelManager = new LevelManagerImpl(emoWidth, emoHeight, level);
