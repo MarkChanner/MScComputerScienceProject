@@ -9,9 +9,28 @@ public interface GameBoard {
 
     void setGamePiece(int x, int y, GamePiece gamePiece) throws ArrayIndexOutOfBoundsException;
 
-    void setToDrop(int x, int y) throws ArrayIndexOutOfBoundsException;
+    void highlight(int x, int y);
 
-    void resetBoard();
+    void highlight(MatchContainer matchContainer);
+
+    void clearHighlights();
+
+    void swap(Selections selections);
+
+    void swapBack(Selections selections);
+
+    /**
+     * Shifts game pieces down the board
+     */
+    void lowerGamePieces(GamePieceFactory factory);
+
+    void removeFromBoard(MatchContainer matchContainer, GamePieceFactory factory);
+
+    void update();
+
+    void clearGamePieces();
+
+    void reset();
 
 }
 

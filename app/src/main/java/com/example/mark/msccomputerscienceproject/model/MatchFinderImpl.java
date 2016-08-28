@@ -2,16 +2,15 @@ package com.example.mark.msccomputerscienceproject.model;
 
 import com.example.mark.msccomputerscienceproject.controller.GameActivityImpl;
 
-import java.util.List;
 import java.util.LinkedList;
 import java.util.ArrayList;
 
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public final class MatchHandlerImpl implements MatchHandler {
+public final class MatchFinderImpl implements MatchFinder {
 
-    private static final String TAG = "MatchHandlerImpl";
+    private static final String TAG = "MatchFinderImpl";
     private static final int ROWS = GameActivityImpl.ROWS;
     private static final int COLUMNS = GameActivityImpl.COLUMNS;
     private static final int ROW_START = 0;
@@ -20,39 +19,28 @@ public final class MatchHandlerImpl implements MatchHandler {
     private static final int COLUMN_BOTTOM = (ROWS - 1);
     private static final String EMPTY = "EMPTY";
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public int getMatchPoints(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
-        int points = 0;
-        points += matchPoints(matchingX);
-        points += matchPoints(matchingY);
-        return points;
+    public MatchContainer findMatches(GameBoard board) {
+        ArrayList<LinkedList<GamePiece>> matchingX = findVerticalMatches(board);
+        ArrayList<LinkedList<GamePiece>> matchingY = findHorizontalMatches(board);
+        MatchContainer container = new MatchContainerImpl();
+        container.addMatchingX(matchingX);
+        container.addMatchingY(matchingY);
+        return container;
     }
 
-    private int matchPoints(ArrayList<LinkedList<GamePiece>> matches) {
-        int points = 0;
-        for (List<GamePiece> removeList : matches) {
-            points += (removeList.size() * 10);
-        }
-        return points;
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void highlightMatches(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
-        highlight(matchingX);
-        highlight(matchingY);
+    public boolean furtherMatchesPossible(GameBoard board) {
+        return (verticalMatchPossible(board) || horizontalMatchPossible(board));
     }
 
-    private void highlight(ArrayList<LinkedList<GamePiece>> matches) {
-        for (List<GamePiece> removeList : matches) {
-            for (GamePiece emo : removeList) {
-                emo.setIsPartOfMatch(true);
-            }
-        }
-    }
-
-    @Override
-    public ArrayList<LinkedList<GamePiece>> findVerticalMatches(GameBoard board) {
+    private ArrayList<LinkedList<GamePiece>> findVerticalMatches(GameBoard board) {
         LinkedList<GamePiece> consecutiveEmoticons = new LinkedList<>();
         ArrayList<LinkedList<GamePiece>> bigList = new ArrayList<>();
         GamePiece emo;
@@ -76,8 +64,7 @@ public final class MatchHandlerImpl implements MatchHandler {
         return bigList;
     }
 
-    @Override
-    public ArrayList<LinkedList<GamePiece>> findHorizontalMatches(GameBoard board) {
+    private ArrayList<LinkedList<GamePiece>> findHorizontalMatches(GameBoard board) {
         LinkedList<GamePiece> consecutiveEmoticons = new LinkedList<>();
         ArrayList<LinkedList<GamePiece>> bigList = new ArrayList<>();
         GamePiece emo;
@@ -118,12 +105,6 @@ public final class MatchHandlerImpl implements MatchHandler {
             }
         }
         return true;
-    }
-
-    @Override
-    public boolean noFurtherMatchesPossible(GameBoard board) {
-        //Log.d(TAG, "noFurtherMatchesPossible(Emoticon[][])");
-        return !(verticalMatchPossible(board) || horizontalMatchPossible(board));
     }
 
     private boolean verticalMatchPossible(GameBoard board) {

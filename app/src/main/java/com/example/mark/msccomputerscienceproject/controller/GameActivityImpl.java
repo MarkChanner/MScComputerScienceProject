@@ -16,9 +16,6 @@ import android.view.ViewGroup;
 import android.view.MotionEvent;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
@@ -130,8 +127,8 @@ public final class GameActivityImpl extends Activity implements GameActivity {
     }
 
     @Override
-    public void playSound(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
-        soundManager.announceMatchedEmoticons(matchingX, matchingY);
+    public void playSound(MatchContainer matchContainer) {
+        soundManager.announceMatchedEmoticons(matchContainer);
     }
 
     @Override

@@ -2,10 +2,7 @@ package com.example.mark.msccomputerscienceproject.controller;
 
 import android.view.MotionEvent;
 
-import com.example.mark.msccomputerscienceproject.model.GamePiece;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
+import com.example.mark.msccomputerscienceproject.model.MatchContainer;
 
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
@@ -22,7 +19,7 @@ public interface GameActivity {
 
     void playSound(String sound);
 
-    void playSound(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY);
+    void playSound(MatchContainer matchContainer);
 
     boolean gameOver();
 

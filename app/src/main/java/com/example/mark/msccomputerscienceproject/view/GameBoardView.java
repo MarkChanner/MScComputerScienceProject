@@ -1,10 +1,11 @@
 package com.example.mark.msccomputerscienceproject.view;
 
-import com.example.mark.msccomputerscienceproject.controller.*;
+import com.example.mark.msccomputerscienceproject.controller.GameActivity;
+import com.example.mark.msccomputerscienceproject.controller.GameActivityImpl;
 import com.example.mark.msccomputerscienceproject.model.GameBoard;
-import com.example.mark.msccomputerscienceproject.R;
-import com.example.mark.msccomputerscienceproject.model.GamePiece;
 import com.example.mark.msccomputerscienceproject.model.GameBoardImpl;
+import com.example.mark.msccomputerscienceproject.model.GamePiece;
+import com.example.mark.msccomputerscienceproject.R;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
@@ -19,7 +20,6 @@ public final class GameBoardView extends SurfaceView implements Runnable {
     private static final int ROWS = GameActivityImpl.ROWS;
     private static final int COLUMNS = GameActivityImpl.COLUMNS;
     private static final int ZERO = 0;
-    private final Rect selectionRect = new Rect();
     private final Rect matchRect = new Rect();
     private int viewSizeX;
 
@@ -148,8 +148,8 @@ public final class GameBoardView extends SurfaceView implements Runnable {
             displayGameOverMessage(canvas);
         } else {
             drawBackground(canvas);
-            highlightAnySelections(canvas);
-            highlightAnyMatches(canvas);
+            drawHighlightedTiles(canvas);
+            drawEmoticons(canvas);
         }
     }
 
@@ -157,23 +157,26 @@ public final class GameBoardView extends SurfaceView implements Runnable {
         canvas.drawBitmap(gridBitmap, ZERO, ZERO, null);
     }
 
-    private void highlightAnySelections(Canvas canvas) {
-        canvas.drawRect(selectionRect, selectionFill);
-        canvas.drawRect(selectionRect, drawingLine);
-    }
-
-    private void highlightAnyMatches(Canvas canvas) {
+    private void drawHighlightedTiles(Canvas canvas) {
         for (int y = ROWS - 1; y >= 0; y--) {
             for (int x = 0; x < COLUMNS; x++) {
                 GamePiece emo = board.getGamePiece(x, y);
-
-                if (emo.isPartOfMatch() || emo.isSelected()) {
+                if (emo.getHighlight()) {
                     int highlightX = emo.getViewPositionX();
                     int highlightY = emo.getViewPositionY();
                     matchRect.set(highlightX, highlightY, (highlightX + emoWidth), (highlightY + emoHeight));
                     canvas.drawRect(matchRect, selectionFill);
                     canvas.drawRect(matchRect, drawingLine);
                 }
+            }
+        }
+    }
+
+    private void drawEmoticons(Canvas canvas) {
+        GamePiece emo;
+        for (int y = ROWS - 1; y >= 0; y--) {
+            for (int x = 0; x < COLUMNS; x++) {
+                emo = board.getGamePiece(x, y);
                 canvas.drawBitmap(emo.getBitmap(), 5 + emo.getViewPositionX(), emo.getViewPositionY(), null);
             }
         }

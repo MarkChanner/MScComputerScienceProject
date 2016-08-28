@@ -16,13 +16,13 @@ public final class EmoticonFactoryLevel02 extends GamePieceFactory {
     /**
      * Factory method overridden from abstract method in superclass
      *
-     * @param x                       the x coordinate of the required GamePiece
-     * @param y                       the y coordinate of the required GamePiece
-     * @param offScreenStartPositionY the y coordinate for GamePiece to dropGamePieces from
+     * @param x      the x coordinate of the required GamePiece
+     * @param y      the y coordinate of the required GamePiece
+     * @param startY the y coordinate for GamePiece to lowerGamePieces from
      * @return GamePiece
      */
     @Override
-    protected GamePiece getRandomGamePiece(int x, int y, int offScreenStartPositionY) {
+    protected GamePiece getRandomGamePiece(int x, int y, int startY) {
         Random random = new Random();
         String emoID = null;
         Bitmap bitmap = null;
@@ -50,6 +50,6 @@ public final class EmoticonFactoryLevel02 extends GamePieceFactory {
             default:
                 break;
         }
-        return new Emoticon(x, y, emoWidth, emoHeight, bitmap, emoID, offScreenStartPositionY);
+        return new Emoticon(x, y, emoWidth, emoHeight, bitmap, emoID, startY);
     }
 }

@@ -23,8 +23,7 @@ public abstract class GamePiece {
     volatile boolean swappingDown;
     volatile boolean swappingRight;
     volatile boolean swappingLeft;
-    volatile boolean isPartOfMatch;
-    volatile boolean isSelected;
+    volatile boolean highlight;
 
     public GamePiece(int arrayX, int arrayY, int pieceWidth, int pieceHeight, Bitmap bitmap, String type, int offScreenStartPositionY) {
         this.arrayX = arrayX;
@@ -37,6 +36,16 @@ public abstract class GamePiece {
         screenPositionY = (offScreenStartPositionY * pieceHeight);
         pixelMovement = (pieceHeight / 8);
         dropping = true;
+    }
+
+    public void setHighlight(boolean bool) {
+        if (!isDropping()) {
+            highlight = bool;
+        }
+    }
+
+    public boolean getHighlight() {
+        return highlight;
     }
 
     public boolean isSwapping() {
@@ -73,24 +82,6 @@ public abstract class GamePiece {
         if (dropping) {
             dropEmoticon();
         }
-    }
-
-    public void setIsSelected(boolean bool) {
-        if (!isDropping()) {
-            isSelected = bool;
-        }
-    }
-
-    public boolean isSelected() {
-        return isSelected;
-    }
-
-    public void setIsPartOfMatch(boolean bool) {
-        isPartOfMatch = bool;
-    }
-
-    public boolean isPartOfMatch() {
-        return isPartOfMatch;
     }
 
     public void setDropping(boolean bool) {

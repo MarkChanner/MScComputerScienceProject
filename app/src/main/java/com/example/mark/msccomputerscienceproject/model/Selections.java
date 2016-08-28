@@ -5,7 +5,7 @@ package com.example.mark.msccomputerscienceproject.model;
  */
 public interface Selections {
 
-    void resetUserSelections();
+    void reset();
 
     boolean selection01Made();
 

@@ -33,7 +33,7 @@ public final class LevelManagerImpl implements LevelManager {
     }
 
     @Override
-    public int getGameLevel() {
+    public int getLevel() {
         return level;
     }
 
@@ -41,7 +41,6 @@ public final class LevelManagerImpl implements LevelManager {
     public void incrementLevel() {
         level++;
         setGameLevel(level);
-
     }
 
     @Override

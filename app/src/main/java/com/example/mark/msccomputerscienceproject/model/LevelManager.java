@@ -5,7 +5,7 @@ package com.example.mark.msccomputerscienceproject.model;
  */
 public interface LevelManager {
 
-    int getGameLevel();
+    int getLevel();
 
     void setGameLevel(int level);
 

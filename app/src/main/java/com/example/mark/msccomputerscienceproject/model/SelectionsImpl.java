@@ -1,10 +1,10 @@
 package com.example.mark.msccomputerscienceproject.model;
+/**
 
+ * @author Mark Channer for Birkbeck MSc Computer Science project
+ */
 public final class SelectionsImpl implements Selections {
 
-    /**
-     * @author Mark Channer for Birkbeck MSc Computer Science project
-     */
     private static final int X = 0;
     private static final int Y = 1;
     private int[] selection01 = new int[2];
@@ -12,13 +12,13 @@ public final class SelectionsImpl implements Selections {
     private boolean selection01HasAlreadyBeenMade;
 
     public SelectionsImpl() {
-        resetUserSelections();
+        reset();
     }
 
     @Override
-    public void resetUserSelections() {
-        selection01[X] = -1;
-        selection01[Y] = -1;
+    public void reset() {
+        selection01[X] = -2;
+        selection01[Y] = -2;
         selection01HasAlreadyBeenMade = false;
         selection02[X] = -1;
         selection02[Y] = -1;

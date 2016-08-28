@@ -8,6 +8,7 @@ import android.media.SoundPool;
 import android.util.Log;
 
 import com.example.mark.msccomputerscienceproject.model.GamePiece;
+import com.example.mark.msccomputerscienceproject.model.MatchContainer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -106,8 +107,10 @@ public final class SoundManager {
         }
     }
 
-    public void announceMatchedEmoticons(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
+    public void announceMatchedEmoticons(MatchContainer matchContainer) {
         //Log.d(TAG, "in PlayMatchedEmoticons method");
+        ArrayList<LinkedList<GamePiece>> matchingX = matchContainer.getMatchingX();
+        ArrayList<LinkedList<GamePiece>> matchingY = matchContainer.getMatchingY();
         if (mixedEmotionsSameDirection(matchingX)
                 || mixedEmotionsSameDirection(matchingY)
                 || mixedEmotionsCrossDirection(matchingX, matchingY)) {

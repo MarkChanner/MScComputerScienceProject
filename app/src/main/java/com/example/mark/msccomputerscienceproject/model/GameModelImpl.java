@@ -4,9 +4,6 @@ import com.example.mark.msccomputerscienceproject.controller.GameActivity;
 
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
@@ -15,15 +12,15 @@ public final class GameModelImpl implements GameModel {
     private static final String TAG = "GameModel";
     private static final String INVALID_MOVE = "INVALID_MOVE";
     private static final int ONE_SECOND = 1000;
-    private static final int SCORE_TARGET_PER_LEVEL = 500;
+    private static final int SCORE_TARGET_PER_LEVEL = 100;
     private static final int GAME_LEVELS = 2;
     private int currentLevelScore;
     private GameActivity controller;
     private LevelManager levelManager;
     private Selections selections;
-    private MatchHandler matchHandler;
+    private MatchFinder matchFinder;
     private GameBoard board;
-    private BoardManipulator boardController;
+    private BoardPopulator populator;
 
     public GameModelImpl(GameActivity controller, int emoWidth, int emoHeight, int level) {
         initializeGameModel(controller, emoWidth, emoHeight, level);
@@ -34,16 +31,15 @@ public final class GameModelImpl implements GameModel {
         this.controller = controller;
         this.levelManager = new LevelManagerImpl(emoWidth, emoHeight, level);
         this.selections = new SelectionsImpl();
-        this.matchHandler = new MatchHandlerImpl();
+        this.matchFinder = new MatchFinderImpl();
         this.board = GameBoardImpl.getInstance();
-        this.boardController = new BoardManipulatorImpl(board);
-        boardController.populateBoard(levelManager.getGamePieceFactory());
+        this.populator = new BoardPopulatorImpl();
+        populator.populate(board, levelManager.getGamePieceFactory());
     }
 
     @Override
     public void updateLogic() {
-        boardController.updateGamePieceSwapCoordinates();
-        boardController.updateGamePieceDropCoordinates();
+        board.update();
     }
 
     @Override
@@ -52,7 +48,7 @@ public final class GameModelImpl implements GameModel {
         if (!board.getGamePiece(x, y).isDropping()) {
             if (!selections.selection01Made()) {
                 selections.setSelection01(x, y);
-                board.getGamePiece(x, y).setIsSelected(true);
+                board.highlight(x, y);
             } else {
                 handleSecondSelection(x, y);
             }
@@ -61,27 +57,26 @@ public final class GameModelImpl implements GameModel {
 
     private void handleSecondSelection(int x, int y) {
         selections.setSelection02(x, y);
-        boardController.unHighlightSelections();
+        board.clearHighlights();
         if (selections.sameSelectionMadeTwice()) {
-            selections.resetUserSelections();
+            selections.reset();
         } else if (selections.areNotAdjacent()) {
             selections.secondSelectionBecomesFirstSelection();
-            board.getGamePiece(x, y).setIsSelected(true);
+            board.highlight(x, y);
         } else {
-            boardController.swap(selections);
+            board.swap(selections);
             checkForMatches(selections);
-            selections.resetUserSelections();
+            selections.reset();
         }
     }
 
     private void checkForMatches(Selections selections) {
-        ArrayList<LinkedList<GamePiece>> matchingX = matchHandler.findVerticalMatches(board);
-        ArrayList<LinkedList<GamePiece>> matchingY = matchHandler.findHorizontalMatches(board);
-        if (matchesFound(matchingX, matchingY)) {
-            handleMatches(matchingX, matchingY);
+        MatchContainer matchContainer = matchFinder.findMatches(board);
+        if (matchContainer.hasMatches()) {
+            handleMatches(matchContainer);
         } else {
             controller.playSound(INVALID_MOVE);
-            boardController.swapBack(selections);
+            board.swapBack(selections);
         }
     }
 
@@ -89,36 +84,28 @@ public final class GameModelImpl implements GameModel {
      * This method handles the bulk of the requirements for handling a match on the board. It
      * does this within a loop until the manipulated board no longer contains matches.
      *
-     * @param matchingX An ArrayList containing a LinkedList of matching vertical GamePieces
-     * @param matchingY An ArrayList containing a LinkedList of matching horizontal GamePieces
+     * @param matchContainer a wrapper object containing board matches
      */
-    private void handleMatches(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
+    private void handleMatches(MatchContainer matchContainer) {
         Log.d(TAG, "handleMatches method");
         GamePieceFactory gamePieceFactory = levelManager.getGamePieceFactory();
-        int points;
         do {
-            points = matchHandler.getMatchPoints(matchingX, matchingY);
-            currentLevelScore += points;
-            controller.updateScoreBoardView(points);
-            matchHandler.highlightMatches(matchingX, matchingY);
-            controller.playSound(matchingX, matchingY);
+            currentLevelScore += matchContainer.getMatchPoints();
+            controller.updateScoreBoardView(matchContainer.getMatchPoints());
+            board.highlight(matchContainer);
+            controller.playSound(matchContainer);
             controller.controlGameBoardView(ONE_SECOND);
-            boardController.replaceGamePieces(matchingX, matchingY, gamePieceFactory);
-            boardController.dropGamePieces(gamePieceFactory);
-            matchingX = matchHandler.findVerticalMatches(board);
-            matchingY = matchHandler.findHorizontalMatches(board);
-        } while (matchesFound(matchingX, matchingY));
+            board.removeFromBoard(matchContainer, gamePieceFactory);
+            board.lowerGamePieces(gamePieceFactory);
+            matchContainer = matchFinder.findMatches(board);
+        } while (matchContainer.hasMatches());
         checkForLevelUp();
-    }
-
-    private boolean matchesFound(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
-        return (!(matchingX.isEmpty() && matchingY.isEmpty()));
     }
 
     private void checkForLevelUp() {
         if (currentLevelScore >= SCORE_TARGET_PER_LEVEL) {
             loadNextLevel();
-        } else if (matchHandler.noFurtherMatchesPossible(board)) {
+        } else if (!matchFinder.furtherMatchesPossible(board)) {
             Log.d(TAG, "checkForLevelUp() entered condition to call finishRound()");
             finishRound();
         }
@@ -126,20 +113,20 @@ public final class GameModelImpl implements GameModel {
 
     private void loadNextLevel() {
         Log.d(TAG, "loadNextLevel()");
-        boardController.unHighlightSelections();
-        boardController.setToDrop();
-        boardController.dropGamePieces(levelManager.getGamePieceFactory());
+        board.clearHighlights();
+        board.clearGamePieces();
+        board.lowerGamePieces(levelManager.getGamePieceFactory());
         currentLevelScore = 0;
-        if (levelManager.getGameLevel() < GAME_LEVELS) {
+        if (levelManager.getLevel() < GAME_LEVELS) {
             levelManager.incrementLevel();
         }
-        boardController.populateBoard(levelManager.getGamePieceFactory());
+        populator.populate(board, levelManager.getGamePieceFactory());
     }
 
     private void finishRound() {
-        boardController.unHighlightSelections();
-        boardController.setToDrop();
-        boardController.dropGamePieces(levelManager.getGamePieceFactory());
+        board.clearHighlights();
+        board.clearGamePieces();
+        board.lowerGamePieces(levelManager.getGamePieceFactory());
         controller.setGameEnded(true);
     }
 
@@ -148,9 +135,9 @@ public final class GameModelImpl implements GameModel {
      */
     @Override
     public void resetGame() {
-        selections.resetUserSelections();
+        selections.reset();
         levelManager.setGameLevel(1);
-        board.resetBoard();
-        boardController.populateBoard(levelManager.getGamePieceFactory());
+        board.reset();
+        populator.populate(board, levelManager.getGamePieceFactory());
     }
 }
