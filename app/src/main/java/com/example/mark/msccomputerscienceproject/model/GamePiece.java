@@ -49,17 +49,7 @@ public abstract class GamePiece {
     }
 
     public boolean isSwapping() {
-        if (swappingUp) {
-            return true;
-        } else if (swappingDown) {
-            return true;
-        } else if (swappingLeft) {
-            return true;
-        } else if (swappingRight) {
-            return true;
-        } else {
-            return false;
-        }
+        return (swappingUp || swappingDown || swappingLeft || swappingRight);
     }
 
     public void updateSwapping() {
