@@ -116,17 +116,17 @@ public final class SoundManager {
                 || mixedEmotionsCrossDirection(matchingX, matchingY)) {
             playSound(MIXED_EMOTIONS);
         } else if (!matchingX.isEmpty()) {
-            playSound(matchingX.get(0).getFirst().getEmoType());
+            playSound(matchingX.get(0).getFirst().toString());
         } else if (!matchingY.isEmpty()) {
-            playSound(matchingY.get(0).getFirst().getEmoType());
+            playSound(matchingY.get(0).getFirst().toString());
         }
     }
 
     private boolean mixedEmotionsSameDirection(ArrayList<LinkedList<GamePiece>> matchingLine) {
         if (!matchingLine.isEmpty() && matchingLine.size() > 1) {
-            String emoTypeMarker = matchingLine.get(0).getFirst().getEmoType();
+            String emoTypeMarker = matchingLine.get(0).getFirst().toString();
             for (int i = 1; i < matchingLine.size(); i++) {
-                if (!matchingLine.get(i).getFirst().getEmoType().equals(emoTypeMarker)) {
+                if (!matchingLine.get(i).getFirst().toString().equals(emoTypeMarker)) {
                     //Log.d(TAG, "return TRUE from mixedEmoticonsSAMEDirection");
                     return true;
                 }
@@ -138,9 +138,9 @@ public final class SoundManager {
 
     private boolean mixedEmotionsCrossDirection(ArrayList<LinkedList<GamePiece>> matchingX, ArrayList<LinkedList<GamePiece>> matchingY) {
         if (!(matchingX.isEmpty() || matchingY.isEmpty())) {
-            String emoTypeMarker = matchingX.get(0).getFirst().getEmoType();
+            String emoTypeMarker = matchingX.get(0).getFirst().toString();
             for (int i = 0; i < matchingY.size(); i++) {
-                if (!emoTypeMarker.equals(matchingY.get(i).getFirst().getEmoType())) {
+                if (!emoTypeMarker.equals(matchingY.get(i).getFirst().toString())) {
                     //Log.d(TAG, "return TRUE from mixedEmoticonsCROSSDirection");
                     return true;
                 }
