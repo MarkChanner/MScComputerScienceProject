@@ -1,7 +1,4 @@
-package com.example.mark.msccomputerscienceproject.TestPackage;
-
-import com.example.mark.msccomputerscienceproject.model.Emoticon;
-import com.example.mark.msccomputerscienceproject.model.GamePiece;
+package com.example.mark.msccomputerscienceproject.model;
 
 import android.graphics.Bitmap;
 
@@ -11,7 +8,7 @@ import org.mockito.Mock;
 import static org.junit.Assert.assertEquals;
 
 /**
- * @author Mark Channer for Birkbeck MSc Computer Science final project
+ * @author Mark Channer for Birkbeck MSc Computer Science project
  */
 public class EmoticonTest {
 
@@ -25,6 +22,6 @@ public class EmoticonTest {
         final String HAPPY = "HAPPY";
         final int offScreenStartPositionY = -10;
         GamePiece emo = new Emoticon(3, 4, emoWidth, emoHeight, bitmap, HAPPY, offScreenStartPositionY);
-        assertEquals("HAPPY", emo.getEmoType());
+        assertEquals("HAPPY", emo.toString());
     }
 }
