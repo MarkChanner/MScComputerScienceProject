@@ -31,6 +31,10 @@ public final class MatchFinderImpl implements MatchFinder {
         container.addMatchingY(matchingY);
         return container;
     }
+    @Override
+    public boolean getTrue() {
+        return true;
+    }
 
     /**
      * {@inheritDoc}
@@ -50,7 +54,7 @@ public final class MatchFinderImpl implements MatchFinder {
 
             for (int y = (COLUMN_BOTTOM - 1); y >= COLUMN_TOP; y--) {
                 emo = board.getGamePiece(x, y);
-                if (!emo.getEmoType().equals(consecutiveEmoticons.getLast().getEmoType())) {
+                if (!emo.toString().equals(consecutiveEmoticons.getLast().toString())) {
                     examineList(consecutiveEmoticons, bigList);
                     consecutiveEmoticons = new LinkedList<>();
                 }
@@ -73,7 +77,7 @@ public final class MatchFinderImpl implements MatchFinder {
 
             for (int x = (ROW_START + 1); x < COLUMNS; x++) {
                 emo = board.getGamePiece(x, y);
-                if (!(emo.getEmoType().equals(consecutiveEmoticons.getLast().getEmoType()))) {
+                if (!(emo.toString().equals(consecutiveEmoticons.getLast().toString()))) {
                     examineList(consecutiveEmoticons, bigList);
                     consecutiveEmoticons = new LinkedList<>();
                 }
@@ -94,10 +98,10 @@ public final class MatchFinderImpl implements MatchFinder {
     }
 
     private boolean allSameType(LinkedList<GamePiece> consecutiveEmoticons) {
-        String previousEmo = consecutiveEmoticons.getFirst().getEmoType();
+        String previousEmo = consecutiveEmoticons.getFirst().toString();
         String nextEmo;
         for (int i = 1; i < consecutiveEmoticons.size(); i++) {
-            nextEmo = consecutiveEmoticons.get(i).getEmoType();
+            nextEmo = consecutiveEmoticons.get(i).toString();
             if (nextEmo.equals(EMPTY) || (!(nextEmo.equals(previousEmo)))) {
                 return false;
             } else {
@@ -112,13 +116,13 @@ public final class MatchFinderImpl implements MatchFinder {
         for (int x = ROW_START; x < COLUMNS; x++) {
             for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
 
-                type = board.getGamePiece(x, y).getEmoType();
+                type = board.getGamePiece(x, y).toString();
 
                 if ((y - 1 >= COLUMN_TOP &&
-                        board.getGamePiece(x, y - 1).getEmoType().equals(type) &&
+                        board.getGamePiece(x, y - 1).toString().equals(type) &&
                         verticalA(board, type, x, y)) ||
                         (y - 2 >= COLUMN_TOP &&
-                                board.getGamePiece(x, y - 2).getEmoType().equals(type) &&
+                                board.getGamePiece(x, y - 2).toString().equals(type) &&
                                 verticalB(board, type, x, y))) {
                     return true;
                 }
@@ -137,9 +141,9 @@ public final class MatchFinderImpl implements MatchFinder {
      * COLUMN_TOP was  checked in the calling method
      */
     private boolean verticalAboveA(GameBoard board, String type, int x, int y) {
-        return ((y - 3 >= COLUMN_TOP && board.getGamePiece(x, y - 3).getEmoType().equals(type)) ||
-                (x - 1 >= ROW_START && board.getGamePiece(x - 1, y - 2).getEmoType().equals(type)) ||
-                (x + 1 < COLUMNS && board.getGamePiece(x + 1, y - 2).getEmoType().equals(type)));
+        return ((y - 3 >= COLUMN_TOP && board.getGamePiece(x, y - 3).toString().equals(type)) ||
+                (x - 1 >= ROW_START && board.getGamePiece(x - 1, y - 2).toString().equals(type)) ||
+                (x + 1 < COLUMNS && board.getGamePiece(x + 1, y - 2).toString().equals(type)));
     }
 
     /**
@@ -147,14 +151,14 @@ public final class MatchFinderImpl implements MatchFinder {
      * COLUMN_BOTTOM was checked in the calling method
      */
     private boolean verticalBelowA(GameBoard board, String type, int x, int y) {
-        return ((y + 2 <= COLUMN_BOTTOM && board.getGamePiece(x, y + 2).getEmoType().equals(type)) ||
-                (x - 1 >= ROW_START && board.getGamePiece(x - 1, y + 1).getEmoType().equals(type)) ||
-                (x + 1 < COLUMNS && board.getGamePiece(x + 1, y + 1).getEmoType().equals(type)));
+        return ((y + 2 <= COLUMN_BOTTOM && board.getGamePiece(x, y + 2).toString().equals(type)) ||
+                (x - 1 >= ROW_START && board.getGamePiece(x - 1, y + 1).toString().equals(type)) ||
+                (x + 1 < COLUMNS && board.getGamePiece(x + 1, y + 1).toString().equals(type)));
     }
 
     private boolean verticalB(GameBoard board, String type, int x, int y) {
-        return ((x - 1 >= ROW_START && board.getGamePiece(x - 1, y - 1).getEmoType().equals(type)) ||
-                (x + 1 < COLUMNS && board.getGamePiece(x + 1, y - 1).getEmoType().equals(type)));
+        return ((x - 1 >= ROW_START && board.getGamePiece(x - 1, y - 1).toString().equals(type)) ||
+                (x + 1 < COLUMNS && board.getGamePiece(x + 1, y - 1).toString().equals(type)));
     }
 
     private boolean horizontalMatchPossible(GameBoard board) {
@@ -162,12 +166,12 @@ public final class MatchFinderImpl implements MatchFinder {
         for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
             for (int x = ROW_START; x < COLUMNS; x++) {
 
-                type = board.getGamePiece(x, y).getEmoType();
+                type = board.getGamePiece(x, y).toString();
 
                 if ((x + 1 < COLUMNS &&
-                        board.getGamePiece(x + 1, y).getEmoType().equals(type) &&
+                        board.getGamePiece(x + 1, y).toString().equals(type) &&
                         horizontalA(board, type, x, y)) ||
-                        (x + 2 < COLUMNS && board.getGamePiece(x + 2, y).getEmoType().equals(type) &&
+                        (x + 2 < COLUMNS && board.getGamePiece(x + 2, y).toString().equals(type) &&
                                 horizontalB(board, type, x, y))) {
                     return true;
                 }
@@ -186,9 +190,9 @@ public final class MatchFinderImpl implements MatchFinder {
      * below COLUMNS was checked in the calling method
      */
     private boolean horizontalRightA(GameBoard board, String type, int x, int y) {
-        return ((x + 3 < COLUMNS && board.getGamePiece(x + 3, y).getEmoType().equals(type)) ||
-                (y - 1 >= COLUMN_TOP && board.getGamePiece(x + 2, y - 1).getEmoType().equals(type)) ||
-                (y + 1 <= COLUMN_BOTTOM && board.getGamePiece(x + 2, y + 1).getEmoType().equals(type)));
+        return ((x + 3 < COLUMNS && board.getGamePiece(x + 3, y).toString().equals(type)) ||
+                (y - 1 >= COLUMN_TOP && board.getGamePiece(x + 2, y - 1).toString().equals(type)) ||
+                (y + 1 <= COLUMN_BOTTOM && board.getGamePiece(x + 2, y + 1).toString().equals(type)));
     }
 
     /**
@@ -196,13 +200,13 @@ public final class MatchFinderImpl implements MatchFinder {
      * above  ROW_START was checked in the calling method
      */
     private boolean horizontalLeftA(GameBoard board, String type, int x, int y) {
-        return ((x - 2 >= ROW_START && board.getGamePiece(x - 2, y).getEmoType().equals(type)) ||
-                (y - 1 >= COLUMN_TOP && board.getGamePiece(x - 1, y - 1).getEmoType().equals(type)) ||
-                (y + 1 <= COLUMN_BOTTOM && board.getGamePiece(x - 1, y + 1).getEmoType().equals(type)));
+        return ((x - 2 >= ROW_START && board.getGamePiece(x - 2, y).toString().equals(type)) ||
+                (y - 1 >= COLUMN_TOP && board.getGamePiece(x - 1, y - 1).toString().equals(type)) ||
+                (y + 1 <= COLUMN_BOTTOM && board.getGamePiece(x - 1, y + 1).toString().equals(type)));
     }
 
     private boolean horizontalB(GameBoard board, String type, int x, int y) {
-        return ((y - 1 >= COLUMN_TOP && board.getGamePiece(x + 1, y - 1).getEmoType().equals(type)) ||
-                (y + 1 <= COLUMN_BOTTOM && board.getGamePiece(x + 1, y + 1).getEmoType().equals(type)));
+        return ((y - 1 >= COLUMN_TOP && board.getGamePiece(x + 1, y - 1).toString().equals(type)) ||
+                (y + 1 <= COLUMN_BOTTOM && board.getGamePiece(x + 1, y + 1).toString().equals(type)));
     }
 }

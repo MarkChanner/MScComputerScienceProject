@@ -32,12 +32,12 @@ public class BoardPopulatorImpl implements BoardPopulator {
     }
 
     private boolean gamePieceTypeCausesMatch(GamePiece emoticon, GameBoard board, int x, int y) {
-        String emoType = emoticon.getEmoType();
-        if (y >= 2 && emoType.equals(board.getGamePiece(x, y - 1).getEmoType()) &&
-                emoType.equals(board.getGamePiece(x, y - 2).getEmoType()))
+        String emoType = emoticon.toString();
+        if (y >= 2 && emoType.equals(board.getGamePiece(x, y - 1).toString()) &&
+                emoType.equals(board.getGamePiece(x, y - 2).toString()))
             return true;
-        else if (x >= 2 && emoType.equals(board.getGamePiece(x - 1, y).getEmoType()) &&
-                emoType.equals(board.getGamePiece(x - 2, y).getEmoType())) {
+        else if (x >= 2 && emoType.equals(board.getGamePiece(x - 1, y).toString()) &&
+                emoType.equals(board.getGamePiece(x - 2, y).toString())) {
             return true;
         }
         return false;

@@ -193,11 +193,12 @@ public abstract class GamePiece {
         return bitmap;
     }
 
-    public String getEmoType() {
-        return type;
-    }
-
     public void setPixelMovement(int pixelMovement) {
         this.pixelMovement = pixelMovement;
+    }
+
+    @Override
+    public String toString() {
+        return type;
     }
 }

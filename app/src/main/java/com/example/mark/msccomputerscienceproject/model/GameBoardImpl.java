@@ -157,7 +157,7 @@ public final class GameBoardImpl implements GameBoard {
             for (GamePiece emo : removeList) {
                 int x = emo.getArrayX();
                 int y = emo.getArrayY();
-                if (!emoticons[x][y].getEmoType().equals(EMPTY)) {
+                if (!emoticons[x][y].toString().equals(EMPTY)) {
                     emoticons[x][y] = factory.createBlankTile(x, y);
                 }
             }
@@ -174,9 +174,9 @@ public final class GameBoardImpl implements GameBoard {
         for (int x = ROW_START; x < COLUMNS; x++) {
             offScreenStartPosition = -1;
             for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
-                if (emoticons[x][y].getEmoType().equals(EMPTY)) {
+                if (emoticons[x][y].toString().equals(EMPTY)) {
                     runnerY = y;
-                    while ((runnerY >= COLUMN_TOP) && emoticons[x][runnerY].getEmoType().equals(EMPTY)) {
+                    while ((runnerY >= COLUMN_TOP) && emoticons[x][runnerY].toString().equals(EMPTY)) {
                         // Travel up the column and, if emoticon found, fill the empty tile with it
                         runnerY--;
                     }
