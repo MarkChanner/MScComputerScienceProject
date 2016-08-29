@@ -1,4 +1,4 @@
-package com.example.mark.msccomputerscienceproject;
+package com.example.mark.msccomputerscienceproject.model;
 
 import com.example.mark.msccomputerscienceproject.model.*;
 

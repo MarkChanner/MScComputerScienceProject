@@ -1,6 +1,6 @@
-package com.example.mark.msccomputerscienceproject;
+package com.example.mark.msccomputerscienceproject.model;
 
-import com.example.mark.msccomputerscienceproject.model.BitmapCreator;
+import com.example.mark.msccomputerscienceproject.R;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

@@ -35,7 +35,7 @@ public class MatchFinderImplTest {
     private ArrayList<LinkedList<GamePiece>> matchingY;
 
     @Mock
-    Bitmap bitmap;
+    private Bitmap bitmap;
 
     @Before
     public void setUp() throws Exception {
