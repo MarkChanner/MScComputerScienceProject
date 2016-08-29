@@ -12,7 +12,7 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;
 
 /**
- * @author Mark Channer for Birkbeck MSc Computer Science final project
+ * @author Mark Channer for Birkbeck MSc Computer Science project
  */
 public class EmoticonFactoryTest {
 
@@ -39,6 +39,5 @@ public class EmoticonFactoryTest {
         GamePiece emo02 = emoFactory02.createRandomGamePiece(x, y, offScreenStartPositionY);
         assertThat(emo01, instanceOf(Emoticon.class));
         assertThat(emo02, instanceOf(Emoticon.class));
-
     }
 }
