@@ -32,8 +32,8 @@ public final class GameModelImpl implements GameModel {
         this.controller = controller;
         this.levelManager = new LevelManagerImpl(emoWidth, emoHeight, level);
         this.selections = new SelectionsImpl();
-        this.matchFinder = new MatchFinderImpl();
         this.board = BoardImpl.getInstance();
+        this.matchFinder = new MatchFinderImpl(board);
         this.manipulator = new BoardManipulatorImpl(board);
         this.populator = new BoardPopulatorImpl(board);
         populator.populate(levelManager.getGamePieceFactory());
@@ -73,7 +73,7 @@ public final class GameModelImpl implements GameModel {
     }
 
     private void checkForMatches(Selections selections) {
-        MatchContainer matchContainer = matchFinder.findMatches(board);
+        MatchContainer matchContainer = matchFinder.findMatches();
         if (matchContainer.hasMatches()) {
             handleMatches(matchContainer);
         } else {
@@ -99,7 +99,7 @@ public final class GameModelImpl implements GameModel {
             controller.controlGameBoardView(ONE_SECOND);
             manipulator.removeFromBoard(matchContainer, gamePieceFactory);
             manipulator.lowerGamePieces(gamePieceFactory);
-            matchContainer = matchFinder.findMatches(board);
+            matchContainer = matchFinder.findMatches();
         } while (matchContainer.hasMatches());
         checkForLevelUp();
     }
@@ -107,7 +107,7 @@ public final class GameModelImpl implements GameModel {
     private void checkForLevelUp() {
         if (currentLevelScore >= SCORE_TARGET_PER_LEVEL) {
             loadNextLevel();
-        } else if (!matchFinder.furtherMatchesPossible(board)) {
+        } else if (!matchFinder.furtherMatchesPossible()) {
             Log.d(TAG, "checkForLevelUp() entered condition to call finishRound()");
             finishRound();
         }

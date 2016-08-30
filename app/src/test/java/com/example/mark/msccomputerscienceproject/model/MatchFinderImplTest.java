@@ -40,7 +40,7 @@ public class MatchFinderImplTest {
     @Before
     public void setUp() throws Exception {
         this.board = BoardImpl.getInstance();
-        this.matchFinder = new MatchFinderImpl();
+        this.matchFinder = new MatchFinderImpl(board);
         this.factory = new EmoticonFactoryLevel01(EMO_WIDTH, EMO_HEIGHT);
         this.populator = new MockBoardPopulator(board);
         populator.populate(factory);
@@ -71,7 +71,7 @@ public class MatchFinderImplTest {
         board.setGamePiece(6, 0, new Emoticon(6, 0, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
         board.setGamePiece(6, 1, new Emoticon(6, 1, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
 
-        matchContainer = matchFinder.findMatches(board);
+        matchContainer = matchFinder.findMatches();
         matchingX = matchContainer.getMatchingX();
         matchingY = matchContainer.getMatchingY();
 
@@ -99,7 +99,7 @@ public class MatchFinderImplTest {
         board.setGamePiece(4, 5, new Emoticon(4, 5, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
         board.setGamePiece(4, 6, new Emoticon(4, 6, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
 
-        matchContainer = matchFinder.findMatches(board);
+        matchContainer = matchFinder.findMatches();
         matchingX = matchContainer.getMatchingX();
         matchingY = matchContainer.getMatchingY();
 
@@ -148,7 +148,7 @@ public class MatchFinderImplTest {
         board.setGamePiece(3, 6, new Emoticon(3, 6, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
         board.setGamePiece(4, 6, new Emoticon(4, 6, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
 
-        matchContainer = matchFinder.findMatches(board);
+        matchContainer = matchFinder.findMatches();
         matchingX = matchContainer.getMatchingX();
         matchingY = matchContainer.getMatchingY();
 

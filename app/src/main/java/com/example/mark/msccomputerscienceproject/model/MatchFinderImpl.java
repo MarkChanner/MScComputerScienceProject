@@ -18,14 +18,19 @@ public final class MatchFinderImpl implements MatchFinder {
     private static final int COLUMN_TOP = 0;
     private static final int COLUMN_BOTTOM = (ROWS - 1);
     private static final String EMPTY = "EMPTY";
+    private Board board;
+
+    public MatchFinderImpl(Board board) {
+        this.board = board;
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public MatchContainer findMatches(Board board) {
-        ArrayList<LinkedList<GamePiece>> matchingX = findVerticalMatches(board);
-        ArrayList<LinkedList<GamePiece>> matchingY = findHorizontalMatches(board);
+    public MatchContainer findMatches() {
+        ArrayList<LinkedList<GamePiece>> matchingX = findVerticalMatches();
+        ArrayList<LinkedList<GamePiece>> matchingY = findHorizontalMatches();
         MatchContainer container = new MatchContainerImpl();
         container.addMatchingX(matchingX);
         container.addMatchingY(matchingY);
@@ -40,11 +45,11 @@ public final class MatchFinderImpl implements MatchFinder {
      * {@inheritDoc}
      */
     @Override
-    public boolean furtherMatchesPossible(Board board) {
-        return (verticalMatchPossible(board) || horizontalMatchPossible(board));
+    public boolean furtherMatchesPossible() {
+        return (verticalMatchPossible() || horizontalMatchPossible());
     }
 
-    private ArrayList<LinkedList<GamePiece>> findVerticalMatches(Board board) {
+    private ArrayList<LinkedList<GamePiece>> findVerticalMatches() {
         LinkedList<GamePiece> consecutiveEmoticons = new LinkedList<>();
         ArrayList<LinkedList<GamePiece>> bigList = new ArrayList<>();
         GamePiece emo;
@@ -68,7 +73,7 @@ public final class MatchFinderImpl implements MatchFinder {
         return bigList;
     }
 
-    private ArrayList<LinkedList<GamePiece>> findHorizontalMatches(Board board) {
+    private ArrayList<LinkedList<GamePiece>> findHorizontalMatches() {
         LinkedList<GamePiece> consecutiveEmoticons = new LinkedList<>();
         ArrayList<LinkedList<GamePiece>> bigList = new ArrayList<>();
         GamePiece emo;
@@ -111,7 +116,7 @@ public final class MatchFinderImpl implements MatchFinder {
         return true;
     }
 
-    private boolean verticalMatchPossible(Board board) {
+    private boolean verticalMatchPossible() {
         String type;
         for (int x = ROW_START; x < COLUMNS; x++) {
             for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
@@ -120,10 +125,10 @@ public final class MatchFinderImpl implements MatchFinder {
 
                 if ((y - 1 >= COLUMN_TOP &&
                         board.getGamePiece(x, y - 1).toString().equals(type) &&
-                        verticalA(board, type, x, y)) ||
+                        verticalA(type, x, y)) ||
                         (y - 2 >= COLUMN_TOP &&
                                 board.getGamePiece(x, y - 2).toString().equals(type) &&
-                                verticalB(board, type, x, y))) {
+                                verticalB(type, x, y))) {
                     return true;
                 }
             }
@@ -131,16 +136,16 @@ public final class MatchFinderImpl implements MatchFinder {
         return false;
     }
 
-    private boolean verticalA(Board board, String type, int x, int y) {
-        return ((y - 2 >= COLUMN_TOP && verticalAboveA(board, type, x, y)) ||
-                (y + 1 <= COLUMN_BOTTOM && verticalBelowA(board, type, x, y)));
+    private boolean verticalA(String type, int x, int y) {
+        return ((y - 2 >= COLUMN_TOP && verticalAboveA(type, x, y)) ||
+                (y + 1 <= COLUMN_BOTTOM && verticalBelowA(type, x, y)));
     }
 
     /**
      * The condition that (y - 2) must be higher than
      * COLUMN_TOP was  checked in the calling method
      */
-    private boolean verticalAboveA(Board board, String type, int x, int y) {
+    private boolean verticalAboveA(String type, int x, int y) {
         return ((y - 3 >= COLUMN_TOP && board.getGamePiece(x, y - 3).toString().equals(type)) ||
                 (x - 1 >= ROW_START && board.getGamePiece(x - 1, y - 2).toString().equals(type)) ||
                 (x + 1 < COLUMNS && board.getGamePiece(x + 1, y - 2).toString().equals(type)));
@@ -150,18 +155,18 @@ public final class MatchFinderImpl implements MatchFinder {
      * The condition that (y + 1) must be less than
      * COLUMN_BOTTOM was checked in the calling method
      */
-    private boolean verticalBelowA(Board board, String type, int x, int y) {
+    private boolean verticalBelowA(String type, int x, int y) {
         return ((y + 2 <= COLUMN_BOTTOM && board.getGamePiece(x, y + 2).toString().equals(type)) ||
                 (x - 1 >= ROW_START && board.getGamePiece(x - 1, y + 1).toString().equals(type)) ||
                 (x + 1 < COLUMNS && board.getGamePiece(x + 1, y + 1).toString().equals(type)));
     }
 
-    private boolean verticalB(Board board, String type, int x, int y) {
+    private boolean verticalB(String type, int x, int y) {
         return ((x - 1 >= ROW_START && board.getGamePiece(x - 1, y - 1).toString().equals(type)) ||
                 (x + 1 < COLUMNS && board.getGamePiece(x + 1, y - 1).toString().equals(type)));
     }
 
-    private boolean horizontalMatchPossible(Board board) {
+    private boolean horizontalMatchPossible() {
         String type;
         for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
             for (int x = ROW_START; x < COLUMNS; x++) {
@@ -170,9 +175,9 @@ public final class MatchFinderImpl implements MatchFinder {
 
                 if ((x + 1 < COLUMNS &&
                         board.getGamePiece(x + 1, y).toString().equals(type) &&
-                        horizontalA(board, type, x, y)) ||
+                        horizontalA(type, x, y)) ||
                         (x + 2 < COLUMNS && board.getGamePiece(x + 2, y).toString().equals(type) &&
-                                horizontalB(board, type, x, y))) {
+                                horizontalB(type, x, y))) {
                     return true;
                 }
             }
@@ -180,16 +185,16 @@ public final class MatchFinderImpl implements MatchFinder {
         return false;
     }
 
-    private boolean horizontalA(Board board, String type, int x, int y) {
-        return ((x + 2 < COLUMNS && horizontalRightA(board, type, x, y)) ||
-                (x - 1 >= ROW_START && horizontalLeftA(board, type, x, y)));
+    private boolean horizontalA(String type, int x, int y) {
+        return ((x + 2 < COLUMNS && horizontalRightA(type, x, y)) ||
+                (x - 1 >= ROW_START && horizontalLeftA(type, x, y)));
     }
 
     /**
      * The condition that (x + 2) must be above
      * below COLUMNS was checked in the calling method
      */
-    private boolean horizontalRightA(Board board, String type, int x, int y) {
+    private boolean horizontalRightA(String type, int x, int y) {
         return ((x + 3 < COLUMNS && board.getGamePiece(x + 3, y).toString().equals(type)) ||
                 (y - 1 >= COLUMN_TOP && board.getGamePiece(x + 2, y - 1).toString().equals(type)) ||
                 (y + 1 <= COLUMN_BOTTOM && board.getGamePiece(x + 2, y + 1).toString().equals(type)));
@@ -199,13 +204,13 @@ public final class MatchFinderImpl implements MatchFinder {
      * The condition that (x - 1) must be above equal to or
      * above  ROW_START was checked in the calling method
      */
-    private boolean horizontalLeftA(Board board, String type, int x, int y) {
+    private boolean horizontalLeftA(String type, int x, int y) {
         return ((x - 2 >= ROW_START && board.getGamePiece(x - 2, y).toString().equals(type)) ||
                 (y - 1 >= COLUMN_TOP && board.getGamePiece(x - 1, y - 1).toString().equals(type)) ||
                 (y + 1 <= COLUMN_BOTTOM && board.getGamePiece(x - 1, y + 1).toString().equals(type)));
     }
 
-    private boolean horizontalB(Board board, String type, int x, int y) {
+    private boolean horizontalB(String type, int x, int y) {
         return ((y - 1 >= COLUMN_TOP && board.getGamePiece(x + 1, y - 1).toString().equals(type)) ||
                 (y + 1 <= COLUMN_BOTTOM && board.getGamePiece(x + 1, y + 1).toString().equals(type)));
     }
