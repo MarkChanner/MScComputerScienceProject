@@ -14,7 +14,7 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.*;
 
 /**
- * @author Mark Channer for Birkbeck MSc Computer Science final project
+ * @author Mark Channer for Birkbeck MSc Computer Science project
  */
 public class BitmapCreatorTest {
 

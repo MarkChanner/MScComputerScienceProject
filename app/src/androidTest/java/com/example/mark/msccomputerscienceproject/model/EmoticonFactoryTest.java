@@ -1,7 +1,5 @@
 package com.example.mark.msccomputerscienceproject.model;
 
-import com.example.mark.msccomputerscienceproject.model.*;
-
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 
