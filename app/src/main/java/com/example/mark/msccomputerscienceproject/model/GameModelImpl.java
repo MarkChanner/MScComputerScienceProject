@@ -19,7 +19,8 @@ public final class GameModelImpl implements GameModel {
     private LevelManager levelManager;
     private Selections selections;
     private MatchFinder matchFinder;
-    private GameBoard board;
+    private Board board;
+    private BoardManipulator manipulator;
     private BoardPopulator populator;
 
     public GameModelImpl(GameActivity controller, int emoWidth, int emoHeight, int level) {
@@ -32,14 +33,15 @@ public final class GameModelImpl implements GameModel {
         this.levelManager = new LevelManagerImpl(emoWidth, emoHeight, level);
         this.selections = new SelectionsImpl();
         this.matchFinder = new MatchFinderImpl();
-        this.board = GameBoardImpl.getInstance();
-        this.populator = new BoardPopulatorImpl();
-        populator.populate(board, levelManager.getGamePieceFactory());
+        this.board = BoardImpl.getInstance();
+        this.manipulator = new BoardManipulatorImpl(board);
+        this.populator = new BoardPopulatorImpl(board);
+        populator.populate(levelManager.getGamePieceFactory());
     }
 
     @Override
     public void updateLogic() {
-        board.update();
+        manipulator.update();
     }
 
     @Override
@@ -64,7 +66,7 @@ public final class GameModelImpl implements GameModel {
             selections.secondSelectionBecomesFirstSelection();
             board.highlight(x, y);
         } else {
-            board.swap(selections);
+            manipulator.swap(selections);
             checkForMatches(selections);
             selections.reset();
         }
@@ -76,7 +78,7 @@ public final class GameModelImpl implements GameModel {
             handleMatches(matchContainer);
         } else {
             controller.playSound(INVALID_MOVE);
-            board.swapBack(selections);
+            manipulator.swapBack(selections);
         }
     }
 
@@ -95,8 +97,8 @@ public final class GameModelImpl implements GameModel {
             board.highlight(matchContainer);
             controller.playSound(matchContainer);
             controller.controlGameBoardView(ONE_SECOND);
-            board.removeFromBoard(matchContainer, gamePieceFactory);
-            board.lowerGamePieces(gamePieceFactory);
+            manipulator.removeFromBoard(matchContainer, gamePieceFactory);
+            manipulator.lowerGamePieces(gamePieceFactory);
             matchContainer = matchFinder.findMatches(board);
         } while (matchContainer.hasMatches());
         checkForLevelUp();
@@ -115,18 +117,18 @@ public final class GameModelImpl implements GameModel {
         Log.d(TAG, "loadNextLevel()");
         board.clearHighlights();
         board.clearGamePieces();
-        board.lowerGamePieces(levelManager.getGamePieceFactory());
+        manipulator.lowerGamePieces(levelManager.getGamePieceFactory());
         currentLevelScore = 0;
         if (levelManager.getLevel() < GAME_LEVELS) {
             levelManager.incrementLevel();
         }
-        populator.populate(board, levelManager.getGamePieceFactory());
+        populator.populate(levelManager.getGamePieceFactory());
     }
 
     private void finishRound() {
         board.clearHighlights();
         board.clearGamePieces();
-        board.lowerGamePieces(levelManager.getGamePieceFactory());
+        manipulator.lowerGamePieces(levelManager.getGamePieceFactory());
         controller.setGameEnded(true);
     }
 
@@ -138,6 +140,6 @@ public final class GameModelImpl implements GameModel {
         selections.reset();
         levelManager.setGameLevel(1);
         board.reset();
-        populator.populate(board, levelManager.getGamePieceFactory());
+        populator.populate(levelManager.getGamePieceFactory());
     }
 }

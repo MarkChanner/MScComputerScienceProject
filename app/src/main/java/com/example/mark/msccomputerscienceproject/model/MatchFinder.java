@@ -15,7 +15,7 @@ public interface MatchFinder {
      * @param board the GameBoard implementation to be checked
      * @return An MatchContainer wrapper object
      */
-    MatchContainer findMatches(GameBoard board);
+    MatchContainer findMatches(Board board);
 
     /**
      * Scans the passed GameBoard implementation and checks if it is possible to perform
@@ -24,6 +24,6 @@ public interface MatchFinder {
      * @param board the GameBoard implementation to be checked
      * @return a boolean value indicating whether further matches are possible
      */
-    boolean furtherMatchesPossible(GameBoard board);
+    boolean furtherMatchesPossible(Board board);
 
 }

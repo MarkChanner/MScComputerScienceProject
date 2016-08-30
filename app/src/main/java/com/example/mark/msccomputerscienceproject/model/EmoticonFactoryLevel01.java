@@ -14,12 +14,7 @@ public final class EmoticonFactoryLevel01 extends GamePieceFactory {
     }
 
     /**
-     * Factory method overridden from abstract method in superclass
-     *
-     * @param x      the x coordinate of the required GamePiece
-     * @param y      the y coordinate of the required GamePiece
-     * @param startY the y coordinate for GamePiece to lowerGamePieces from
-     * @return GamePiece
+     * {@inheritDoc}
      */
     @Override
     protected GamePiece getRandomGamePiece(int x, int y, int startY) {

@@ -15,6 +15,9 @@ public final class SelectionsImpl implements Selections {
         reset();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reset() {
         selection01[X] = -2;
@@ -24,17 +27,26 @@ public final class SelectionsImpl implements Selections {
         selection02[Y] = -1;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean selection01Made() {
         return selection01HasAlreadyBeenMade;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int[] getSelection01() {
         //Log.d(TAG, "in getSelection01()");
         return selection01;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setSelection01(int x, int y) {
         selection01[X] = x;
@@ -42,23 +54,35 @@ public final class SelectionsImpl implements Selections {
         selection01HasAlreadyBeenMade = true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int[] getSelection02() {
         //Log.d(TAG, "in getSelection02()");
         return selection02;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setSelection02(int x, int y) {
         selection02[X] = x;
         selection02[Y] = y;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean sameSelectionMadeTwice() {
         return (selection01[X] == selection02[X] && selection01[Y] == selection02[Y]);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean areNotAdjacent() {
         if ((selection01[X] == selection02[X]) &&
@@ -71,6 +95,9 @@ public final class SelectionsImpl implements Selections {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void secondSelectionBecomesFirstSelection() {
         selection01[X] = selection02[X];

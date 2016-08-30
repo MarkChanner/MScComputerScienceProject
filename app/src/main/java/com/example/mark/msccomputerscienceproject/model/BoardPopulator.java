@@ -5,6 +5,11 @@ package com.example.mark.msccomputerscienceproject.model;
  */
 public interface BoardPopulator {
 
-    void populate(GameBoard board, GamePieceFactory factory);
+    /**
+     * Populates a given Board with games pieces in the given factory
+     *
+     * @param factory the GamePieceFactory to populate the board with
+     */
+    void populate(GamePieceFactory factory);
 
 }
