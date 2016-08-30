@@ -26,7 +26,7 @@ public class MatchFinderImplTest {
     private static final String SURPRISED = "SURPRISED";
     private static final String SAD = "SAD";
 
-    private GameBoard board;
+    private Board board;
     private MatchFinder matchFinder;
     private MatchContainer matchContainer;
     private GamePieceFactory factory;
@@ -39,11 +39,11 @@ public class MatchFinderImplTest {
 
     @Before
     public void setUp() throws Exception {
-        this.board = GameBoardImpl.getInstance();
+        this.board = BoardImpl.getInstance();
         this.matchFinder = new MatchFinderImpl();
         this.factory = new EmoticonFactoryLevel01(EMO_WIDTH, EMO_HEIGHT);
-        this.populator = new MockBoardPopulator();
-        populator.populate(board, factory);
+        this.populator = new MockBoardPopulator(board);
+        populator.populate(factory);
     }
 
     @After

@@ -2,8 +2,8 @@ package com.example.mark.msccomputerscienceproject.view;
 
 import com.example.mark.msccomputerscienceproject.controller.GameActivity;
 import com.example.mark.msccomputerscienceproject.controller.GameActivityImpl;
-import com.example.mark.msccomputerscienceproject.model.GameBoard;
-import com.example.mark.msccomputerscienceproject.model.GameBoardImpl;
+import com.example.mark.msccomputerscienceproject.model.Board;
+import com.example.mark.msccomputerscienceproject.model.BoardImpl;
 import com.example.mark.msccomputerscienceproject.model.GamePiece;
 import com.example.mark.msccomputerscienceproject.R;
 
@@ -25,7 +25,7 @@ public final class GameBoardView extends SurfaceView implements Runnable {
 
     private SurfaceHolder surfaceHolder;
     private GameActivity controller;
-    private GameBoard board;
+    private Board board;
     private int emoWidth;
     private int emoHeight;
     private Paint backgroundColour;
@@ -45,7 +45,7 @@ public final class GameBoardView extends SurfaceView implements Runnable {
         this.controller = (GameActivity) context;
         this.emoWidth = emoWidth;
         this.emoHeight = emoHeight;
-        this.board = GameBoardImpl.getInstance();
+        this.board = BoardImpl.getInstance();
         setPaint(context);
         createBackgroundBitmap(viewSizeX, viewSizeY);
     }

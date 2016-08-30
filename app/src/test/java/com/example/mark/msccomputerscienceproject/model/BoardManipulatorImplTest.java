@@ -15,32 +15,35 @@ import static org.junit.Assert.*;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public class GameBoardImplTest {
+public class BoardManipulatorImplTest {
 
+    private static final int EMO_WIDTH = 20;
+    private static final int EMO_HEIGHT = 20;
+    private static final int START_POSITION_Y = 0;
     private static final String ANGRY = "ANGRY";
     private static final String HAPPY = "HAPPY";
     private static final String EMBARRASSED = "EMBARRASSED";
     private static final String SAD = "SAD";
     private static final String SURPRISED = "SURPRISED";
     private static final String EMPTY = "EMPTY";
-    private static final int EMO_WIDTH = 20;
-    private static final int EMO_HEIGHT = 20;
-    private static final int START_POSITION_Y = 0;
 
-    private GameBoard board;
     private GamePieceFactory factory;
     private MatchContainer matchContainer;
+    private Board board;
+    private BoardManipulator manipulator;
 
     @Mock
     private Bitmap bitmap;
 
     @Before
     public void setUp() throws Exception {
-        this.board = MockGameBoard.getInstance();
-        this.matchContainer = new MatchContainerImpl();
         this.factory = new EmoticonFactoryLevel01(EMO_WIDTH, EMO_HEIGHT);
-        BoardPopulator populator = new MockBoardPopulator();
-        populator.populate(board, factory);
+        this.matchContainer = new MatchContainerImpl();
+        this.board = BoardImpl.getInstance();
+        // Uses MockBoardManipulator and MockBoardPopulator to enable tests
+        this.manipulator = new MockBoardManipulator(board);
+        BoardPopulator populator = new MockBoardPopulator(board);
+        populator.populate(factory);
     }
 
     @After
@@ -61,7 +64,7 @@ public class GameBoardImplTest {
         selections.setSelection01(0, 1);
         selections.setSelection02(0, 2);
 
-        board.swap(selections);
+        manipulator.swap(selections);
         assertEquals(EMBARRASSED, board.getGamePiece(0, 1).toString());
         assertEquals(HAPPY, board.getGamePiece(0, 2).toString());
     }
@@ -82,14 +85,14 @@ public class GameBoardImplTest {
         bigList.add(consecutiveEmoticons);
         matchContainer.addMatchingX(bigList);
         matchContainer.addMatchingY(emptyList);
-        board.removeFromBoard(matchContainer, factory);
+        manipulator.removeFromBoard(matchContainer, factory);
 
         assertEquals(EMPTY, board.getGamePiece(0, 1).toString());
         assertEquals(EMPTY, board.getGamePiece(0, 2).toString());
         assertEquals(EMPTY, board.getGamePiece(0, 3).toString());
 
         // Checks that no error if given coordinates already contains a BlankTile
-        board.removeFromBoard(matchContainer, factory);
+        manipulator.removeFromBoard(matchContainer, factory);
         assertEquals(EMPTY, board.getGamePiece(0, 1).toString());
         assertEquals(EMPTY, board.getGamePiece(0, 2).toString());
         assertEquals(EMPTY, board.getGamePiece(0, 3).toString());
@@ -105,7 +108,7 @@ public class GameBoardImplTest {
         board.setGamePiece(0, 5, new Emoticon(0, 5, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
 
         // Tests emoticons above BlankTile are shifted down to fill it
-        board.lowerGamePieces(factory);
+        manipulator.lowerGamePieces(factory);
         assertEquals(ANGRY, board.getGamePiece(0, 5).toString());
         assertEquals(SURPRISED, board.getGamePiece(0, 4).toString());
         assertEquals(SAD, board.getGamePiece(0, 3).toString());
