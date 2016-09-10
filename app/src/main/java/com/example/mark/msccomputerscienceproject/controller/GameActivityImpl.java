@@ -62,7 +62,9 @@ public final class GameActivityImpl extends Activity implements GameActivity {
         BitmapCreator bitmapCreator = BitmapCreator.getInstance();
         bitmapCreator.prepareScaledBitmaps(this, emoWidth, emoHeight);
         int level = 1;
-        this.gameModel = new GameModelImpl(this, emoWidth, emoHeight, level);
+        LevelManager levelManager = new LevelManagerImpl(emoWidth, emoHeight, level);
+
+        this.gameModel = new GameModelImpl(this, levelManager);
         this.gameBoardView = new GameBoardView(this, gameBoardViewSizeX, gameBoardViewSizeY, emoWidth, emoHeight);
         this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, scoreBoardViewSizeY);
 

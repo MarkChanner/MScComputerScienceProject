@@ -23,14 +23,14 @@ public final class GameModelImpl implements GameModel {
     private BoardManipulator manipulator;
     private BoardPopulator populator;
 
-    public GameModelImpl(GameActivity controller, int emoWidth, int emoHeight, int level) {
-        initializeGameModel(controller, emoWidth, emoHeight, level);
+    public GameModelImpl(GameActivity controller, LevelManager levelManager) {
+        initializeGameModel(controller, levelManager);
     }
 
-    private void initializeGameModel(GameActivity controller, int emoWidth, int emoHeight, int level) {
+    private void initializeGameModel(GameActivity controller, LevelManager levelManager) {
         this.currentLevelScore = 0;
         this.controller = controller;
-        this.levelManager = new LevelManagerImpl(emoWidth, emoHeight, level);
+        this.levelManager = levelManager;
         this.selections = new SelectionsImpl();
         this.board = BoardImpl.getInstance();
         this.matchFinder = new MatchFinderImpl(board);
