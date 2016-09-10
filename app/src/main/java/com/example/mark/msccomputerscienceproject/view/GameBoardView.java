@@ -17,8 +17,8 @@ import android.view.*;
  */
 public final class GameBoardView extends SurfaceView implements Runnable {
 
-    private static final int ROWS = GameActivityImpl.ROWS;
-    private static final int COLUMNS = GameActivityImpl.COLUMNS;
+    private static final int ROWS = GameActivityImpl.MAX_ROWS;
+    private static final int COLUMNS = GameActivityImpl.MAX_COLUMNS;
     private static final int ZERO = 0;
     private final Rect matchRect = new Rect();
     private int viewSizeX;

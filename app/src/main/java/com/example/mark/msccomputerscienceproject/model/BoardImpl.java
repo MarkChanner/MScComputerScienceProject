@@ -11,8 +11,8 @@ import java.util.List;
  */
 public final class BoardImpl implements Board {
 
-    private static final int ROWS = GameActivityImpl.ROWS;
-    private static final int COLUMNS = GameActivityImpl.COLUMNS;
+    private static final int ROWS = GameActivityImpl.MAX_ROWS;
+    private static final int COLUMNS = GameActivityImpl.MAX_COLUMNS;
     private static final int ROW_START = 0;
     private static final int COLUMN_TOP = 0;
     private static final int COLUMN_BOTTOM = (ROWS - 1);

@@ -12,8 +12,8 @@ import com.example.mark.msccomputerscienceproject.controller.GameActivityImpl;
  */
 public class BoardPopulatorImpl implements BoardPopulator {
 
-    public static final int ROWS = GameActivityImpl.ROWS;
-    public static final int COLUMNS = GameActivityImpl.COLUMNS;
+    public static final int ROWS = GameActivityImpl.MAX_ROWS;
+    public static final int COLUMNS = GameActivityImpl.MAX_COLUMNS;
     public static final int ROW_START = 0;
     public static final int COLUMN_TOP = 0;
 

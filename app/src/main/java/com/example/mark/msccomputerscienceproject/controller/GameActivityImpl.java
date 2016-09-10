@@ -22,8 +22,8 @@ import android.util.Log;
 public final class GameActivityImpl extends Activity implements GameActivity {
 
     private final static String TAG = "GameControllerImpl";
-    public static final int ROWS = 7;
-    public static final int COLUMNS = 8;
+    public static final int MAX_ROWS = 7;
+    public static final int MAX_COLUMNS = 8;
 
     private MusicPlayer music;
     private SoundManager soundManager;
@@ -55,15 +55,14 @@ public final class GameActivityImpl extends Activity implements GameActivity {
         int gameBoardViewSizeY = (size.y - (screenLayout.getPaddingTop() + screenLayout.getPaddingBottom()));
         int scoreBoardViewSizeX = (int) (screenSizeX * 0.1);
         int scoreBoardViewSizeY = (gameBoardViewSizeY / 3);
-        this.emoWidth = gameBoardViewSizeX / COLUMNS;
-        this.emoHeight = gameBoardViewSizeY / ROWS;
+        this.emoWidth = gameBoardViewSizeX / MAX_COLUMNS;
+        this.emoHeight = gameBoardViewSizeY / MAX_ROWS;
 
         // Instantiates Model and View objects
         BitmapCreator bitmapCreator = BitmapCreator.getInstance();
         bitmapCreator.prepareScaledBitmaps(this, emoWidth, emoHeight);
         int level = 1;
         LevelManager levelManager = new LevelManagerImpl(emoWidth, emoHeight, level);
-
         this.gameModel = new GameModelImpl(this, levelManager);
         this.gameBoardView = new GameBoardView(this, gameBoardViewSizeX, gameBoardViewSizeY, emoWidth, emoHeight);
         this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, scoreBoardViewSizeY);

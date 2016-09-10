@@ -11,8 +11,8 @@ import java.util.ArrayList;
 public final class MatchFinderImpl implements MatchFinder {
 
     private static final String TAG = "MatchFinderImpl";
-    private static final int ROWS = GameActivityImpl.ROWS;
-    private static final int COLUMNS = GameActivityImpl.COLUMNS;
+    private static final int ROWS = GameActivityImpl.MAX_ROWS;
+    private static final int COLUMNS = GameActivityImpl.MAX_COLUMNS;
     private static final int ROW_START = 0;
     private static final int ROW_END = (COLUMNS - 1);
     private static final int COLUMN_TOP = 0;
@@ -192,7 +192,7 @@ public final class MatchFinderImpl implements MatchFinder {
 
     /**
      * The condition that (x + 2) must be above
-     * below COLUMNS was checked in the calling method
+     * below MAX_COLUMNS was checked in the calling method
      */
     private boolean horizontalRightA(String type, int x, int y) {
         return ((x + 3 < COLUMNS && board.getGamePiece(x + 3, y).toString().equals(type)) ||
