@@ -20,7 +20,7 @@ public class BoardManipulatorImpl implements BoardManipulator {
     private static final int Y = 1;
     private static final String EMPTY = "EMPTY";
 
-    private final Object swapLock = new Object();
+    private final Object lock = new Object();
     private final Object dropLock = new Object();
     private volatile boolean animatingSwap = false;
     private volatile boolean animatingDrop = false;
@@ -82,11 +82,11 @@ public class BoardManipulatorImpl implements BoardManipulator {
     }
 
     private void waitForSwapAnimationToFinish() {
-        synchronized (swapLock) {
+        synchronized (lock) {
             animatingSwap = true;
             while (animatingSwap) {
                 try {
-                    swapLock.wait();
+                    lock.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -159,31 +159,31 @@ public class BoardManipulatorImpl implements BoardManipulator {
 
     @Override
     public void update() {
-        updateGamePieceSwapCoordinates();
-        updateGamePieceDropCoordinates();
+        incrementSwapCoordinates();
+        incrementDropCoordinates();
     }
 
-    private void updateGamePieceSwapCoordinates() {
-        boolean emoticonsSwapping = false;
+    private void incrementSwapCoordinates() {
+        boolean stillAnimating = false;
         for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
             for (int x = ROW_START; x < COLUMNS; x++) {
-                if (board.getGamePiece(x, y).isSwapping()) {
-                    emoticonsSwapping = true;
-                    board.getGamePiece(x, y).updateSwapping();
+                if (board.getGamePiece(x, y).isBeingAnimated()) {
+                    stillAnimating = true;
+                    board.getGamePiece(x, y).incrementCoordinates();
                 }
             }
         }
-        if (!emoticonsSwapping) {
-            synchronized (swapLock) {
+        if (!stillAnimating) {
+            synchronized (lock) {
                 if (animatingSwap) {
                     animatingSwap = false;
-                    swapLock.notifyAll();
+                    lock.notifyAll();
                 }
             }
         }
     }
 
-    private void updateGamePieceDropCoordinates() {
+    private void incrementDropCoordinates() {
         boolean emoticonsDropping = false;
         for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
             for (int x = ROW_START; x < COLUMNS; x++) {

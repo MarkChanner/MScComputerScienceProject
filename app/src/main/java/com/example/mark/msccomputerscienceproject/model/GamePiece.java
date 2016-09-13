@@ -48,11 +48,11 @@ public abstract class GamePiece {
         return highlight;
     }
 
-    public boolean isSwapping() {
+    public boolean isBeingAnimated() {
         return (swappingUp || swappingDown || swappingLeft || swappingRight);
     }
 
-    public void updateSwapping() {
+    public void incrementCoordinates() {
         if (swappingUp) {
             swapUp();
         } else if (swappingDown) {
