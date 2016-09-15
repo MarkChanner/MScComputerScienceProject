@@ -33,7 +33,7 @@ public class SelectionsImplTest {
         assertEquals(2, selections.getSelection01()[Y]);
         assertEquals(1, selections.getSelection02()[X]);
         assertEquals(3, selections.getSelection02()[Y]);
-        selections.reset();
+        selections.resetSelections();
         assertEquals(-2, selections.getSelection01()[X]);
         assertEquals(-2, selections.getSelection01()[Y]);
         assertEquals(-1, selections.getSelection02()[X]);
@@ -52,7 +52,7 @@ public class SelectionsImplTest {
         selections.setSelection01(3, 3);
         selections.setSelection02(2, 3);
         assertEquals(false, selections.sameSelectionMadeTwice());
-        selections.reset();
+        selections.resetSelections();
         selections.setSelection01(5, 5);
         selections.setSelection02(5, 5);
         assertEquals(true, selections.sameSelectionMadeTwice());
@@ -63,7 +63,7 @@ public class SelectionsImplTest {
         selections.setSelection01(4, 3);
         selections.setSelection02(6, 3);
         assertEquals(true, selections.notAdjacent());
-        selections.reset();
+        selections.resetSelections();
         selections.setSelection01(4, 3);
         selections.setSelection02(5, 3);
         assertEquals(false, selections.notAdjacent());
@@ -73,7 +73,7 @@ public class SelectionsImplTest {
     public void testSetSelection02ToSelection01() throws Exception {
         selections.setSelection01(5, 5);
         selections.setSelection02(7, 7);
-        selections.secondSelectionBecomesFirstSelection();
+        selections.secondSelectionToFirstSelection();
         assertEquals(7, selections.getSelection01()[X]);
         assertEquals(7, selections.getSelection01()[Y]);
         assertEquals(-1, selections.getSelection02()[X]);

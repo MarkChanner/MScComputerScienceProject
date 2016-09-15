@@ -12,14 +12,14 @@ public final class SelectionsImpl implements Selections {
     private boolean selection01HasAlreadyBeenMade;
 
     public SelectionsImpl() {
-        reset();
+        resetSelections();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void reset() {
+    public void resetSelections() {
         selection01[X] = -2;
         selection01[Y] = -2;
         selection01HasAlreadyBeenMade = false;
@@ -99,7 +99,7 @@ public final class SelectionsImpl implements Selections {
      * {@inheritDoc}
      */
     @Override
-    public void secondSelectionBecomesFirstSelection() {
+    public void secondSelectionToFirstSelection() {
         selection01[X] = selection02[X];
         selection01[Y] = selection02[Y];
         selection02[X] = -1;

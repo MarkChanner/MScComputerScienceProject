@@ -8,7 +8,7 @@ public interface Selections {
     /**
      * Sets selection 1 to value of -2 and selection 2 to value of -1
      */
-    void reset();
+    void resetSelections();
 
     /**
      * @return true if user has made first selection
@@ -61,7 +61,7 @@ public interface Selections {
      * Called when the user's second selection is not directly
      * vertically or horizontally adjacent to the first selection
      */
-    void secondSelectionBecomesFirstSelection();
+    void secondSelectionToFirstSelection();
 
 }
 

@@ -61,14 +61,14 @@ public final class GameModelImpl implements GameModel {
         selections.setSelection02(x, y);
         board.clearHighlights();
         if (selections.sameSelectionMadeTwice()) {
-            selections.reset();
+            selections.resetSelections();
         } else if (selections.notAdjacent()) {
-            selections.secondSelectionBecomesFirstSelection();
+            selections.secondSelectionToFirstSelection();
             board.highlight(x, y);
         } else {
             manipulator.swap(selections);
             checkForMatches(selections);
-            selections.reset();
+            selections.resetSelections();
         }
     }
 
@@ -137,7 +137,7 @@ public final class GameModelImpl implements GameModel {
      */
     @Override
     public void resetGame() {
-        selections.reset();
+        selections.resetSelections();
         levelManager.setGameLevel(1);
         board.reset();
         populator.populate(levelManager.getGamePieceFactory());
