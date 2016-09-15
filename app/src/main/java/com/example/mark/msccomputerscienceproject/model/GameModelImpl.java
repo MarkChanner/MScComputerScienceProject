@@ -98,7 +98,7 @@ public final class GameModelImpl implements GameModel {
             controller.playSound(matchContainer);
             controller.controlGameBoardView(ONE_SECOND);
             boardManipulator.removeFromBoard(matchContainer, gamePieceFactory);
-            boardManipulator.lowerGamePieces(gamePieceFactory);
+            boardManipulator.updateBoard(gamePieceFactory);
             matchContainer = matchFinder.findMatches();
         } while (matchContainer.hasMatches());
         checkForLevelUp();
@@ -117,7 +117,7 @@ public final class GameModelImpl implements GameModel {
         Log.d(TAG, "loadNextLevel()");
         gameBoard.clearHighlights();
         gameBoard.clearGamePieces();
-        boardManipulator.lowerGamePieces(levelManager.getGamePieceFactory());
+        boardManipulator.updateBoard(levelManager.getGamePieceFactory());
         currentLevelScore = 0;
         if (levelManager.getLevel() < GAME_LEVELS) {
             levelManager.incrementLevel();
@@ -128,7 +128,7 @@ public final class GameModelImpl implements GameModel {
     private void finishRound() {
         gameBoard.clearHighlights();
         gameBoard.clearGamePieces();
-        boardManipulator.lowerGamePieces(levelManager.getGamePieceFactory());
+        boardManipulator.updateBoard(levelManager.getGamePieceFactory());
         controller.setGameEnded(true);
     }
 

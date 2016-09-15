@@ -14,7 +14,7 @@ public interface BoardManipulator {
     /**
      * Shifts game pieces down the board
      */
-    void lowerGamePieces(GamePieceFactory factory);
+    void updateBoard(GamePieceFactory factory);
 
     void update();
 }

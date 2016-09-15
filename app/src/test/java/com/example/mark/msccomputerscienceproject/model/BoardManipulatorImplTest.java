@@ -108,7 +108,7 @@ public class BoardManipulatorImplTest {
         board.setGamePiece(0, 5, new Emoticon(0, 5, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
 
         // Tests emoticons above BlankTile are shifted down to fill it
-        manipulator.lowerGamePieces(factory);
+        manipulator.updateBoard(factory);
         assertEquals(ANGRY, board.getGamePiece(0, 5).toString());
         assertEquals(SURPRISED, board.getGamePiece(0, 4).toString());
         assertEquals(SAD, board.getGamePiece(0, 3).toString());

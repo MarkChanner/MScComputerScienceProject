@@ -20,7 +20,7 @@ public abstract class GamePieceFactory {
      *
      * @param x                       the x coordinate of the required GamePiece
      * @param y                       the y coordinate of the required GamePiece
-     * @param startY the y coordinate for GamePiece to lowerGamePieces from
+     * @param startY the y coordinate for GamePiece to updateBoard from
      * @return GamePiece
      */
     protected abstract GamePiece getRandomGamePiece(int x, int y, int startY);
@@ -35,7 +35,7 @@ public abstract class GamePieceFactory {
     }
 
     /**
-     * Returns a GamePiece without an ID or lowerGamePieces down position
+     * Returns a GamePiece without an ID or updateBoard down position
      *
      * @return GamePiece
      */

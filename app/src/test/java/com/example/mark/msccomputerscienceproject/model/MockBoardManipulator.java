@@ -73,7 +73,7 @@ public class MockBoardManipulator implements BoardManipulator {
      * {@inheritDoc}
      */
     @Override
-    public void lowerGamePieces(GamePieceFactory factory) {
+    public void updateBoard(GamePieceFactory factory) {
         int offScreenStartPosition;
         int runnerY;
         for (int x = ROW_START; x < COLUMNS; x++) {
