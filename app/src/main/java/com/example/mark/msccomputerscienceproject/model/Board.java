@@ -31,14 +31,14 @@ public interface Board {
      * @param x the x value on the board to be highlighted
      * @param y the y value on the board to be highlighted
      */
-    void highlight(int x, int y);
+    void highlightTile(int x, int y);
 
     /**
      * Sets GamePiece objects in the matchContainer to be highlighted in the view
      *
      * @param matchContainer an object that holds matches found on the board
      */
-    void highlight(MatchContainer matchContainer);
+    void highlightTile(MatchContainer matchContainer);
 
     /**
      * Sets all GamePiece objects to no longer be highlighted

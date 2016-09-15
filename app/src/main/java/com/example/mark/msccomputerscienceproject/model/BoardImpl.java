@@ -57,7 +57,7 @@ public final class BoardImpl implements Board {
      * {@inheritDoc}
      */
     @Override
-    public void highlight(int x, int y) {
+    public void highlightTile(int x, int y) {
         emoticons[x][y].setHighlight(true);
     }
 
@@ -65,7 +65,7 @@ public final class BoardImpl implements Board {
      * {@inheritDoc}
      */
     @Override
-    public void highlight(MatchContainer matchContainer) {
+    public void highlightTile(MatchContainer matchContainer) {
         highlightMatches(matchContainer.getMatchingX());
         highlightMatches(matchContainer.getMatchingY());
     }

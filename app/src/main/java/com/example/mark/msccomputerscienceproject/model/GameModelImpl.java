@@ -19,8 +19,8 @@ public final class GameModelImpl implements GameModel {
     private LevelManager levelManager;
     private Selections selections;
     private MatchFinder matchFinder;
-    private Board board;
-    private BoardManipulator manipulator;
+    private Board gameBoard;
+    private BoardManipulator boardManipulator;
     private BoardPopulator populator;
 
     public GameModelImpl(GameActivity controller, LevelManager levelManager) {
@@ -32,25 +32,25 @@ public final class GameModelImpl implements GameModel {
         this.controller = controller;
         this.levelManager = levelManager;
         this.selections = new SelectionsImpl();
-        this.board = BoardImpl.getInstance();
-        this.matchFinder = new MatchFinderImpl(board);
-        this.manipulator = new BoardManipulatorImpl(board);
-        this.populator = new BoardPopulatorImpl(board);
+        this.gameBoard = BoardImpl.getInstance();
+        this.matchFinder = new MatchFinderImpl(gameBoard);
+        this.boardManipulator = new BoardManipulatorImpl(gameBoard);
+        this.populator = new BoardPopulatorImpl(gameBoard);
         populator.populate(levelManager.getGamePieceFactory());
     }
 
     @Override
     public void updateLogic() {
-        manipulator.update();
+        boardManipulator.update();
     }
 
     @Override
     public void handleSelection(int x, int y) {
         Log.d(TAG, "handleSelection(int, int)");
-        if (!board.getGamePiece(x, y).isDropping()) {
+        if (!gameBoard.getGamePiece(x, y).isDropping()) {
             if (!selections.selection01Made()) {
                 selections.setSelection01(x, y);
-                board.highlight(x, y);
+                gameBoard.highlightTile(x, y);
             } else {
                 handleSecondSelection(x, y);
             }
@@ -59,14 +59,14 @@ public final class GameModelImpl implements GameModel {
 
     private void handleSecondSelection(int x, int y) {
         selections.setSelection02(x, y);
-        board.clearHighlights();
+        gameBoard.clearHighlights();
         if (selections.sameSelectionMadeTwice()) {
             selections.resetSelections();
         } else if (selections.notAdjacent()) {
             selections.secondSelectionToFirstSelection();
-            board.highlight(x, y);
+            gameBoard.highlightTile(x, y);
         } else {
-            manipulator.swap(selections);
+            boardManipulator.swap(selections);
             checkForMatches(selections);
             selections.resetSelections();
         }
@@ -78,15 +78,15 @@ public final class GameModelImpl implements GameModel {
             handleMatches(matchContainer);
         } else {
             controller.playSound(INVALID_MOVE);
-            manipulator.swapBack(selections);
+            boardManipulator.swapBack(selections);
         }
     }
 
     /**
-     * This method handles the bulk of the requirements for handling a match on the board. It
-     * does this within a loop until the manipulated board no longer contains matches.
+     * This method handles the bulk of the requirements for handling a match on the gameBoard. It
+     * does this within a loop until the manipulated gameBoard no longer contains matches.
      *
-     * @param matchContainer a wrapper object containing board matches
+     * @param matchContainer a wrapper object containing gameBoard matches
      */
     private void handleMatches(MatchContainer matchContainer) {
         Log.d(TAG, "handleMatches method");
@@ -94,11 +94,11 @@ public final class GameModelImpl implements GameModel {
         do {
             currentLevelScore += matchContainer.getMatchPoints();
             controller.updateScoreBoardView(matchContainer.getMatchPoints());
-            board.highlight(matchContainer);
+            gameBoard.highlightTile(matchContainer);
             controller.playSound(matchContainer);
             controller.controlGameBoardView(ONE_SECOND);
-            manipulator.removeFromBoard(matchContainer, gamePieceFactory);
-            manipulator.lowerGamePieces(gamePieceFactory);
+            boardManipulator.removeFromBoard(matchContainer, gamePieceFactory);
+            boardManipulator.lowerGamePieces(gamePieceFactory);
             matchContainer = matchFinder.findMatches();
         } while (matchContainer.hasMatches());
         checkForLevelUp();
@@ -115,9 +115,9 @@ public final class GameModelImpl implements GameModel {
 
     private void loadNextLevel() {
         Log.d(TAG, "loadNextLevel()");
-        board.clearHighlights();
-        board.clearGamePieces();
-        manipulator.lowerGamePieces(levelManager.getGamePieceFactory());
+        gameBoard.clearHighlights();
+        gameBoard.clearGamePieces();
+        boardManipulator.lowerGamePieces(levelManager.getGamePieceFactory());
         currentLevelScore = 0;
         if (levelManager.getLevel() < GAME_LEVELS) {
             levelManager.incrementLevel();
@@ -126,9 +126,9 @@ public final class GameModelImpl implements GameModel {
     }
 
     private void finishRound() {
-        board.clearHighlights();
-        board.clearGamePieces();
-        manipulator.lowerGamePieces(levelManager.getGamePieceFactory());
+        gameBoard.clearHighlights();
+        gameBoard.clearGamePieces();
+        boardManipulator.lowerGamePieces(levelManager.getGamePieceFactory());
         controller.setGameEnded(true);
     }
 
@@ -139,7 +139,7 @@ public final class GameModelImpl implements GameModel {
     public void resetGame() {
         selections.resetSelections();
         levelManager.setGameLevel(1);
-        board.reset();
+        gameBoard.reset();
         populator.populate(levelManager.getGamePieceFactory());
     }
 }
