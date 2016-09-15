@@ -46,7 +46,7 @@ public final class GameModelImpl implements GameModel {
 
     @Override
     public void handleSelection(int x, int y) {
-        Log.d(TAG, "handleSelection(int, int)");
+        Log.d(TAG, "handleTouch(int, int)");
         if (!gameBoard.getGamePiece(x, y).isDropping()) {
             if (!selections.selection01Made()) {
                 selections.setSelection01(x, y);

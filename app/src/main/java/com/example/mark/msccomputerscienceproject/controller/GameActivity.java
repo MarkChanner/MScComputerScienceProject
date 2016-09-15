@@ -9,7 +9,7 @@ import com.example.mark.msccomputerscienceproject.model.MatchContainer;
  */
 public interface GameActivity {
 
-    void handleSelection(MotionEvent event);
+    void handleTouch(MotionEvent event);
 
     void updateModel();
 

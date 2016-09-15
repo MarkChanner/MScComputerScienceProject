@@ -194,7 +194,7 @@ public final class GameBoardView extends SurfaceView implements Runnable {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        controller.handleSelection(event);
+        controller.handleTouch(event);
         return true;
     }
 }
