@@ -62,7 +62,7 @@ public final class GameModelImpl implements GameModel {
         board.clearHighlights();
         if (selections.sameSelectionMadeTwice()) {
             selections.reset();
-        } else if (selections.areNotAdjacent()) {
+        } else if (selections.notAdjacent()) {
             selections.secondSelectionBecomesFirstSelection();
             board.highlight(x, y);
         } else {

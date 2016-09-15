@@ -54,7 +54,7 @@ public interface Selections {
      * @return true if the second selection is NOT directly vertically
      * or horizontally adjacent to the first selection
      */
-    boolean areNotAdjacent();
+    boolean notAdjacent();
 
     /**
      * Sets the second selection to the first selection.

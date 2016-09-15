@@ -62,11 +62,11 @@ public class SelectionsImplTest {
     public void testAdjacentSelections() throws Exception {
         selections.setSelection01(4, 3);
         selections.setSelection02(6, 3);
-        assertEquals(true, selections.areNotAdjacent());
+        assertEquals(true, selections.notAdjacent());
         selections.reset();
         selections.setSelection01(4, 3);
         selections.setSelection02(5, 3);
-        assertEquals(false, selections.areNotAdjacent());
+        assertEquals(false, selections.notAdjacent());
     }
 
     @Test

@@ -84,7 +84,7 @@ public final class SelectionsImpl implements Selections {
      * {@inheritDoc}
      */
     @Override
-    public boolean areNotAdjacent() {
+    public boolean notAdjacent() {
         if ((selection01[X] == selection02[X]) &&
                 (selection01[Y] == (selection02[Y] + 1) || selection01[Y] == (selection02[Y] - 1))) {
             return false;
