@@ -26,8 +26,8 @@ public final class GameBoardView extends SurfaceView implements Runnable {
     private SurfaceHolder surfaceHolder;
     private GameActivity controller;
     private Board board;
-    private int emoWidth;
-    private int emoHeight;
+    private int tileWidth;
+    private int tileHeight;
     private Paint backgroundColour;
     private Paint drawingLine;
     private Paint borderColour;
@@ -38,13 +38,13 @@ public final class GameBoardView extends SurfaceView implements Runnable {
     private Thread gameViewThread = null;
     volatile boolean running = false;
 
-    public GameBoardView(Context context, int viewSizeX, int viewSizeY, int emoWidth, int emoHeight) {
+    public GameBoardView(Context context, int viewSizeX, int viewSizeY, int tileWidth, int tileHeight) {
         super(context);
         this.viewSizeX = viewSizeX;
         this.surfaceHolder = getHolder();
         this.controller = (GameActivity) context;
-        this.emoWidth = emoWidth;
-        this.emoHeight = emoHeight;
+        this.tileWidth = tileWidth;
+        this.tileHeight = tileHeight;
         this.board = BoardImpl.getInstance();
         setPaint(context);
         createBackgroundBitmap(viewSizeX, viewSizeY);
@@ -90,13 +90,13 @@ public final class GameBoardView extends SurfaceView implements Runnable {
 
     private void drawHorizontal(Canvas gridCanvas, int viewSizeX) {
         for (int i = 0; i < ROWS; i++) {
-            gridCanvas.drawLine(ZERO, i * emoHeight, viewSizeX, i * emoHeight, drawingLine);
+            gridCanvas.drawLine(ZERO, i * tileHeight, viewSizeX, i * tileHeight, drawingLine);
         }
     }
 
     private void drawVertical(Canvas gridCanvas, int viewSizeY) {
         for (int i = 0; i < COLUMNS; i++) {
-            gridCanvas.drawLine(i * emoWidth, ZERO, i * emoWidth, viewSizeY, drawingLine);
+            gridCanvas.drawLine(i * tileWidth, ZERO, i * tileWidth, viewSizeY, drawingLine);
         }
     }
 
@@ -164,7 +164,7 @@ public final class GameBoardView extends SurfaceView implements Runnable {
                 if (emo.getHighlight()) {
                     int highlightX = emo.getViewPositionX();
                     int highlightY = emo.getViewPositionY();
-                    matchRect.set(highlightX, highlightY, (highlightX + emoWidth), (highlightY + emoHeight));
+                    matchRect.set(highlightX, highlightY, (highlightX + tileWidth), (highlightY + tileHeight));
                     canvas.drawRect(matchRect, selectionFill);
                     canvas.drawRect(matchRect, drawingLine);
                 }

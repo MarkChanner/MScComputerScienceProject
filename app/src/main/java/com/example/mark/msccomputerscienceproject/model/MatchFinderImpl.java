@@ -51,31 +51,31 @@ public final class MatchFinderImpl implements MatchFinder {
 
     private ArrayList<LinkedList<GamePiece>> findVerticalMatches() {
         LinkedList<GamePiece> consecutiveEmoticons = new LinkedList<>();
-        ArrayList<LinkedList<GamePiece>> bigList = new ArrayList<>();
-        GamePiece emo;
+        ArrayList<LinkedList<GamePiece>> allVerticalMatches = new ArrayList<>();
+        GamePiece emoticon;
         for (int x = ROW_START; x < COLUMNS; x++) {
             consecutiveEmoticons.add(board.getGamePiece(x, COLUMN_BOTTOM));
 
 
             for (int y = (COLUMN_BOTTOM - 1); y >= COLUMN_TOP; y--) {
-                emo = board.getGamePiece(x, y);
-                if (!emo.toString().equals(consecutiveEmoticons.getLast().toString())) {
-                    examineList(consecutiveEmoticons, bigList);
+                emoticon = board.getGamePiece(x, y);
+                if (!emoticon.toString().equals(consecutiveEmoticons.getLast().toString())) {
+                    examineList(consecutiveEmoticons, allVerticalMatches);
                     consecutiveEmoticons = new LinkedList<>();
                 }
-                consecutiveEmoticons.add(emo);
+                consecutiveEmoticons.add(emoticon);
                 if (y == COLUMN_TOP) {
-                    examineList(consecutiveEmoticons, bigList);
+                    examineList(consecutiveEmoticons, allVerticalMatches);
                     consecutiveEmoticons = new LinkedList<>();
                 }
             }
         }
-        return bigList;
+        return allVerticalMatches;
     }
 
     private ArrayList<LinkedList<GamePiece>> findHorizontalMatches() {
         LinkedList<GamePiece> consecutiveEmoticons = new LinkedList<>();
-        ArrayList<LinkedList<GamePiece>> bigList = new ArrayList<>();
+        ArrayList<LinkedList<GamePiece>> allHorizontalMatches = new ArrayList<>();
         GamePiece emo;
         for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
             consecutiveEmoticons.add(board.getGamePiece(ROW_START, y));
@@ -83,17 +83,17 @@ public final class MatchFinderImpl implements MatchFinder {
             for (int x = (ROW_START + 1); x < COLUMNS; x++) {
                 emo = board.getGamePiece(x, y);
                 if (!(emo.toString().equals(consecutiveEmoticons.getLast().toString()))) {
-                    examineList(consecutiveEmoticons, bigList);
+                    examineList(consecutiveEmoticons, allHorizontalMatches);
                     consecutiveEmoticons = new LinkedList<>();
                 }
                 consecutiveEmoticons.add(emo);
                 if (x == ROW_END) {
-                    examineList(consecutiveEmoticons, bigList);
+                    examineList(consecutiveEmoticons, allHorizontalMatches);
                     consecutiveEmoticons = new LinkedList<>();
                 }
             }
         }
-        return bigList;
+        return allHorizontalMatches;
     }
 
     private void examineList(LinkedList<GamePiece> consecutiveEmotions, ArrayList<LinkedList<GamePiece>> bigList) {
