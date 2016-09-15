@@ -78,10 +78,10 @@ public class BoardManipulatorImpl implements BoardManipulator {
                 emo1.setSwappingRight(true);
             }
         }
-        waitForSwapAnimationToFinish();
+        waitForSwapAnimationToComplete();
     }
 
-    private void waitForSwapAnimationToFinish() {
+    private void waitForSwapAnimationToComplete() {
         synchronized (lock) {
             animatingSwap = true;
             while (animatingSwap) {
