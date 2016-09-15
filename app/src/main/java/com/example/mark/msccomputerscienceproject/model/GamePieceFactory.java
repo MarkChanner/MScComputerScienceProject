@@ -6,13 +6,13 @@ package com.example.mark.msccomputerscienceproject.model;
 public abstract class GamePieceFactory {
 
     protected BitmapCreator bitmapCreator;
-    protected int emoWidth;
-    protected int emoHeight;
+    protected int tileWidth;
+    protected int tileHeight;
 
-    public GamePieceFactory(int emoWidth, int emoHeight) {
+    public GamePieceFactory(int tileWidth, int tileHeight) {
         this.bitmapCreator = BitmapCreator.getInstance();
-        this.emoWidth = emoWidth;
-        this.emoHeight = emoHeight;
+        this.tileWidth = tileWidth;
+        this.tileHeight = tileHeight;
     }
 
     /**
@@ -40,6 +40,6 @@ public abstract class GamePieceFactory {
      * @return GamePiece
      */
     public GamePiece createBlankTile(int x, int y) {
-        return new BlankTile(x, y, emoWidth, emoHeight, bitmapCreator.getEmptyBitmap());
+        return new BlankTile(x, y, tileWidth, tileHeight, bitmapCreator.getEmptyBitmap());
     }
 }

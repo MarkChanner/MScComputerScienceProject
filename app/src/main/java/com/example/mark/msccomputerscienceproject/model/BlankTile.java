@@ -8,8 +8,8 @@ public class BlankTile extends GamePiece {
 
     private static final String EMOTION_TYPE = "EMPTY";
 
-    public BlankTile(int x, int y, int emoWidth, int emoHeight, Bitmap emptyBitmap) {
-        super(x, y, emoWidth, emoHeight, emptyBitmap, EMOTION_TYPE, y);
+    public BlankTile(int x, int y, int tileWidth, int tileHeight, Bitmap emptyBitmap) {
+        super(x, y, tileWidth, tileHeight, emptyBitmap, EMOTION_TYPE, y);
         super.dropping = false;
     }
 }

@@ -9,8 +9,8 @@ import java.util.Random;
  */
 public final class EmoticonFactoryLevel02 extends GamePieceFactory {
 
-    public EmoticonFactoryLevel02(int emoWidth, int emoHeight) {
-        super(emoWidth, emoHeight);
+    public EmoticonFactoryLevel02(int tileWidth, int tileHeight) {
+        super(tileWidth, tileHeight);
     }
 
     /**
@@ -45,6 +45,6 @@ public final class EmoticonFactoryLevel02 extends GamePieceFactory {
             default:
                 break;
         }
-        return new Emoticon(x, y, emoWidth, emoHeight, bitmap, emoID, startY);
+        return new Emoticon(x, y, tileWidth, tileHeight, bitmap, emoID, startY);
     }
 }

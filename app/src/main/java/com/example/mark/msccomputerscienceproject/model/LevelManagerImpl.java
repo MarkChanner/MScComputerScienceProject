@@ -9,14 +9,14 @@ public final class LevelManagerImpl implements LevelManager {
 
     public static final int LEVEL_ONE = 1;
     public static final int LEVEL_TWO = 2;
-    private int emoWidth;
-    private int emoHeight;
+    private int tileWidth;
+    private int tileHeight;
     private int level;
     private GamePieceFactory factory;
 
-    public LevelManagerImpl(int emoWidth, int emoHeight, int level) {
-        this.emoWidth = emoWidth;
-        this.emoHeight = emoHeight;
+    public LevelManagerImpl(int tileWidth, int tileHeight, int level) {
+        this.tileWidth = tileWidth;
+        this.tileHeight = tileHeight;
         this.level = level;
         setGameLevel(level);
     }
@@ -24,9 +24,9 @@ public final class LevelManagerImpl implements LevelManager {
     @Override
     public void setGameLevel(int level) {
         if (level == LEVEL_ONE) {
-            factory = new EmoticonFactoryLevel01(emoWidth, emoHeight);
+            factory = new EmoticonFactoryLevel01(tileWidth, tileHeight);
         } else if (level == LEVEL_TWO) {
-            factory = new EmoticonFactoryLevel02(emoWidth, emoHeight);
+            factory = new EmoticonFactoryLevel02(tileWidth, tileHeight);
         } else {
             throw new IndexOutOfBoundsException("level out of bounds in setEmoFactory(int)");
         }

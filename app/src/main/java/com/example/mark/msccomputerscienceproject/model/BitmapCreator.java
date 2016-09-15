@@ -38,44 +38,44 @@ public class BitmapCreator {
         return instance;
     }
 
-    public void prepareScaledBitmaps(Context context, int emoWidth, int emoHeight) {
+    public void prepareScaledBitmaps(Context context, int tileWidth, int tileHeight) {
         Bitmap temp;
         temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.empty_tile);
-        emptyBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+        emptyBitmap = Bitmap.createScaledBitmap(temp, tileWidth, tileHeight, false);
         emptyBitmap.eraseColor(android.graphics.Color.TRANSPARENT);
 
         temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.angry);
-        angryBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+        angryBitmap = Bitmap.createScaledBitmap(temp, tileWidth, tileHeight, false);
 
         temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.happy);
-        happyBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+        happyBitmap = Bitmap.createScaledBitmap(temp, tileWidth, tileHeight, false);
 
         temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.embarrassed);
-        embarrassedBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+        embarrassedBitmap = Bitmap.createScaledBitmap(temp, tileWidth, tileHeight, false);
 
         temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.surprised);
-        surprisedBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+        surprisedBitmap = Bitmap.createScaledBitmap(temp, tileWidth, tileHeight, false);
 
         temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.sad);
-        sadBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+        sadBitmap = Bitmap.createScaledBitmap(temp, tileWidth, tileHeight, false);
 
         temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.mock);
-        mockBitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+        mockBitmap = Bitmap.createScaledBitmap(temp, tileWidth, tileHeight, false);
 
         temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.angry2);
-        angry2Bitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+        angry2Bitmap = Bitmap.createScaledBitmap(temp, tileWidth, tileHeight, false);
 
         temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.happy2);
-        happy2Bitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+        happy2Bitmap = Bitmap.createScaledBitmap(temp, tileWidth, tileHeight, false);
 
         temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.embarrassed2);
-        embarrassed2Bitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+        embarrassed2Bitmap = Bitmap.createScaledBitmap(temp, tileWidth, tileHeight, false);
 
         temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.surprised2);
-        surprised2Bitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+        surprised2Bitmap = Bitmap.createScaledBitmap(temp, tileWidth, tileHeight, false);
 
         temp = BitmapFactory.decodeResource(context.getResources(), R.drawable.sad2);
-        sad2Bitmap = Bitmap.createScaledBitmap(temp, emoWidth, emoHeight, false);
+        sad2Bitmap = Bitmap.createScaledBitmap(temp, tileWidth, tileHeight, false);
     }
 
     public Bitmap getAngryBitmap() {

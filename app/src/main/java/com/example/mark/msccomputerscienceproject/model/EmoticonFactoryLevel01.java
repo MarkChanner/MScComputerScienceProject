@@ -9,8 +9,14 @@ import java.util.Random;
  */
 public final class EmoticonFactoryLevel01 extends GamePieceFactory {
 
-    public EmoticonFactoryLevel01(int emoWidth, int emoHeight) {
-        super(emoWidth, emoHeight);
+    public static final String ANGRY = "ANGRY";
+    public static final String HAPPY = "HAPPY";
+    public static final String EMBARRASSED = "EMBARRASSED";
+    public static final String SAD = "SAD";
+    public static final String SURPRISED = "SURPRISED";
+
+    public EmoticonFactoryLevel01(int tileWidth, int tileHeight) {
+        super(tileWidth, tileHeight);
     }
 
     /**
@@ -23,28 +29,28 @@ public final class EmoticonFactoryLevel01 extends GamePieceFactory {
         Bitmap bitmap = null;
         switch (random.nextInt(5)) {
             case 0:
-                type = "ANGRY";
+                type = ANGRY;
                 bitmap = bitmapCreator.getAngryBitmap();
                 break;
             case 1:
-                type = "HAPPY";
+                type = HAPPY;
                 bitmap = bitmapCreator.getHappyBitmap();
                 break;
             case 2:
-                type = "EMBARRASSED";
+                type = EMBARRASSED;
                 bitmap = bitmapCreator.getEmbarrassedBitmap();
                 break;
             case 3:
-                type = "SURPRISED";
+                type = SURPRISED;
                 bitmap = bitmapCreator.getSurprisedBitmap();
                 break;
             case 4:
-                type = "SAD";
+                type = SAD;
                 bitmap = bitmapCreator.getSadBitmap();
                 break;
             default:
                 break;
         }
-        return new Emoticon(x, y, emoWidth, emoHeight, bitmap, type, startY);
+        return new Emoticon(x, y, tileWidth, tileHeight, bitmap, type, startY);
     }
 }
