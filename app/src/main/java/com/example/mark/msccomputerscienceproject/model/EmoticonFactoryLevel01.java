@@ -19,32 +19,32 @@ public final class EmoticonFactoryLevel01 extends GamePieceFactory {
     @Override
     protected GamePiece getRandomGamePiece(int x, int y, int startY) {
         Random random = new Random();
-        String emoID = null;
+        String type = null;
         Bitmap bitmap = null;
         switch (random.nextInt(5)) {
             case 0:
-                emoID = "ANGRY";
+                type = "ANGRY";
                 bitmap = bitmapCreator.getAngryBitmap();
                 break;
             case 1:
-                emoID = "HAPPY";
+                type = "HAPPY";
                 bitmap = bitmapCreator.getHappyBitmap();
                 break;
             case 2:
-                emoID = "EMBARRASSED";
+                type = "EMBARRASSED";
                 bitmap = bitmapCreator.getEmbarrassedBitmap();
                 break;
             case 3:
-                emoID = "SURPRISED";
+                type = "SURPRISED";
                 bitmap = bitmapCreator.getSurprisedBitmap();
                 break;
             case 4:
-                emoID = "SAD";
+                type = "SAD";
                 bitmap = bitmapCreator.getSadBitmap();
                 break;
             default:
                 break;
         }
-        return new Emoticon(x, y, emoWidth, emoHeight, bitmap, emoID, startY);
+        return new Emoticon(x, y, emoWidth, emoHeight, bitmap, type, startY);
     }
 }

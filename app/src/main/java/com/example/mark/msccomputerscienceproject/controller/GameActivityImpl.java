@@ -30,8 +30,8 @@ public final class GameActivityImpl extends Activity implements GameActivity {
     private GameModel gameModel;
     private GameBoardView gameBoardView;
     private ScoreBoardView scoreBoardView;
-    private int emoWidth;
-    private int emoHeight;
+    private int tileWidth;
+    private int tileHeight;
     volatile boolean gameEnded = false;
 
     @Override
@@ -55,16 +55,16 @@ public final class GameActivityImpl extends Activity implements GameActivity {
         int gameBoardViewSizeY = (size.y - (screenLayout.getPaddingTop() + screenLayout.getPaddingBottom()));
         int scoreBoardViewSizeX = (int) (screenSizeX * 0.1);
         int scoreBoardViewSizeY = (gameBoardViewSizeY / 3);
-        this.emoWidth = gameBoardViewSizeX / MAX_COLUMNS;
-        this.emoHeight = gameBoardViewSizeY / MAX_ROWS;
+        this.tileWidth = gameBoardViewSizeX / MAX_COLUMNS;
+        this.tileHeight = gameBoardViewSizeY / MAX_ROWS;
 
         // Instantiates Model and View objects
         BitmapCreator bitmapCreator = BitmapCreator.getInstance();
-        bitmapCreator.prepareScaledBitmaps(this, emoWidth, emoHeight);
+        bitmapCreator.prepareScaledBitmaps(this, tileWidth, tileHeight);
         int level = 1;
-        LevelManager levelManager = new LevelManagerImpl(emoWidth, emoHeight, level);
+        LevelManager levelManager = new LevelManagerImpl(tileWidth, tileHeight, level);
         this.gameModel = new GameModelImpl(this, levelManager);
-        this.gameBoardView = new GameBoardView(this, gameBoardViewSizeX, gameBoardViewSizeY, emoWidth, emoHeight);
+        this.gameBoardView = new GameBoardView(this, gameBoardViewSizeX, gameBoardViewSizeY, tileWidth, tileHeight);
         this.scoreBoardView = new ScoreBoardView(this, scoreBoardViewSizeX, scoreBoardViewSizeY);
 
         // Sets layout of Views
@@ -104,7 +104,7 @@ public final class GameActivityImpl extends Activity implements GameActivity {
         int screenY = (int) event.getY();
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (!gameOver()) {
-                gameModel.handleSelection(screenX / emoWidth, screenY / emoHeight);
+                gameModel.handleSelection(screenX / tileWidth, screenY / tileHeight);
             } else {
                 gameEnded = false;
                 gameModel.resetGame();
