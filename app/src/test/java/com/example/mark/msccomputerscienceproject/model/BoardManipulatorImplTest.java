@@ -29,7 +29,7 @@ public class BoardManipulatorImplTest {
 
     private GamePieceFactory factory;
     private MatchContainer matchContainer;
-    private Board board;
+    private GameBoard gameBoard;
     private BoardManipulator manipulator;
 
     @Mock
@@ -39,34 +39,34 @@ public class BoardManipulatorImplTest {
     public void setUp() throws Exception {
         this.factory = new EmoticonFactoryLevel01(EMO_WIDTH, EMO_HEIGHT);
         this.matchContainer = new MatchContainerImpl();
-        this.board = BoardImpl.getInstance();
+        this.gameBoard = GameBoardImpl.getInstance();
         // Uses MockBoardManipulator and MockBoardPopulator to enable tests
-        this.manipulator = new MockBoardManipulator(board);
-        BoardPopulator populator = new MockBoardPopulator(board);
+        this.manipulator = new MockBoardManipulator(gameBoard);
+        BoardPopulator populator = new MockBoardPopulator(gameBoard);
         populator.populate(factory);
     }
 
     @After
     public void tearDown() throws Exception {
-        board.reset();
+        gameBoard.reset();
         matchContainer = null;
     }
 
     @Test
     public void testSwap() throws Exception {
-        board.setGamePiece(0, 1, new Emoticon(0, 1, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, 0));
-        board.setGamePiece(0, 2, new Emoticon(0, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, EMBARRASSED, 0));
+        gameBoard.setGamePiece(0, 1, new Emoticon(0, 1, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, 0));
+        gameBoard.setGamePiece(0, 2, new Emoticon(0, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, EMBARRASSED, 0));
 
-        assertEquals(HAPPY, board.getGamePiece(0, 1).toString());
-        assertEquals(EMBARRASSED, board.getGamePiece(0, 2).toString());
+        assertEquals(HAPPY, gameBoard.getGamePiece(0, 1).toString());
+        assertEquals(EMBARRASSED, gameBoard.getGamePiece(0, 2).toString());
 
         Selections selections = new SelectionsImpl();
         selections.setSelection01(0, 1);
         selections.setSelection02(0, 2);
 
         manipulator.swap(selections);
-        assertEquals(EMBARRASSED, board.getGamePiece(0, 1).toString());
-        assertEquals(HAPPY, board.getGamePiece(0, 2).toString());
+        assertEquals(EMBARRASSED, gameBoard.getGamePiece(0, 1).toString());
+        assertEquals(HAPPY, gameBoard.getGamePiece(0, 2).toString());
     }
 
     @Test
@@ -75,43 +75,43 @@ public class BoardManipulatorImplTest {
         ArrayList<LinkedList<GamePiece>> bigList = new ArrayList<>();
         ArrayList<LinkedList<GamePiece>> emptyList = new ArrayList<>();
 
-        board.setGamePiece(0, 1, new Emoticon(0, 1, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
-        board.setGamePiece(0, 2, new Emoticon(0, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
-        board.setGamePiece(0, 3, new Emoticon(0, 3, EMO_WIDTH, EMO_HEIGHT, bitmap, EMBARRASSED, START_POSITION_Y));
+        gameBoard.setGamePiece(0, 1, new Emoticon(0, 1, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
+        gameBoard.setGamePiece(0, 2, new Emoticon(0, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
+        gameBoard.setGamePiece(0, 3, new Emoticon(0, 3, EMO_WIDTH, EMO_HEIGHT, bitmap, EMBARRASSED, START_POSITION_Y));
 
-        consecutiveEmoticons.add(board.getGamePiece(0, 1));
-        consecutiveEmoticons.add(board.getGamePiece(0, 2));
-        consecutiveEmoticons.add(board.getGamePiece(0, 3));
+        consecutiveEmoticons.add(gameBoard.getGamePiece(0, 1));
+        consecutiveEmoticons.add(gameBoard.getGamePiece(0, 2));
+        consecutiveEmoticons.add(gameBoard.getGamePiece(0, 3));
         bigList.add(consecutiveEmoticons);
         matchContainer.addMatchingX(bigList);
         matchContainer.addMatchingY(emptyList);
         manipulator.removeFromBoard(matchContainer, factory);
 
-        assertEquals(EMPTY, board.getGamePiece(0, 1).toString());
-        assertEquals(EMPTY, board.getGamePiece(0, 2).toString());
-        assertEquals(EMPTY, board.getGamePiece(0, 3).toString());
+        assertEquals(EMPTY, gameBoard.getGamePiece(0, 1).toString());
+        assertEquals(EMPTY, gameBoard.getGamePiece(0, 2).toString());
+        assertEquals(EMPTY, gameBoard.getGamePiece(0, 3).toString());
 
         // Checks that no error if given coordinates already contains a BlankTile
         manipulator.removeFromBoard(matchContainer, factory);
-        assertEquals(EMPTY, board.getGamePiece(0, 1).toString());
-        assertEquals(EMPTY, board.getGamePiece(0, 2).toString());
-        assertEquals(EMPTY, board.getGamePiece(0, 3).toString());
+        assertEquals(EMPTY, gameBoard.getGamePiece(0, 1).toString());
+        assertEquals(EMPTY, gameBoard.getGamePiece(0, 2).toString());
+        assertEquals(EMPTY, gameBoard.getGamePiece(0, 3).toString());
     }
 
     @Test
     public void testLowerGamePieces() throws Exception {
-        board.setGamePiece(0, 1, new Emoticon(0, 1, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
-        board.setGamePiece(0, 2, new Emoticon(0, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, SAD, START_POSITION_Y));
-        board.setGamePiece(0, 3, new Emoticon(0, 3, EMO_WIDTH, EMO_HEIGHT, bitmap, SURPRISED, START_POSITION_Y));
+        gameBoard.setGamePiece(0, 1, new Emoticon(0, 1, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
+        gameBoard.setGamePiece(0, 2, new Emoticon(0, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, SAD, START_POSITION_Y));
+        gameBoard.setGamePiece(0, 3, new Emoticon(0, 3, EMO_WIDTH, EMO_HEIGHT, bitmap, SURPRISED, START_POSITION_Y));
         // BlankTile
-        board.setGamePiece(0, 4, new BlankTile(0, 4, EMO_WIDTH, EMO_HEIGHT, bitmap));
-        board.setGamePiece(0, 5, new Emoticon(0, 5, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
+        gameBoard.setGamePiece(0, 4, new BlankTile(0, 4, EMO_WIDTH, EMO_HEIGHT, bitmap));
+        gameBoard.setGamePiece(0, 5, new Emoticon(0, 5, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
 
         // Tests emoticons above BlankTile are shifted down to fill it
         manipulator.updateBoard(factory);
-        assertEquals(ANGRY, board.getGamePiece(0, 5).toString());
-        assertEquals(SURPRISED, board.getGamePiece(0, 4).toString());
-        assertEquals(SAD, board.getGamePiece(0, 3).toString());
-        assertEquals(HAPPY, board.getGamePiece(0, 2).toString());
+        assertEquals(ANGRY, gameBoard.getGamePiece(0, 5).toString());
+        assertEquals(SURPRISED, gameBoard.getGamePiece(0, 4).toString());
+        assertEquals(SAD, gameBoard.getGamePiece(0, 3).toString());
+        assertEquals(HAPPY, gameBoard.getGamePiece(0, 2).toString());
     }
 }

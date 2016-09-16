@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import org.mockito.Mock;
 
 /**
- * Extension of BoardPopulatorImpl for testing purposes. Populates a Board with
+ * Extension of BoardPopulatorImpl for testing purposes. Populates a GameBoard with
  * emoticons so that no matches are initially possible. This is done by assigning
  * each emoticon type a unique number to be output when toString() is called.
  *
@@ -15,14 +15,14 @@ public class MockBoardPopulator extends BoardPopulatorImpl implements BoardPopul
 
     private static final int EMO_WIDTH = 20;
     private static final int EMO_HEIGHT = 20;
-    private Board board;
+    private GameBoard gameBoard;
 
     @Mock
     Bitmap bitmap;
 
-    public MockBoardPopulator(Board board) {
-        super(board);
-        this.board = board;
+    public MockBoardPopulator(GameBoard gameBoard) {
+        super(gameBoard);
+        this.gameBoard = gameBoard;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class MockBoardPopulator extends BoardPopulatorImpl implements BoardPopul
             for (int y = COLUMN_TOP; y < ROWS; y++) {
                 String type = counter <= 9 ? "0" + counter : "" + counter;
                 emoticon = new Emoticon(x, y, EMO_WIDTH, EMO_HEIGHT, bitmap, type, offScreenStartPositionY);
-                board.setGamePiece(x, y, emoticon);
+                gameBoard.setGamePiece(x, y, emoticon);
                 counter++;
             }
         }

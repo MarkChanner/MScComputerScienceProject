@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public final class BoardImpl implements Board {
+public final class GameBoardImpl implements GameBoard {
 
     private static final int ROWS = GameActivityImpl.MAX_ROWS;
     private static final int COLUMNS = GameActivityImpl.MAX_COLUMNS;
@@ -19,14 +19,14 @@ public final class BoardImpl implements Board {
     private static final int frames = 32;
 
     private GamePiece[][] emoticons = new GamePiece[COLUMNS][ROWS];
-    private static Board instance;
+    private static GameBoard instance;
 
-    private BoardImpl() {
+    private GameBoardImpl() {
     }
 
-    public static synchronized Board getInstance() {
+    public static synchronized GameBoard getInstance() {
         if (instance == null) {
-            instance = new BoardImpl();
+            instance = new GameBoardImpl();
         }
         return instance;
     }

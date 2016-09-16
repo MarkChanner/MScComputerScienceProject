@@ -25,10 +25,10 @@ public class BoardManipulatorImpl implements BoardManipulator {
     private volatile boolean animatingSwap = false;
     private volatile boolean animatingDrop = false;
 
-    private Board gameBoard;
+    private GameBoard gameGameBoard;
 
-    public BoardManipulatorImpl(Board gameBoard) {
-        this.gameBoard = gameBoard;
+    public BoardManipulatorImpl(GameBoard gameGameBoard) {
+        this.gameGameBoard = gameGameBoard;
     }
 
     @Override
@@ -36,22 +36,22 @@ public class BoardManipulatorImpl implements BoardManipulator {
         int[] s01 = selections.getSelection01();
         int[] s02 = selections.getSelection02();
 
-        int emo01X = gameBoard.getGamePiece(s01[X], s01[Y]).getArrayX();
-        int emo01Y = gameBoard.getGamePiece(s01[X], s01[Y]).getArrayY();
-        int emo02X = gameBoard.getGamePiece(s02[X], s02[Y]).getArrayX();
-        int emo02Y = gameBoard.getGamePiece(s02[X], s02[Y]).getArrayY();
-        GamePiece newEmo02 = gameBoard.getGamePiece(s01[X], s01[Y]);
+        int emo01X = gameGameBoard.getGamePiece(s01[X], s01[Y]).getArrayX();
+        int emo01Y = gameGameBoard.getGamePiece(s01[X], s01[Y]).getArrayY();
+        int emo02X = gameGameBoard.getGamePiece(s02[X], s02[Y]).getArrayX();
+        int emo02Y = gameGameBoard.getGamePiece(s02[X], s02[Y]).getArrayY();
+        GamePiece newEmo02 = gameGameBoard.getGamePiece(s01[X], s01[Y]);
 
-        gameBoard.setGamePiece(s01[X], s01[Y], gameBoard.getGamePiece(s02[X], s02[Y]));
-        gameBoard.getGamePiece(s01[X], s01[Y]).setArrayX(emo01X);
-        gameBoard.getGamePiece(s01[X], s01[Y]).setArrayY(emo01Y);
+        gameGameBoard.setGamePiece(s01[X], s01[Y], gameGameBoard.getGamePiece(s02[X], s02[Y]));
+        gameGameBoard.getGamePiece(s01[X], s01[Y]).setArrayX(emo01X);
+        gameGameBoard.getGamePiece(s01[X], s01[Y]).setArrayY(emo01Y);
 
-        gameBoard.setGamePiece(s02[X], s02[Y], newEmo02);
-        gameBoard.getGamePiece(s02[X], s02[Y]).setArrayX(emo02X);
-        gameBoard.getGamePiece(s02[X], s02[Y]).setArrayY(emo02Y);
+        gameGameBoard.setGamePiece(s02[X], s02[Y], newEmo02);
+        gameGameBoard.getGamePiece(s02[X], s02[Y]).setArrayX(emo02X);
+        gameGameBoard.getGamePiece(s02[X], s02[Y]).setArrayY(emo02Y);
 
-        GamePiece emo01 = gameBoard.getGamePiece(s01[X], s01[Y]);
-        GamePiece emo02 = gameBoard.getGamePiece(s02[X], s02[Y]);
+        GamePiece emo01 = gameGameBoard.getGamePiece(s01[X], s01[Y]);
+        GamePiece emo02 = gameGameBoard.getGamePiece(s02[X], s02[Y]);
         setToAnimate(emo01, emo02);
     }
 
@@ -96,17 +96,17 @@ public class BoardManipulatorImpl implements BoardManipulator {
 
     @Override
     public void removeFromBoard(MatchContainer matchContainer, GamePieceFactory factory) {
-        remove(gameBoard, matchContainer.getMatchingX(), factory);
-        remove(gameBoard, matchContainer.getMatchingY(), factory);
+        remove(gameGameBoard, matchContainer.getMatchingX(), factory);
+        remove(gameGameBoard, matchContainer.getMatchingY(), factory);
     }
 
-    private void remove(Board board, ArrayList<LinkedList<GamePiece>> matches, GamePieceFactory factory) {
+    private void remove(GameBoard gameBoard, ArrayList<LinkedList<GamePiece>> matches, GamePieceFactory factory) {
         for (List<GamePiece> removeList : matches) {
             for (GamePiece emo : removeList) {
                 int x = emo.getArrayX();
                 int y = emo.getArrayY();
-                if (!board.getGamePiece(x, y).toString().equals(BLANK)) {
-                    board.setGamePiece(x, y, factory.createBlankTile(x, y));
+                if (!gameBoard.getGamePiece(x, y).toString().equals(BLANK)) {
+                    gameBoard.setGamePiece(x, y, factory.createBlankTile(x, y));
                 }
             }
         }
@@ -122,20 +122,20 @@ public class BoardManipulatorImpl implements BoardManipulator {
         for (int x = ROW_START; x < COLUMNS; x++) {
             offScreenStartPosition = -1;
             for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
-                if (gameBoard.getGamePiece(x, y).toString().equals(BLANK)) {
+                if (gameGameBoard.getGamePiece(x, y).toString().equals(BLANK)) {
                     runnerY = y;
-                    while ((runnerY >= COLUMN_TOP) && gameBoard.getGamePiece(x, runnerY).toString().equals(BLANK)) {
+                    while ((runnerY >= COLUMN_TOP) && gameGameBoard.getGamePiece(x, runnerY).toString().equals(BLANK)) {
                         // Travel up the column and, if emoticon found, fill the empty tile with it
                         runnerY--;
                     }
                     if (runnerY >= COLUMN_TOP) {
-                        int tempY = gameBoard.getGamePiece(x, y).getArrayY();
-                        gameBoard.setGamePiece(x, y, gameBoard.getGamePiece(x, runnerY));
-                        gameBoard.getGamePiece(x, y).setArrayY(tempY);
-                        gameBoard.getGamePiece(x, y).setDropping(true);
-                        gameBoard.setGamePiece(x, runnerY, factory.createBlankTile(x, runnerY));
+                        int tempY = gameGameBoard.getGamePiece(x, y).getArrayY();
+                        gameGameBoard.setGamePiece(x, y, gameGameBoard.getGamePiece(x, runnerY));
+                        gameGameBoard.getGamePiece(x, y).setArrayY(tempY);
+                        gameGameBoard.getGamePiece(x, y).setDropping(true);
+                        gameGameBoard.setGamePiece(x, runnerY, factory.createBlankTile(x, runnerY));
                     } else {
-                        gameBoard.setGamePiece(x, y, factory.getRandomGamePiece(x, y, offScreenStartPosition));
+                        gameGameBoard.setGamePiece(x, y, factory.getRandomGamePiece(x, y, offScreenStartPosition));
                         offScreenStartPosition--;
                     }
                 }
@@ -167,9 +167,9 @@ public class BoardManipulatorImpl implements BoardManipulator {
         boolean stillAnimating = false;
         for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
             for (int x = ROW_START; x < COLUMNS; x++) {
-                if (gameBoard.getGamePiece(x, y).isBeingAnimated()) {
+                if (gameGameBoard.getGamePiece(x, y).isBeingAnimated()) {
                     stillAnimating = true;
-                    gameBoard.getGamePiece(x, y).incrementCoordinates();
+                    gameGameBoard.getGamePiece(x, y).incrementCoordinates();
                 }
             }
         }
@@ -187,9 +187,9 @@ public class BoardManipulatorImpl implements BoardManipulator {
         boolean emoticonsDropping = false;
         for (int y = COLUMN_BOTTOM; y >= COLUMN_TOP; y--) {
             for (int x = ROW_START; x < COLUMNS; x++) {
-                if (gameBoard.getGamePiece(x, y).isDropping()) {
+                if (gameGameBoard.getGamePiece(x, y).isDropping()) {
                     emoticonsDropping = true;
-                    gameBoard.getGamePiece(x, y).updateDropping();
+                    gameGameBoard.getGamePiece(x, y).updateDropping();
                 }
             }
         }

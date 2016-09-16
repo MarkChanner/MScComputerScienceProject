@@ -3,7 +3,7 @@ package com.example.mark.msccomputerscienceproject.model;
 /**
  * @author Mark Channer for Birkbeck MSc Computer Science project
  */
-public interface Board {
+public interface GameBoard {
 
     /**
      * Returns the GamePiece located at the given coordinates

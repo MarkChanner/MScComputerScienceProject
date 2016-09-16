@@ -2,8 +2,8 @@ package com.example.mark.msccomputerscienceproject.view;
 
 import com.example.mark.msccomputerscienceproject.controller.GameActivity;
 import com.example.mark.msccomputerscienceproject.controller.GameActivityImpl;
-import com.example.mark.msccomputerscienceproject.model.Board;
-import com.example.mark.msccomputerscienceproject.model.BoardImpl;
+import com.example.mark.msccomputerscienceproject.model.GameBoard;
+import com.example.mark.msccomputerscienceproject.model.GameBoardImpl;
 import com.example.mark.msccomputerscienceproject.model.GamePiece;
 import com.example.mark.msccomputerscienceproject.R;
 
@@ -25,7 +25,7 @@ public final class GameBoardView extends SurfaceView implements Runnable {
 
     private SurfaceHolder surfaceHolder;
     private GameActivity controller;
-    private Board board;
+    private GameBoard gameBoard;
     private int tileWidth;
     private int tileHeight;
     private Paint backgroundColour;
@@ -45,7 +45,7 @@ public final class GameBoardView extends SurfaceView implements Runnable {
         this.controller = (GameActivity) context;
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
-        this.board = BoardImpl.getInstance();
+        this.gameBoard = GameBoardImpl.getInstance();
         setPaint(context);
         createBackgroundBitmap(viewSizeX, viewSizeY);
     }
@@ -160,7 +160,7 @@ public final class GameBoardView extends SurfaceView implements Runnable {
     private void drawHighlightedTiles(Canvas canvas) {
         for (int y = ROWS - 1; y >= 0; y--) {
             for (int x = 0; x < COLUMNS; x++) {
-                GamePiece emo = board.getGamePiece(x, y);
+                GamePiece emo = gameBoard.getGamePiece(x, y);
                 if (emo.getHighlight()) {
                     int highlightX = emo.getViewPositionX();
                     int highlightY = emo.getViewPositionY();
@@ -176,7 +176,7 @@ public final class GameBoardView extends SurfaceView implements Runnable {
         GamePiece emo;
         for (int y = ROWS - 1; y >= 0; y--) {
             for (int x = 0; x < COLUMNS; x++) {
-                emo = board.getGamePiece(x, y);
+                emo = gameBoard.getGamePiece(x, y);
                 canvas.drawBitmap(emo.getBitmap(), 5 + emo.getViewPositionX(), emo.getViewPositionY(), null);
             }
         }

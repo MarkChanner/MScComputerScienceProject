@@ -26,7 +26,7 @@ public class MatchFinderImplTest {
     private static final String SURPRISED = "SURPRISED";
     private static final String SAD = "SAD";
 
-    private Board board;
+    private GameBoard gameBoard;
     private MatchFinder matchFinder;
     private MatchContainer matchContainer;
     private GamePieceFactory factory;
@@ -39,16 +39,16 @@ public class MatchFinderImplTest {
 
     @Before
     public void setUp() throws Exception {
-        this.board = BoardImpl.getInstance();
-        this.matchFinder = new MatchFinderImpl(board);
+        this.gameBoard = GameBoardImpl.getInstance();
+        this.matchFinder = new MatchFinderImpl(gameBoard);
         this.factory = new EmoticonFactoryLevel01(EMO_WIDTH, EMO_HEIGHT);
-        this.populator = new MockBoardPopulator(board);
+        this.populator = new MockBoardPopulator(gameBoard);
         populator.populate(factory);
     }
 
     @After
     public void tearDown() throws Exception {
-        board.reset();
+        gameBoard.reset();
         matchFinder = null;
         matchingX = null;
         matchingY = null;
@@ -57,19 +57,19 @@ public class MatchFinderImplTest {
     @Test
     public void testVerticalAndHorizontalMatches() throws Exception {
         // Set up a vertical match
-        board.setGamePiece(0, 1, new Emoticon(0, 1, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
-        board.setGamePiece(0, 2, new Emoticon(0, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
-        board.setGamePiece(0, 3, new Emoticon(0, 3, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
-        board.setGamePiece(0, 4, new Emoticon(0, 4, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
+        gameBoard.setGamePiece(0, 1, new Emoticon(0, 1, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
+        gameBoard.setGamePiece(0, 2, new Emoticon(0, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
+        gameBoard.setGamePiece(0, 3, new Emoticon(0, 3, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
+        gameBoard.setGamePiece(0, 4, new Emoticon(0, 4, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
 
         // Set up a horizontal match
-        board.setGamePiece(3, 2, new Emoticon(3, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, SURPRISED, START_POSITION_Y));
-        board.setGamePiece(4, 2, new Emoticon(4, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, SURPRISED, START_POSITION_Y));
-        board.setGamePiece(5, 2, new Emoticon(5, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, SURPRISED, START_POSITION_Y));
+        gameBoard.setGamePiece(3, 2, new Emoticon(3, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, SURPRISED, START_POSITION_Y));
+        gameBoard.setGamePiece(4, 2, new Emoticon(4, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, SURPRISED, START_POSITION_Y));
+        gameBoard.setGamePiece(5, 2, new Emoticon(5, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, SURPRISED, START_POSITION_Y));
 
         // Sets up just two emoticons to confirm that they are not considered to be a match
-        board.setGamePiece(6, 0, new Emoticon(6, 0, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
-        board.setGamePiece(6, 1, new Emoticon(6, 1, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
+        gameBoard.setGamePiece(6, 0, new Emoticon(6, 0, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
+        gameBoard.setGamePiece(6, 1, new Emoticon(6, 1, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
 
         matchContainer = matchFinder.findMatches();
         matchingX = matchContainer.getMatchingX();
@@ -91,13 +91,13 @@ public class MatchFinderImplTest {
 
     @Test
     public void testTwoVerticalMatches() throws Exception {
-        board.setGamePiece(2, 1, new Emoticon(2, 1, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
-        board.setGamePiece(2, 2, new Emoticon(2, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
-        board.setGamePiece(2, 3, new Emoticon(2, 3, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
+        gameBoard.setGamePiece(2, 1, new Emoticon(2, 1, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
+        gameBoard.setGamePiece(2, 2, new Emoticon(2, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
+        gameBoard.setGamePiece(2, 3, new Emoticon(2, 3, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
 
-        board.setGamePiece(4, 4, new Emoticon(4, 4, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
-        board.setGamePiece(4, 5, new Emoticon(4, 5, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
-        board.setGamePiece(4, 6, new Emoticon(4, 6, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
+        gameBoard.setGamePiece(4, 4, new Emoticon(4, 4, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
+        gameBoard.setGamePiece(4, 5, new Emoticon(4, 5, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
+        gameBoard.setGamePiece(4, 6, new Emoticon(4, 6, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
 
         matchContainer = matchFinder.findMatches();
         matchingX = matchContainer.getMatchingX();
@@ -119,34 +119,34 @@ public class MatchFinderImplTest {
     @Test
     public void testBaseCaseMatches() throws Exception {
         // Sets 4 vertical matches
-        board.setGamePiece(0, 0, new Emoticon(0, 0, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
-        board.setGamePiece(0, 1, new Emoticon(0, 1, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
-        board.setGamePiece(0, 2, new Emoticon(0, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
+        gameBoard.setGamePiece(0, 0, new Emoticon(0, 0, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
+        gameBoard.setGamePiece(0, 1, new Emoticon(0, 1, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
+        gameBoard.setGamePiece(0, 2, new Emoticon(0, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
 
-        board.setGamePiece(0, 4, new Emoticon(0, 4, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
-        board.setGamePiece(0, 5, new Emoticon(0, 5, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
-        board.setGamePiece(0, 6, new Emoticon(0, 6, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
+        gameBoard.setGamePiece(0, 4, new Emoticon(0, 4, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
+        gameBoard.setGamePiece(0, 5, new Emoticon(0, 5, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
+        gameBoard.setGamePiece(0, 6, new Emoticon(0, 6, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
 
-        board.setGamePiece(7, 0, new Emoticon(7, 0, EMO_WIDTH, EMO_HEIGHT, bitmap, EMBARRASSED, START_POSITION_Y));
-        board.setGamePiece(7, 1, new Emoticon(7, 1, EMO_WIDTH, EMO_HEIGHT, bitmap, EMBARRASSED, START_POSITION_Y));
-        board.setGamePiece(7, 2, new Emoticon(7, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, EMBARRASSED, START_POSITION_Y));
+        gameBoard.setGamePiece(7, 0, new Emoticon(7, 0, EMO_WIDTH, EMO_HEIGHT, bitmap, EMBARRASSED, START_POSITION_Y));
+        gameBoard.setGamePiece(7, 1, new Emoticon(7, 1, EMO_WIDTH, EMO_HEIGHT, bitmap, EMBARRASSED, START_POSITION_Y));
+        gameBoard.setGamePiece(7, 2, new Emoticon(7, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, EMBARRASSED, START_POSITION_Y));
 
-        board.setGamePiece(7, 4, new Emoticon(7, 4, EMO_WIDTH, EMO_HEIGHT, bitmap, SAD, START_POSITION_Y));
-        board.setGamePiece(7, 5, new Emoticon(7, 5, EMO_WIDTH, EMO_HEIGHT, bitmap, SAD, START_POSITION_Y));
-        board.setGamePiece(7, 6, new Emoticon(7, 6, EMO_WIDTH, EMO_HEIGHT, bitmap, SAD, START_POSITION_Y));
+        gameBoard.setGamePiece(7, 4, new Emoticon(7, 4, EMO_WIDTH, EMO_HEIGHT, bitmap, SAD, START_POSITION_Y));
+        gameBoard.setGamePiece(7, 5, new Emoticon(7, 5, EMO_WIDTH, EMO_HEIGHT, bitmap, SAD, START_POSITION_Y));
+        gameBoard.setGamePiece(7, 6, new Emoticon(7, 6, EMO_WIDTH, EMO_HEIGHT, bitmap, SAD, START_POSITION_Y));
 
         // Sets 3 horizontal matches
-        board.setGamePiece(2, 0, new Emoticon(2, 0, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
-        board.setGamePiece(3, 0, new Emoticon(3, 0, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
-        board.setGamePiece(4, 0, new Emoticon(4, 0, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
+        gameBoard.setGamePiece(2, 0, new Emoticon(2, 0, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
+        gameBoard.setGamePiece(3, 0, new Emoticon(3, 0, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
+        gameBoard.setGamePiece(4, 0, new Emoticon(4, 0, EMO_WIDTH, EMO_HEIGHT, bitmap, HAPPY, START_POSITION_Y));
 
-        board.setGamePiece(3, 2, new Emoticon(3, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, EMBARRASSED, START_POSITION_Y));
-        board.setGamePiece(4, 2, new Emoticon(4, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, EMBARRASSED, START_POSITION_Y));
-        board.setGamePiece(5, 2, new Emoticon(5, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, EMBARRASSED, START_POSITION_Y));
+        gameBoard.setGamePiece(3, 2, new Emoticon(3, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, EMBARRASSED, START_POSITION_Y));
+        gameBoard.setGamePiece(4, 2, new Emoticon(4, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, EMBARRASSED, START_POSITION_Y));
+        gameBoard.setGamePiece(5, 2, new Emoticon(5, 2, EMO_WIDTH, EMO_HEIGHT, bitmap, EMBARRASSED, START_POSITION_Y));
 
-        board.setGamePiece(2, 6, new Emoticon(2, 6, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
-        board.setGamePiece(3, 6, new Emoticon(3, 6, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
-        board.setGamePiece(4, 6, new Emoticon(4, 6, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
+        gameBoard.setGamePiece(2, 6, new Emoticon(2, 6, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
+        gameBoard.setGamePiece(3, 6, new Emoticon(3, 6, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
+        gameBoard.setGamePiece(4, 6, new Emoticon(4, 6, EMO_WIDTH, EMO_HEIGHT, bitmap, ANGRY, START_POSITION_Y));
 
         matchContainer = matchFinder.findMatches();
         matchingX = matchContainer.getMatchingX();
