@@ -19,8 +19,8 @@ import static org.junit.Assert.*;
 public class BitmapCreatorTest {
 
     private BitmapCreator bitmapCreator;
-    private int emoWidth = 20;
-    private int emoHeight = 20;
+    private int tileWidth = 20;
+    private int tileHeight = 20;
 
     @Before
     public void setUp() throws Exception {
@@ -40,18 +40,18 @@ public class BitmapCreatorTest {
     @Test
     public void testPrepareScaledBitmaps() throws Exception {
         Context context = InstrumentationRegistry.getTargetContext();
-        bitmapCreator.prepareScaledBitmaps(context, emoWidth, emoHeight);
+        bitmapCreator.prepareScaledBitmaps(context, tileWidth, tileHeight);
         assertNotNull(bitmapCreator.getAngryBitmap());
     }
 
     @Test
     public void testGetAngryBitmap() throws Exception {
         Context context = InstrumentationRegistry.getTargetContext();
-        bitmapCreator.prepareScaledBitmaps(context, emoWidth, emoHeight);
+        bitmapCreator.prepareScaledBitmaps(context, tileWidth, tileHeight);
         Bitmap angryBitmap1 = bitmapCreator.getAngryBitmap();
 
         Bitmap unscaledBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.angry);
-        Bitmap angryBitmap2 = Bitmap.createScaledBitmap(unscaledBitmap, emoWidth, emoHeight, false);
+        Bitmap angryBitmap2 = Bitmap.createScaledBitmap(unscaledBitmap, tileWidth, tileHeight, false);
         assertTrue(angryBitmap1.sameAs(angryBitmap2));
     }
 }
