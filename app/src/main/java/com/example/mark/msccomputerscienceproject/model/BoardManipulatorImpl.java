@@ -18,7 +18,7 @@ public class BoardManipulatorImpl implements BoardManipulator {
     private static final int COLUMN_BOTTOM = (ROWS - 1);
     private static final int X = 0;
     private static final int Y = 1;
-    private static final String BLANK = "BLANK";
+    private static final String BLANK = "EMPTY";
 
     private final Object lock = new Object();
     private final Object dropLock = new Object();
